@@ -1,0 +1,628 @@
+<!DOCTYPE html>
+<html lang="pt-PT">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Caçador de Oportunidades</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;500;600&family=Barlow+Condensed:wght@500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#EEF1EE; --card:#FFFFFF; --ink:#22262A; --ink-2:#56605A; --ink-3:#8A938D; --line:#D9DFDA;
+  --pinho:#23533F; --pinho-bg:#E1EDE6; --resina:#9A5F12; --resina-bg:#F6EAD6; --tijolo:#A2402E; --tijolo-bg:#F6E3DF;
+  --campo:#F6F8F6;
+  --f-corpo:"Barlow",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+  --f-preco:"Barlow Condensed","Arial Narrow",system-ui,sans-serif;
+  box-sizing:border-box;
+  padding-top:env(safe-area-inset-top,0px); padding-bottom:env(safe-area-inset-bottom,0px);
+}
+@media (prefers-color-scheme:dark){ :root:not([data-theme="light"]){
+  --bg:#121614; --card:#1B211E; --ink:#E8ECE9; --ink-2:#B1BBB4; --ink-3:#7F8A83; --line:#2C3531;
+  --pinho:#7CC6A0; --pinho-bg:#1F3A2D; --resina:#E3A85B; --resina-bg:#3A2C17; --tijolo:#EE8F7C; --tijolo-bg:#3D211C; --campo:#161B19;
+}}
+:root[data-theme="dark"]{
+  --bg:#121614; --card:#1B211E; --ink:#E8ECE9; --ink-2:#B1BBB4; --ink-3:#7F8A83; --line:#2C3531;
+  --pinho:#7CC6A0; --pinho-bg:#1F3A2D; --resina:#E3A85B; --resina-bg:#3A2C17; --tijolo:#EE8F7C; --tijolo-bg:#3D211C; --campo:#161B19;
+}
+*,*::before,*::after{box-sizing:inherit}
+input,select,textarea{box-sizing:border-box;max-width:100%}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.5 var(--f-corpo);-webkit-text-size-adjust:100%}
+main{max-width:640px;margin:0 auto;padding:18px 16px 180px}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+h1{font:600 30px/1.05 var(--f-preco);margin:0;letter-spacing:.2px}
+h2{font:600 22px/1.15 var(--f-preco);margin:28px 0 6px}
+h3{font:600 17px/1.3 var(--f-corpo);margin:0 0 4px}
+p{margin:0 0 10px}
+.topo{display:flex;justify-content:space-between;align-items:flex-end;gap:12px;margin-bottom:14px}
+.topo small{color:var(--ink-3);font-size:13px;text-align:right}
+.intro{color:var(--ink-2);font-size:15px;max-width:60ch}
+.aviso{background:var(--resina-bg);color:var(--resina);border-radius:10px;padding:10px 12px;font-size:14px;margin:12px 0}
+select,input[type=text],input[type=number],input[type=password]{font:inherit;color:var(--ink);background:var(--campo);border:1px solid var(--line);border-radius:8px;padding:9px 11px;width:100%;min-height:44px}
+input:focus-visible,select:focus-visible,button:focus-visible,a:focus-visible,summary:focus-visible{outline:2px solid var(--pinho);outline-offset:2px}
+button{font:500 15px var(--f-corpo);color:var(--ink);background:transparent;border:1px solid var(--line);border-radius:8px;padding:9px 14px;min-height:44px;cursor:pointer}
+button.principal{background:var(--pinho);border-color:var(--pinho);color:var(--card)}
+button.leve{border:none;color:var(--pinho);padding:6px 4px;min-height:36px;text-decoration:underline;text-underline-offset:3px}
+button.perigo{color:var(--tijolo);border-color:var(--tijolo-bg)}
+.filtro{margin:0 0 14px}
+
+.anuncio{background:var(--card);border-radius:14px;padding:14px 14px 12px;margin:0 0 12px;border:1px solid var(--line)}
+.anuncio.rever{border-left:4px solid var(--resina)}
+.anuncio.boa{border-left:4px solid var(--pinho)}
+.linha-preco{display:flex;align-items:center;justify-content:space-between;gap:10px;margin:6px 0 4px}
+.preco{font:700 34px/1 var(--f-preco);letter-spacing:.3px}
+.etiqueta{font:700 22px/1 var(--f-preco);padding:7px 12px 7px 20px;clip-path:polygon(12px 0,100% 0,100% 100%,12px 100%,0 50%);white-space:nowrap}
+.boa .etiqueta{background:var(--pinho);color:var(--card)}
+.rever .etiqueta{background:var(--resina);color:var(--card)}
+.ref{color:var(--ink-2);font-size:14px;margin:0 0 8px}
+.baixou{color:var(--pinho);font-weight:600;font-size:14px}
+.marcas{display:flex;flex-wrap:wrap;gap:6px;margin:0 0 8px}
+.marca{font-size:13px;padding:3px 9px;border-radius:999px}
+.marca.pressa{background:var(--pinho-bg);color:var(--pinho)}
+.marca.problema{background:var(--resina-bg);color:var(--resina)}
+.rodape{display:flex;justify-content:space-between;align-items:center;gap:8px;color:var(--ink-3);font-size:13px}
+.rodape a{color:var(--pinho);font-weight:600;font-size:15px;text-decoration:none;padding:8px 0}
+.de{font-size:13px;color:var(--ink-3);margin:0 0 2px}
+.m2{color:var(--ink-2);font-size:14px;margin:0 0 4px}
+.tipos{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;margin:0 0 12px}
+.tipos button{min-height:64px;font-size:16px;background:var(--card)}
+.tipos button span{display:block;font-size:22px}
+details.procura>summary .resumo{display:block;font-size:13px;color:var(--ink-3);margin-top:2px}
+.vazio{text-align:center;color:var(--ink-2);padding:40px 12px}
+.vazio strong{display:block;font:600 22px var(--f-preco);color:var(--ink);margin-bottom:6px}
+
+.mercado{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:14px;margin:0 0 12px}
+.grupo{display:flex;justify-content:space-between;align-items:baseline;padding:8px 0;border-top:1px solid var(--line)}
+.grupo:first-of-type{border-top:none}
+.grupo b{font:600 24px var(--f-preco)}
+.grupo span{color:var(--ink-2);font-size:14px}
+.grupo .val{text-align:right;white-space:nowrap}
+.grupo .val small{display:block;font-size:13px;color:var(--ink-3)}
+
+.mercado-proc{background:var(--campo);border-radius:10px;padding:10px 12px;margin:0 0 6px}
+.mercado-proc .grupo{padding:6px 0}
+.seg{display:flex;border:1px solid var(--line);border-radius:10px;overflow:hidden;margin:0 0 10px}
+.seg button{flex:1;border:none;border-radius:0;min-height:44px;font-size:14px;padding:6px 4px;color:var(--ink-2)}
+.seg button+button{border-left:1px solid var(--line)}
+.seg button[aria-pressed="true"]{background:var(--pinho);color:var(--card)}
+.sugestoes{border:1px solid var(--line);border-radius:10px;margin-top:6px;overflow:hidden;background:var(--card)}
+.sugestoes:empty{display:none}
+.sugestoes button{display:block;width:100%;text-align:left;border:none;border-radius:0;border-top:1px solid var(--line);padding:9px 12px;min-height:48px}
+.sugestoes button:first-child{border-top:none}
+.sugestoes small{display:block;color:var(--ink-3);font-size:13px}
+.centro{display:flex;justify-content:space-between;align-items:center;gap:8px;background:var(--pinho-bg);color:var(--pinho);border-radius:10px;padding:8px 8px 8px 12px;margin:0 0 10px}
+.centro small{display:block;font-size:13px;opacity:.85}
+.km{display:flex;align-items:center;gap:6px;flex-wrap:wrap;margin-top:4px}
+.km{flex-wrap:nowrap}
+.km input{max-width:64px;padding:9px 6px;text-align:center}
+.km button{min-width:0;flex:1;padding:6px 2px;font-size:14px;white-space:nowrap}
+.km .desc{white-space:nowrap}
+.km button[aria-pressed="true"]{border-color:var(--pinho);color:var(--pinho);font-weight:600}
+.frase-zona{font-size:14px;color:var(--ink-2);margin:8px 0 0}
+.regra{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:14px;margin:0 0 10px}
+.regra .desc{color:var(--ink-2);font-size:14px;margin:2px 0 10px}
+.campo-unidade{display:flex;align-items:center;gap:8px}
+.campo-unidade input{max-width:130px}
+.campo-unidade span{color:var(--ink-2);font-size:14px}
+.proposta{display:flex;align-items:center;flex-wrap:wrap;gap:4px 10px;margin-top:8px;font-size:13px;color:var(--ink-3)}
+.fichas{display:flex;flex-wrap:wrap;gap:6px;margin:0 0 8px}
+.ficha{display:inline-flex;align-items:center;gap:2px;background:var(--campo);border:1px solid var(--line);border-radius:999px;padding:2px 4px 2px 11px;font-size:14px}
+.ficha button{border:none;min-height:30px;min-width:30px;padding:0;color:var(--ink-3);font-size:18px;line-height:1}
+.acrescentar{display:flex;gap:8px}
+.acrescentar input{flex:1}
+.interruptor{display:flex;align-items:center;gap:10px;cursor:pointer;min-height:44px}
+.interruptor input{width:22px;height:22px;accent-color:var(--pinho)}
+details.procura{background:var(--card);border:1px solid var(--line);border-radius:14px;margin:0 0 12px}
+details.procura>summary{list-style:none;cursor:pointer;padding:14px;display:flex;justify-content:space-between;align-items:center;gap:8px}
+details.procura>summary::-webkit-details-marker{display:none}
+details.procura>summary b{font:600 20px var(--f-preco)}
+details.procura>summary span{font-size:13px;color:var(--ink-3)}
+details.procura .corpo{padding:0 14px 14px}
+details.procura .regra{border:none;padding:12px 0 4px;border-top:1px solid var(--line);border-radius:0;margin:0}
+.barra-guardar{position:fixed;left:0;right:0;bottom:0;padding:10px 16px calc(10px + 64px + env(safe-area-inset-bottom,0px));background:var(--card);border-top:1px solid var(--line);display:none;justify-content:center;gap:10px;z-index:4}
+.barra-guardar.ativa{display:flex}
+.barra-guardar button{flex:1;max-width:300px}
+
+nav{position:fixed;left:0;right:0;bottom:0;background:var(--card);border-top:1px solid var(--line);display:flex;justify-content:center;padding:0 0 env(safe-area-inset-bottom,0px);z-index:5}
+nav button{flex:1;max-width:130px;padding:0 2px;border:none;border-radius:0;min-height:62px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1px;font-size:13px;color:var(--ink-3);position:relative}
+nav button b{font:600 20px/1 var(--f-preco);color:inherit}
+nav button[aria-selected="true"]{color:var(--pinho)}
+nav button[aria-selected="true"]::before{content:"";position:absolute;top:0;left:22%;right:22%;height:3px;background:var(--pinho);border-radius:0 0 3px 3px}
+.toast{position:fixed;left:50%;bottom:150px;transform:translateX(-50%);background:var(--ink);color:var(--card);padding:10px 16px;border-radius:10px;font-size:14px;max-width:90vw;z-index:9;display:none}
+.toast.ver{display:block}
+@media (prefers-reduced-motion:no-preference){ .anuncio{animation:entrar .25s ease-out both} @keyframes entrar{from{opacity:0;transform:translateY(4px)}} }
+</style>
+</head>
+<body>
+<main>
+  <div class="topo">
+    <h1>Caçador de<br>Oportunidades</h1>
+    <small id="atualizado"></small>
+  </div>
+  <div id="demo-aviso"></div>
+  <div id="vista"></div>
+</main>
+
+<div class="barra-guardar" id="barra-guardar">
+  <button id="descartar">Desfazer</button>
+  <button class="principal" id="guardar">Guardar alterações</button>
+</div>
+
+<nav role="tablist" aria-label="Secções">
+  <button role="tab" data-vista="boa" aria-selected="true"><b id="n-boa">0</b>Boas</button>
+  <button role="tab" data-vista="rever" aria-selected="false"><b id="n-rever">0</b>A rever</button>
+  <button role="tab" data-vista="procuras" aria-selected="false"><b id="n-procuras">0</b>Procuras</button>
+  <button role="tab" data-vista="regras" aria-selected="false"><b>⚙</b>Regras</button>
+</nav>
+<div class="toast" id="toast" role="status"></div>
+
+<script>
+const DEMO = null;
+
+const E = {regras:null, dados:{anuncios:{},mercado:{}}, config:null, original:null, sha:null, vista:"boa", filtro:"todas"};
+const noGitHub = location.hostname.endsWith("github.io");
+const modoDemo = !!DEMO || !noGitHub || new URLSearchParams(location.search).has("demo");
+
+function guardarLocal(k, v){ try{ localStorage.setItem(k, v); }catch(e){} }
+function lerLocal(k){ try{ return localStorage.getItem(k) || ""; }catch(e){ return ""; } }
+
+function repo(){
+  const dono = lerLocal("cacador_dono") || (noGitHub ? location.hostname.split(".")[0] : "");
+  const nome = lerLocal("cacador_repo") || (noGitHub ? (location.pathname.split("/")[1] || "") : "");
+  return {dono, nome, token: lerLocal("cacador_token")};
+}
+
+const esc = s => String(s ?? "").replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const euros = v => v == null ? "sem preço" : String(Math.round(v)).replace(/\B(?=(\d{3})+(?!\d))/g, " ") + " €";
+const ICONE = {mota:"🏍️", carro:"🚗", casa:"🏠", terreno:"🌳", outro:"🔎"};
+function valorFmt(v, unidade){
+  if (v == null) return "sem preço";
+  if (unidade === "€/m²") return (v < 100 ? v.toFixed(2).replace(".", ",") : String(Math.round(v)).replace(/\B(?=(\d{3})+(?!\d))/g, " ")) + " €/m²";
+  return euros(v);
+}
+const pct = v => Math.round(v * 100) + "%";
+const urlSegura = u => /^https?:\/\//i.test(u || "") ? u : "#";
+function haQuanto(ts){
+  const m = Math.max(0, Math.round((Date.now()/1000 - ts) / 60));
+  if (m < 60) return m <= 1 ? "agora mesmo" : `há ${m} min`;
+  const h = Math.round(m / 60); if (h < 24) return `há ${h} h`;
+  const d = Math.round(h / 24); return d === 1 ? "ontem" : `há ${d} dias`;
+}
+function toast(txt){ const t = document.getElementById("toast"); t.textContent = txt; t.classList.add("ver"); clearTimeout(toast.t); toast.t = setTimeout(() => t.classList.remove("ver"), 3500); }
+
+/* ---------- carregar ---------- */
+async function carregar(){
+  if (modoDemo && DEMO){
+    E.regras = DEMO.regras; E.dados = DEMO.dados; E.config = structuredClone(DEMO.config);
+  } else {
+    try { E.regras = await (await fetch("./regras.json", {cache:"no-store"})).json(); } catch(e){ E.regras = null; }
+    try { E.dados = await (await fetch("./dados.json", {cache:"no-store"})).json(); } catch(e){}
+    await carregarConfig();
+  }
+  E.original = JSON.stringify(E.config);
+  document.getElementById("demo-aviso").innerHTML = modoDemo
+    ? '<div class="aviso">Pré-visualização com dados de exemplo. No GitHub, esta página mostra os teus anúncios reais.</div>' : "";
+  desenhar();
+}
+
+async function carregarConfig(){
+  const {dono, nome, token} = repo();
+  if (!dono || !nome){ E.config = {geral:{}, sinais:{}, procuras:[]}; return; }
+  const cab = {"Accept":"application/vnd.github+json"}; if (token) cab.Authorization = "Bearer " + token;
+  try{
+    const r = await fetch(`https://api.github.com/repos/${dono}/${nome}/contents/config.json?ref=main&t=${Date.now()}`, {headers:cab});
+    if (!r.ok) throw new Error(r.status);
+    const j = await r.json();
+    const bytes = Uint8Array.from(atob(j.content.replace(/\n/g,"")), c => c.charCodeAt(0));
+    E.config = JSON.parse(new TextDecoder().decode(bytes)); E.sha = j.sha;
+  } catch(e){
+    E.config = {geral:{}, sinais:{}, procuras:[]};
+    E.erroConfig = "Não foi possível ler as regras do GitHub. Confirma a ligação em \"Ligação ao GitHub\", no fundo desta página.";
+  }
+}
+
+async function guardarConfig(){
+  if (modoDemo){ E.original = JSON.stringify(E.config); marcarAlterado(); toast("Pré-visualização: nada foi gravado."); return; }
+  const {dono, nome, token} = repo();
+  if (!token){ toast("Liga primeiro ao GitHub (fundo do separador Regras)."); return; }
+  const texto = JSON.stringify(E.config, null, 2) + "\n";
+  const b64 = btoa(String.fromCharCode(...new TextEncoder().encode(texto)));
+  const btn = document.getElementById("guardar"); btn.disabled = true; btn.textContent = "A guardar…";
+  try{
+    const r = await fetch(`https://api.github.com/repos/${dono}/${nome}/contents/config.json`, {
+      method:"PUT", headers:{"Accept":"application/vnd.github+json","Authorization":"Bearer " + token},
+      body: JSON.stringify({message:"Regras atualizadas pela página", content:b64, sha:E.sha || undefined, branch:"main"})
+    });
+    const j = await r.json();
+    if (!r.ok) throw new Error(j.message || r.status);
+    E.sha = j.content.sha; E.original = JSON.stringify(E.config); marcarAlterado();
+    toast("Regras guardadas. O bot usa-as na próxima verificação.");
+  } catch(e){
+    toast("Não foi possível guardar: " + e.message + ". Se alguém alterou as regras entretanto, recarrega a página.");
+  } finally { btn.disabled = false; btn.textContent = "Guardar alterações"; }
+}
+
+/* ---------- navegação ---------- */
+document.querySelectorAll("nav button").forEach(b => b.addEventListener("click", () => {
+  E.vista = b.dataset.vista;
+  document.querySelectorAll("nav button").forEach(x => x.setAttribute("aria-selected", x === b));
+  desenhar(); window.scrollTo(0, 0);
+}));
+document.getElementById("guardar").addEventListener("click", guardarConfig);
+document.getElementById("descartar").addEventListener("click", () => { E.config = JSON.parse(E.original); marcarAlterado(); desenhar(); });
+function marcarAlterado(){
+  document.getElementById("barra-guardar").classList.toggle("ativa", JSON.stringify(E.config) !== E.original);
+}
+
+/* ---------- listagens ---------- */
+function lista(categoria){
+  return Object.entries(E.dados.anuncios || {})
+    .map(([id, a]) => ({id, ...a}))
+    .filter(a => a.categoria === categoria && (E.filtro === "todas" || a.procura === E.filtro))
+    .sort((x, y) => y.desconto - x.desconto);
+}
+
+function cartao(a){
+  const marcas = (a.sinais||[]).map(s => `<span class="marca pressa">Pressa: ${esc(s)}</span>`).join("")
+               + (a.problemas||[]).map(s => `<span class="marca problema">${esc(s)}</span>`).join("");
+  const m2 = a.unidade === "€/m²" ? `<p class="m2">${valorFmt(a.valor, a.unidade)}${a.area ? `, ${euros(a.area).replace(" €", "")} m²` : ""}</p>` : "";
+  return `<article class="anuncio ${a.categoria}">
+    <p class="de">${ICONE[a.tipo] || ICONE.outro} ${esc(a.procura)}</p>
+    <h3>${esc(a.titulo)}</h3>
+    <div class="linha-preco"><span class="preco">${euros(a.preco)}</span><span class="etiqueta">−${pct(a.desconto)}</span></div>${m2}
+    ${a.preco_antes ? `<p class="baixou">Baixou de ${euros(a.preco_antes)}</p>` : ""}
+    <p class="ref">Preço normal ${valorFmt(a.mediana, a.unidade)}, calculado com ${a.amostras} anúncios${a.grupo ? ` de ${esc(a.grupo)}` : ""}</p>
+    ${marcas ? `<div class="marcas">${marcas}</div>` : ""}
+    <div class="rodape"><span>${esc(a.local || "")}${a.km != null ? ` (a ${a.km} km)` : ""} ${a.local ? "—" : ""} ${esc(a.fonte)}, ${haQuanto(a.primeiro)}</span>
+      <a href="${esc(urlSegura(a.url))}" target="_blank" rel="noopener">Abrir anúncio</a></div>
+  </article>`;
+}
+
+function filtroProcuras(){
+  const nomes = [...new Set(Object.values(E.dados.anuncios || {}).map(a => a.procura))];
+  if (nomes.length < 2) return "";
+  return `<div class="filtro"><label class="sr" for="filtro">Procura</label><select id="filtro">
+    <option value="todas">Todas as procuras</option>
+    ${nomes.map(n => `<option ${E.filtro===n?"selected":""}>${esc(n)}</option>`).join("")}</select></div>`;
+}
+
+function vistaLista(cat){
+  const itens = lista(cat);
+  const intro = cat === "boa"
+    ? "Anúncios sem problemas e claramente abaixo do preço normal. Os melhores primeiro."
+    : "Anúncios com um problema indicado pelo vendedor, mas com um desconto que pode compensar. Vê o problema antes de ligar.";
+  const vazio = cat === "boa"
+    ? `<div class="vazio"><strong>Ainda sem boas compras</strong>O bot verifica de 15 em 15 minutos e avisa-te no WhatsApp quando aparecer uma.</div>`
+    : `<div class="vazio"><strong>Nada para rever</strong>Aqui aparecem anúncios com problemas razoáveis e preço muito abaixo do normal.</div>`;
+  return `<p class="intro">${intro}</p>${filtroProcuras()}${itens.length ? itens.map(cartao).join("") : vazio}`;
+}
+
+function vistaMercado(){
+  const m = E.dados.mercado || {};
+  const nomes = Object.keys(m);
+  if (!nomes.length) return `<div class="vazio"><strong>A aprender o mercado</strong>Depois das primeiras verificações aparece aqui o preço normal de cada procura.</div>`;
+  return `<p class="intro">Preço normal (mediana) calculado pelo bot com os anúncios que viu nos últimos 120 dias. É a referência usada para decidir o que é boa compra.</p>` +
+    nomes.map(n => `<section class="mercado"><h3>${esc(n)}</h3>${
+      Object.entries(m[n]).map(([g, v]) => `<div class="grupo"><span>${g === "todos" ? "Todas as versões" : esc(g)}</span><span class="val"><b>${valorFmt(v.mediana, v.unidade)}</b><small>${v.amostras} anúncios</small></span></div>`).join("")
+    }</section>`).join("");
+}
+
+/* ---------- regras (configurações) ---------- */
+function valorGeral(r){ const v = (E.config.geral||{})[r.chave]; return v == null ? r.proposta : v; }
+function valorSinal(r){ const v = (E.config.sinais||{})[r.chave]; return Array.isArray(v) ? v : r.proposta; }
+const mostrar = (v, u) => typeof v === "boolean" ? (v ? "ligado" : "desligado") : Array.isArray(v) ? v.join(", ") : `${v}${u ? " " + u : ""}`;
+
+function campo(r, valor, caminho, rotuloProposta){
+  const id = "c-" + caminho.replace(/\W/g, "-");
+  const proposta = propostaDe(caminho);
+  let entrada = "";
+  if (r.tipo === "numero"){
+    entrada = `<div class="campo-unidade"><input type="number" inputmode="decimal" id="${id}" data-caminho="${caminho}" value="${valor ?? ""}" ${r.min!=null?`min="${r.min}"`:""} ${r.max!=null?`max="${r.max}"`:""} placeholder="vazio"><span>${esc(r.unidade||"")}</span></div>`;
+  } else if (r.tipo === "sim_nao"){
+    entrada = `<label class="interruptor"><input type="checkbox" id="${id}" data-caminho="${caminho}" ${valor ? "checked" : ""}> ${valor ? "Ligado" : "Desligado"}</label>`;
+  } else if (r.tipo === "escolha"){
+    entrada = `<select id="${id}" data-caminho="${caminho}">${r.opcoes.map(o => `<option value="${o.valor}" ${valor === o.valor ? "selected" : ""}>${esc(o.rotulo)}</option>`).join("")}</select>`;
+  } else if (r.tipo === "zona"){
+    entrada = campoZona(valor, caminho);
+  } else if (r.tipo === "texto"){
+    entrada = `<input type="text" id="${id}" data-caminho="${caminho}" value="${esc(valor ?? "")}">`;
+  } else if (r.tipo === "fontes"){
+    entrada = r.opcoes.map(o => `<label class="interruptor"><input type="checkbox" data-caminho="${caminho}" data-opcao="${o}" ${(valor||[]).includes(o) ? "checked" : ""}> ${o === "olx" ? "OLX" : "CustoJusto"}</label>`).join("");
+  } else { // lista
+    entrada = `<div class="fichas">${(valor||[]).map((p, i) => `<span class="ficha">${esc(p)}<button aria-label="Retirar ${esc(p)}" data-retirar="${caminho}" data-i="${i}">×</button></span>`).join("") || '<span class="desc">Lista vazia</span>'}</div>
+      <div class="acrescentar"><input type="text" placeholder="Nova palavra" data-nova="${caminho}" aria-label="Acrescentar a ${esc(r.nome)}"><button data-acrescentar="${caminho}">Acrescentar</button></div>`;
+  }
+  const igual = JSON.stringify(valor) === JSON.stringify(proposta);
+  const vazio = proposta == null || proposta === "" || (Array.isArray(proposta) && !proposta.length);
+  const semProposta = vazio || (r.tipo === "sim_nao" && rotuloProposta === "Exemplo") || r.chave === "tipo" || r.chave === "nome" || r.tipo === "zona";
+  const prop = semProposta ? "" : `<div class="proposta">${rotuloProposta}: ${esc(r.tipo === "escolha" ? (r.opcoes.find(o => o.valor === proposta) || {}).rotulo : mostrar(proposta, r.unidade))}${
+    igual ? "" : ` <button class="leve" data-proposta="${caminho}">Usar ${rotuloProposta.toLowerCase()}</button>`}</div>`;
+  return `<div class="regra"><h3><label for="${id}">${esc(r.nome)}</label></h3><p class="desc">${esc(r.descricao)}</p>${entrada}${prop}</div>`;
+}
+
+function vistaRegras(){
+  if (!E.regras) return `<div class="vazio"><strong>Regras indisponíveis</strong>Não foi possível ler docs/regras.json.</div>`;
+  const {dono, nome, token} = repo();
+  let h = `<p class="intro">Regras que valem para todas as procuras. Cada regra explica o que faz e tem uma proposta: se não souberes o que pôr, toca em "Usar proposta".</p>`;
+  if (E.erroConfig) h += `<div class="aviso">${esc(E.erroConfig)}</div>`;
+
+  h += `<h2>Regras gerais</h2>`;
+  h += E.regras.geral.map(r => campo(r, valorGeral(r), `geral.${r.chave}`, "Proposta")).join("");
+
+  h += `<h2>Palavras-sinal</h2><p class="intro">O bot procura estas palavras no título e na descrição. Maiúsculas e acentos não contam. Uma palavra incompleta apanha as variações: "avariad" apanha avariado e avariada.</p>`;
+  h += E.regras.sinais.map(r => campo(r, valorSinal(r), `sinais.${r.chave}`, "Proposta")).join("");
+
+  h += `<h2>Ligação ao GitHub</h2>
+    <div class="regra"><p class="desc">Para guardares as regras a partir desta página é preciso uma chave (token) do GitHub. Fica guardada só neste telemóvel.</p>
+    <p class="desc">Como criar: GitHub, Settings, Developer settings, Fine-grained tokens, Generate new token. Em "Repository access" escolhe só este repositório e em "Permissions" dá "Contents: Read and write".</p>
+    <h3><label for="l-dono">Utilizador do GitHub</label></h3><input type="text" id="l-dono" value="${esc(dono)}" placeholder="tigreman263">
+    <h3 style="margin-top:10px"><label for="l-repo">Repositório</label></h3><input type="text" id="l-repo" value="${esc(nome)}" placeholder="cacador-oportunidades">
+    <h3 style="margin-top:10px"><label for="l-token">Token</label></h3><input type="password" id="l-token" value="${esc(token)}" placeholder="github_pat_…" autocomplete="off">
+    <div style="margin-top:10px"><button id="ligar">Guardar ligação</button></div></div>`;
+  return h;
+}
+
+function resumoProcura(p){
+  const partes = [p.ativa === false ? "Pausada" : "Ativa"];
+  if (p.pesquisa) partes.push(`"${p.pesquisa}"`);
+  if (p.preco_max) partes.push("até " + euros(p.preco_max));
+  if (p.zona && p.zona.modo && p.zona.modo !== "pais") partes.push(frase(p.zona));
+  else if ((p.zonas || []).length) partes.push(p.zonas.slice(0, 2).join(", ") + (p.zonas.length > 2 ? "…" : ""));
+  return partes.join(", ");
+}
+
+function mercadoDe(nome){
+  const m = (E.dados.mercado || {})[nome];
+  if (!m || !Object.keys(m).length)
+    return `<div class="mercado-proc"><span class="desc">Preço normal: ainda a aprender (precisa de ver alguns anúncios).</span></div>`;
+  return `<div class="mercado-proc"><h3>Preço normal agora</h3>${
+    Object.entries(m).filter(([g]) => !g.startsWith("_")).map(([g, v]) =>
+      `<div class="grupo"><span>${g === "todos" ? "Todas as versões" : esc(g)}</span><span class="val"><b>${valorFmt(v.mediana, v.unidade)}</b><small>${v.amostras} anúncios</small></span></div>`).join("")
+  }</div>`;
+}
+
+function vistaProcuras(){
+  if (!E.regras) return `<div class="vazio"><strong>Regras indisponíveis</strong>Não foi possível ler docs/regras.json.</div>`;
+  let h = `<p class="intro">O que o bot anda a caçar. Podes ter várias procuras ao mesmo tempo: motas, carros, casas, terrenos… Toca numa para a editar. Cada campo explica o que faz e tem um exemplo.</p>`;
+  if (E.erroConfig) h += `<div class="aviso">${esc(E.erroConfig)}</div>`;
+  (E.config.procuras || []).forEach((p, i) => {
+    h += `<details class="procura" ${E.aberta === i ? "open" : ""} data-i="${i}"><summary><div><b>${ICONE[p.tipo] || ICONE.outro} ${esc(p.nome || "Sem nome")}</b><span class="resumo">${esc(resumoProcura(p))}</span></div></summary><div class="corpo">${mercadoDe(p.nome)}`
+      + E.regras.procura.map(r => campo(r, p[r.chave] ?? (r.tipo === "lista" || r.tipo === "fontes" ? [] : null), `procuras.${i}.${r.chave}`, "Exemplo")).join("")
+      + `<div style="margin-top:12px"><button class="perigo" data-apagar="${i}">Apagar esta procura</button></div></div></details>`;
+  });
+  if (!(E.config.procuras || []).length) h += `<div class="vazio"><strong>Cria a tua primeira procura</strong>Escolhe o tipo abaixo e ajusta os campos.</div>`;
+  h += `<h2>Nova procura</h2><p class="intro">Escolhe o tipo. A procura já vem preenchida com um exemplo que podes alterar.</p><div class="tipos">`
+    + (E.regras.procura.find(r => r.chave === "tipo").opcoes)
+        .map(o => `<button data-novo-tipo="${o.valor}"><span>${ICONE[o.valor]}</span>${esc(o.rotulo)}</button>`).join("")
+    + `</div>`;
+  return h;
+}
+
+/* caminho "procuras.0.incluir" -> [objeto, chave] */
+function alvo(caminho){
+  const partes = caminho.split("."); let o = E.config;
+  for (const p of partes.slice(0, -1)){ if (o[p] == null) o[p] = {}; o = o[p]; }
+  return [o, partes[partes.length - 1]];
+}
+function regraDe(caminho){
+  const [grupo, a, b] = caminho.split(".");
+  if (grupo === "geral") return E.regras.geral.find(r => r.chave === a);
+  if (grupo === "sinais") return E.regras.sinais.find(r => r.chave === a);
+  return E.regras.procura.find(r => r.chave === b);
+}
+function propostaDe(caminho){
+  const r = regraDe(caminho);
+  if (caminho.startsWith("procuras.")){
+    const i = +caminho.split(".")[1], tipo = (E.config.procuras[i] || {}).tipo || "outro";
+    const m = (E.regras.modelos || {})[tipo] || {};
+    if (r.chave in m) return m[r.chave];
+  }
+  return r.proposta;
+}
+function valorAtual(caminho){
+  const r = regraDe(caminho), [o, k] = alvo(caminho);
+  if (caminho.startsWith("geral.")) return valorGeral(r);
+  if (caminho.startsWith("sinais.")) return valorSinal(r);
+  return o[k] ?? [];
+}
+function lembrarAberta(caminho){ if (caminho.startsWith("procuras.")) E.aberta = +caminho.split(".")[1]; }
+
+document.getElementById("vista").addEventListener("change", ev => {
+  const el = ev.target;
+  if (el.id === "filtro"){ E.filtro = el.value; desenhar(); return; }
+  const caminho = el.dataset.caminho; if (!caminho) return;
+  const [o, k] = alvo(caminho); const r = regraDe(caminho); lembrarAberta(caminho);
+  if (r.tipo === "numero") o[k] = el.value === "" ? null : Number(el.value);
+  else if (r.tipo === "escolha") o[k] = el.value;
+  else if (r.tipo === "sim_nao") o[k] = el.checked;
+  else if (r.tipo === "texto") o[k] = el.value.trim();
+  else if (r.tipo === "fontes"){
+    const atual = new Set(o[k] || []); el.checked ? atual.add(el.dataset.opcao) : atual.delete(el.dataset.opcao); o[k] = [...atual];
+  }
+  marcarAlterado(); desenhar();
+});
+
+document.getElementById("vista").addEventListener("keydown", ev => {
+  if (ev.key === "Enter" && ev.target.dataset.nova){ ev.preventDefault(); acrescentar(ev.target.dataset.nova); }
+});
+
+function acrescentar(caminho){
+  const inp = document.querySelector(`[data-nova="${caminho}"]`);
+  const palavra = (inp.value || "").trim();
+  if (!palavra){ toast("Escreve uma palavra primeiro."); inp.focus(); return; }
+  const lista = [...valorAtual(caminho)];
+  if (!lista.map(x => x.toLowerCase()).includes(palavra.toLowerCase())) lista.push(palavra);
+  const [o, k] = alvo(caminho); o[k] = lista; lembrarAberta(caminho); marcarAlterado(); desenhar();
+  const novo = document.querySelector(`[data-nova="${caminho}"]`); if (novo) novo.focus();
+}
+
+document.getElementById("vista").addEventListener("click", ev => {
+  const b = ev.target.closest("button"); if (!b) return;
+  if (b.dataset.acrescentar){ acrescentar(b.dataset.acrescentar); return; }
+  if (b.dataset.retirar){
+    const c = b.dataset.retirar, lista = [...valorAtual(c)]; lista.splice(+b.dataset.i, 1);
+    const [o, k] = alvo(c); o[k] = lista; lembrarAberta(c); marcarAlterado(); desenhar(); return;
+  }
+  if (b.dataset.proposta){
+    const c = b.dataset.proposta, r = regraDe(c), [o, k] = alvo(c);
+    o[k] = structuredClone(propostaDe(c)); lembrarAberta(c); marcarAlterado(); desenhar(); return;
+  }
+  if (b.dataset.apagar != null){
+    const i = +b.dataset.apagar, nome = E.config.procuras[i].nome || "esta procura";
+    if (confirm(`Apagar "${nome}"? Podes desfazer antes de guardar.`)){ E.config.procuras.splice(i, 1); E.aberta = null; marcarAlterado(); desenhar(); }
+    return;
+  }
+  if (b.dataset.novoTipo){
+    const tipo = b.dataset.novoTipo, m = structuredClone((E.regras.modelos || {})[tipo] || {});
+    E.config.procuras = E.config.procuras || [];
+    E.config.procuras.push({tipo, ativa:true, desconto_minimo:null, fontes:["olx","custojusto"],
+      pesquisa:"", incluir:[], alternativas:[], excluir:[], zonas:[], preco_max:null, grupos:[], comparar_por:"preco", ...m,
+      nome: m.nome || "Nova procura"});
+    E.aberta = E.config.procuras.length - 1; marcarAlterado(); desenhar();
+    const d = document.querySelector(`details.procura[data-i="${E.aberta}"]`); if (d) d.scrollIntoView({block:"start"});
+    toast("Procura criada com um exemplo. Ajusta e toca em Guardar.");
+    return;
+  }
+  if (b.id === "ligar"){
+    guardarLocal("cacador_dono", document.getElementById("l-dono").value.trim());
+    guardarLocal("cacador_repo", document.getElementById("l-repo").value.trim());
+    guardarLocal("cacador_token", document.getElementById("l-token").value.trim());
+    toast("Ligação guardada neste telemóvel.");
+    if (!modoDemo){ E.erroConfig = null; carregarConfig().then(() => { E.original = JSON.stringify(E.config); marcarAlterado(); desenhar(); }); }
+  }
+});
+
+document.getElementById("vista").addEventListener("toggle", ev => {
+  if (ev.target.matches && ev.target.matches("details.procura") && ev.target.open) E.aberta = +ev.target.dataset.i;
+}, true);
+
+
+/* ---------- zonas ---------- */
+const semAcento = s => String(s || "").normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase().trim();
+E.loc = null; E.locErro = null; E.sug = [];
+
+async function carregarLocalidades(){
+  if (E.loc || E.locErro) return;
+  try{
+    const d = (modoDemo && DEMO && DEMO.localidades) ? DEMO.localidades
+            : await (await fetch("./localidades.json")).json();
+    const vistos = new Set(), lugares = [];
+    for (const [nome, lat, lon, c, pop, pri] of d.lugares){
+      const chave = nome + "|" + c; if (vistos.has(chave)) continue; vistos.add(chave);
+      const [cNome, dIdx] = d.concelhos[c];
+      lugares.push({nome, lat, lon, pop, pri, concelho:cNome, distrito:d.distritos[dIdx], n:semAcento(nome)});
+    }
+    const areas = d.distritos.map(n => ({tipo:"distrito", nome:n, n:semAcento(n)}))
+      .concat(d.concelhos.map(([n, di]) => ({tipo:"concelho", nome:n, distrito:d.distritos[di], n:semAcento(n)})));
+    E.loc = {lugares, areas};
+  } catch(e){
+    E.locErro = "A lista de localidades ainda não existe. É criada na primeira execução do bot (no GitHub: Actions, Run workflow). Depois recarrega esta página.";
+  }
+}
+
+function buscar(q, tipo, ja = []){
+  q = semAcento(q); if (q.length < 2 || !E.loc) return [];
+  const lista = tipo === "raio" ? E.loc.lugares : E.loc.areas;
+  const pont = x => x.n.startsWith(q) ? 0 : x.n.split(/[\s-]+/).some(w => w.startsWith(q)) ? 1 : 9;
+  return lista.map(x => [pont(x), x]).filter(([s]) => s < 9)
+    .sort((a, b) => a[0] - b[0] || (b[1].pri || 0) - (a[1].pri || 0) || (b[1].pop || 0) - (a[1].pop || 0) || (a[1].tipo === "distrito" ? -1 : 1))
+    .filter(([, x]) => !ja.some(l => l.tipo === x.tipo && l.nome === x.nome && (l.distrito || "") === (x.distrito || "")))
+    .slice(0, 8).map(([, x]) => x);
+}
+
+function mostrarSugestoes(input){
+  const caixa = input.parentElement.querySelector(".sugestoes");
+  if (E.locErro){ caixa.innerHTML = `<div class="aviso" style="margin:0">${esc(E.locErro)}</div>`; return; }
+  const caminho = input.dataset.caminho;
+  E.sug = buscar(input.value, input.dataset.zonaBusca, input.dataset.zonaBusca === "lista" ? (zonaDe(caminho).locais || []) : []);
+  caixa.innerHTML = E.sug.map((x, i) => `<button data-zona-escolher="${i}" data-caminho-zona="${caminho}">${esc(x.nome)}<small>${
+    x.tipo === "distrito" ? "Distrito inteiro" : x.tipo === "concelho" ? "Concelho, distrito de " + esc(x.distrito) : esc(x.concelho) + ", " + esc(x.distrito)}</small></button>`).join("")
+    || (semAcento(input.value).length >= 2 ? `<div class="desc" style="padding:10px 12px">Nenhum local com esse nome.</div>` : "");
+}
+
+function frase(z){
+  if (!z || z.modo === "pais" || !z.modo) return "Todo o país";
+  if (z.modo === "raio") return z.centro ? `Até ${z.km || 10} km de ${z.centro.nome}` : "Perto de um local (escolhe o local)";
+  const l = z.locais || [];
+  return l.length ? l.map(x => x.nome).join(", ") : "Concelhos (escolhe pelo menos um)";
+}
+
+function campoZona(z, caminho){
+  z = z && z.modo ? z : {modo:"pais"};
+  const modos = [["pais","Todo o país"],["raio","Perto de mim"],["lista","Concelhos"]];
+  let h = `<div class="seg" role="group" aria-label="Onde procurar">${modos.map(([m, r]) =>
+    `<button data-zona-modo="${m}" data-caminho-zona="${caminho}" aria-pressed="${z.modo === m}">${r}</button>`).join("")}</div>`;
+  if (z.modo === "raio"){
+    h += z.centro
+      ? `<div class="centro"><span><b>${esc(z.centro.nome)}</b><small>${esc(z.centro.concelho || "")}${z.centro.distrito ? ", " + esc(z.centro.distrito) : ""}</small></span><button class="leve" data-zona-limpar="${caminho}">Mudar</button></div>`
+      : `<div><input type="text" placeholder="Escreve a tua terra, ex.: Sertã" data-zona-busca="raio" data-caminho="${caminho}" aria-label="Procurar local" autocomplete="off"><div class="sugestoes"></div></div>`;
+    const km = z.km || 10;
+    h += `<div class="km"><span class="desc">Raio:</span>${[5,10,25,50].map(v => `<button data-zona-km="${v}" data-caminho-zona="${caminho}" aria-pressed="${km == v}">${v} km</button>`).join("")}
+      <input type="number" inputmode="numeric" min="1" max="300" value="${km}" data-zona-km-input="${caminho}" aria-label="Raio em km"></div>`;
+  }
+  if (z.modo === "lista"){
+    h += `<div class="fichas">${(z.locais || []).map((l, i) => `<span class="ficha">${esc(l.nome)}${l.tipo === "distrito" ? " (distrito)" : ""}<button aria-label="Retirar ${esc(l.nome)}" data-zona-retirar="${i}" data-caminho-zona="${caminho}">×</button></span>`).join("")}</div>
+      <div><input type="text" placeholder="Concelho ou distrito, ex.: Oleiros" data-zona-busca="lista" data-caminho="${caminho}" aria-label="Procurar concelho ou distrito" autocomplete="off"><div class="sugestoes"></div></div>`;
+  }
+  h += `<p class="frase-zona">${esc(frase(z))}</p>`;
+  return h;
+}
+
+function zonaDe(caminho){ const [o, k] = alvo(caminho); o[k] = o[k] && o[k].modo ? o[k] : {modo:"pais"}; return o[k]; }
+
+document.getElementById("vista").addEventListener("input", ev => {
+  const el = ev.target;
+  if (el.dataset.zonaBusca){ carregarLocalidades().then(() => mostrarSugestoes(el)); }
+});
+document.getElementById("vista").addEventListener("focusin", ev => {
+  if (ev.target.dataset && ev.target.dataset.zonaBusca) carregarLocalidades();
+});
+document.getElementById("vista").addEventListener("change", ev => {
+  if (ev.target.dataset && ev.target.dataset.zonaBusca){ ev.stopImmediatePropagation(); return; }
+  const c = ev.target.dataset && ev.target.dataset.zonaKmInput; if (!c) return;
+  ev.stopImmediatePropagation();
+  const v = Math.round(Number(ev.target.value));
+  if (!v || v < 1){ toast("Indica um raio de pelo menos 1 km."); return; }
+  zonaDe(c).km = Math.min(v, 300); lembrarAberta(c); marcarAlterado(); desenhar();
+}, true);
+document.getElementById("vista").addEventListener("click", ev => {
+  const b = ev.target.closest("button"); if (!b || !b.dataset.caminhoZona && !b.dataset.zonaLimpar) return;
+  ev.stopImmediatePropagation();
+  const c = b.dataset.caminhoZona || b.dataset.zonaLimpar; lembrarAberta(c);
+  const z = zonaDe(c);
+  if (b.dataset.zonaModo){ z.modo = b.dataset.zonaModo; if (z.modo === "raio" && !z.km) z.km = 10; }
+  else if (b.dataset.zonaKm){ z.km = +b.dataset.zonaKm; }
+  else if (b.dataset.zonaLimpar){ delete z.centro; }
+  else if (b.dataset.zonaRetirar != null){ z.locais.splice(+b.dataset.zonaRetirar, 1); }
+  else if (b.dataset.zonaEscolher != null){
+    const x = E.sug[+b.dataset.zonaEscolher]; if (!x) return;
+    if (z.modo === "raio") z.centro = {nome:x.nome, lat:x.lat, lon:x.lon, concelho:x.concelho, distrito:x.distrito};
+    else {
+      z.locais = z.locais || [];
+      if (!z.locais.some(l => l.tipo === x.tipo && l.nome === x.nome && (l.distrito || "") === (x.distrito || "")))
+        z.locais.push(x.tipo === "distrito" ? {tipo:"distrito", nome:x.nome} : {tipo:"concelho", nome:x.nome, distrito:x.distrito});
+    }
+  }
+  marcarAlterado(); desenhar();
+  if (b.dataset.zonaLimpar || (b.dataset.zonaModo && b.dataset.zonaModo !== "pais")){
+    const i = document.querySelector(`[data-zona-busca][data-caminho="${c}"]`); if (i) i.focus();
+  }
+}, true);
+
+/* ---------- desenhar ---------- */
+function desenhar(){
+  const n = c => Object.values(E.dados.anuncios || {}).filter(a => a.categoria === c).length;
+  document.getElementById("n-boa").textContent = n("boa");
+  document.getElementById("n-rever").textContent = n("rever");
+  document.getElementById("n-procuras").textContent = (E.config && E.config.procuras || []).filter(p => p.ativa !== false).length;
+  document.getElementById("atualizado").textContent = E.dados.atualizado ? "Verificado " + haQuanto(E.dados.atualizado) : "";
+  const v = document.getElementById("vista");
+  v.innerHTML = E.vista === "boa" ? vistaLista("boa") : E.vista === "rever" ? vistaLista("rever")
+              : E.vista === "mercado" ? vistaMercado() : E.vista === "procuras" ? vistaProcuras() : vistaRegras();
+}
+
+carregar();
+</script>
+</body>
+</html>

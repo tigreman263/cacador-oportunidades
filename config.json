@@ -1,0 +1,57 @@
+{
+  "geral": {
+    "desconto_minimo": 15,
+    "bonus_urgencia": 5,
+    "desconto_minimo_com_problemas": 35,
+    "alertar_com_problemas": true,
+    "minimo_amostras": 6,
+    "limite_burla": 50,
+    "dias_na_listagem": 30
+  },
+  "sinais": {},
+  "procuras": [
+    {
+      "nome": "Moto4 Suzuki 4x4",
+      "ativa": true,
+      "pesquisa": "moto4 suzuki",
+      "incluir": [
+        "suzuki"
+      ],
+      "alternativas": [
+        "moto4",
+        "moto 4",
+        "quad",
+        "4x4",
+        "ltf",
+        "kingquad",
+        "king quad"
+      ],
+      "excluir": [
+        "pneus",
+        "jantes",
+        "capa",
+        "banco"
+      ],
+      "preco_max": 6000,
+      "grupos": [
+        "250",
+        "300",
+        "400",
+        "450",
+        "500",
+        "700",
+        "750"
+      ],
+      "desconto_minimo": null,
+      "fontes": [
+        "olx",
+        "custojusto"
+      ],
+      "tipo": "mota",
+      "comparar_por": "preco",
+      "zona": {
+        "modo": "pais"
+      }
+    }
+  ]
+}

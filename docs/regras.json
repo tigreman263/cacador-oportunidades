@@ -1,0 +1,499 @@
+{
+ "geral": [
+  {
+   "chave": "desconto_minimo",
+   "nome": "Desconto mínimo para boa compra",
+   "descricao": "Quanto abaixo do preço normal de mercado um anúncio tem de estar para ser considerado boa compra. Mais alto = menos alertas, mas melhores. Mais baixo = mais alertas.",
+   "proposta": 15,
+   "tipo": "numero",
+   "unidade": "%",
+   "min": 0,
+   "max": 80
+  },
+  {
+   "chave": "bonus_urgencia",
+   "nome": "Folga para vendedores com pressa",
+   "descricao": "Se o anúncio tiver sinais de pressa (ex.: \"urgente\", \"emigração\"), o desconto exigido baixa estes pontos, porque costuma dar para negociar mais.",
+   "proposta": 5,
+   "tipo": "numero",
+   "unidade": "pontos",
+   "min": 0,
+   "max": 30
+  },
+  {
+   "chave": "desconto_minimo_com_problemas",
+   "nome": "Desconto mínimo para anúncios com problemas",
+   "descricao": "Anúncios com problemas (ex.: \"não pega\", \"sem documentos\") só entram na lista \"A rever\" se estiverem pelo menos isto abaixo do mercado. Um problema só compensa com um bom desconto. Põe 0 para veres todos.",
+   "proposta": 35,
+   "tipo": "numero",
+   "unidade": "%",
+   "min": 0,
+   "max": 90
+  },
+  {
+   "chave": "alertar_com_problemas",
+   "nome": "Avisar no WhatsApp os anúncios com problemas",
+   "descricao": "Se estiver ligado, os anúncios \"A rever\" também chegam ao WhatsApp, numa secção separada e sempre depois das boas compras. Se estiver desligado, só aparecem na página.",
+   "proposta": true,
+   "tipo": "sim_nao"
+  },
+  {
+   "chave": "minimo_amostras",
+   "nome": "Anúncios necessários para conhecer o mercado",
+   "descricao": "Quantos anúncios semelhantes o bot precisa de ter visto antes de calcular o preço normal. Com poucos, a comparação é pouco fiável e o bot não avisa.",
+   "proposta": 6,
+   "tipo": "numero",
+   "unidade": "anúncios",
+   "min": 3,
+   "max": 50
+  },
+  {
+   "chave": "limite_burla",
+   "nome": "Preço bom demais (possível burla)",
+   "descricao": "Se o preço estiver abaixo desta percentagem do preço normal, o anúncio é ignorado por ser suspeito. Ex.: 50 = menos de metade do preço normal.",
+   "proposta": 50,
+   "tipo": "numero",
+   "unidade": "% do mercado",
+   "min": 10,
+   "max": 90
+  },
+  {
+   "chave": "dias_na_listagem",
+   "nome": "Dias que um anúncio fica na lista",
+   "descricao": "Depois deste tempo, os anúncios saem da página (provavelmente já foram vendidos).",
+   "proposta": 30,
+   "tipo": "numero",
+   "unidade": "dias",
+   "min": 1,
+   "max": 120
+  }
+ ],
+ "sinais": [
+  {
+   "chave": "urgencia",
+   "nome": "Sinais de pressa do vendedor",
+   "descricao": "Palavras que mostram que o vendedor quer despachar. Dão uma folga no desconto exigido e aparecem destacadas no alerta.",
+   "proposta": [
+    "urgente",
+    "emigracao",
+    "emigrar",
+    "preciso vender",
+    "preciso de vender",
+    "aceito propostas",
+    "negociavel",
+    "mudanca de casa",
+    "abaixo do valor",
+    "vendo rapido",
+    "motivo de viagem"
+   ]
+  },
+  {
+   "chave": "problemas_a_rever",
+   "nome": "Problemas razoáveis (vão para \"A rever\")",
+   "descricao": "Problemas que podem valer a pena se o preço for bom. Estes anúncios não são descartados: vão para a lista \"A rever\", com o problema indicado. Serve para veículos e imóveis.",
+   "proposta": [
+    "sem documentos",
+    "sem livrete",
+    "sem registo",
+    "nao pega",
+    "nao trabalha",
+    "precisa de bateria",
+    "precisa de manutencao",
+    "para restauro",
+    "para restaurar",
+    "avariad",
+    "acidentad",
+    "motor gripado",
+    "motor partido",
+    "com defeito",
+    "precisa de reparacao",
+    "precisa de obras",
+    "para recuperar",
+    "ruina",
+    "sem licenca",
+    "sem licenca de habitacao"
+   ]
+  },
+  {
+   "chave": "problemas_graves",
+   "nome": "Problemas graves (descartar sempre)",
+   "descricao": "Anúncios com estas palavras são ignorados de vez. Usa só para situações que nunca te interessam (ex.: aluguer, quando só queres comprar).",
+   "proposta": [
+    "penhora",
+    "roubad",
+    "furtad",
+    "para pecas",
+    "so pecas",
+    "venda de pecas",
+    "arrendamento",
+    "arrenda-se",
+    "aluga-se",
+    "para alugar",
+    "trespasse"
+   ]
+  }
+ ],
+ "procura": [
+  {
+   "chave": "tipo",
+   "nome": "Tipo",
+   "descricao": "Muda as propostas de cada campo (exemplos, problemas típicos, como comparar preços).",
+   "proposta": "outro",
+   "tipo": "escolha",
+   "opcoes": [
+    {
+     "valor": "mota",
+     "rotulo": "Mota ou moto4"
+    },
+    {
+     "valor": "carro",
+     "rotulo": "Carro"
+    },
+    {
+     "valor": "casa",
+     "rotulo": "Casa"
+    },
+    {
+     "valor": "terreno",
+     "rotulo": "Terreno"
+    },
+    {
+     "valor": "outro",
+     "rotulo": "Outra coisa"
+    }
+   ]
+  },
+  {
+   "chave": "nome",
+   "nome": "Nome da procura",
+   "descricao": "Só para te orientares. Aparece no alerta.",
+   "proposta": null,
+   "tipo": "texto"
+  },
+  {
+   "chave": "ativa",
+   "nome": "Ativa",
+   "descricao": "Desliga para pausar esta procura sem a apagar.",
+   "proposta": true,
+   "tipo": "sim_nao"
+  },
+  {
+   "chave": "pesquisa",
+   "nome": "Texto de pesquisa",
+   "descricao": "O que o bot escreve na pesquisa do site. Curto e abrangente: 1 a 3 palavras.",
+   "proposta": null,
+   "tipo": "texto"
+  },
+  {
+   "chave": "incluir",
+   "nome": "Palavras obrigatórias",
+   "descricao": "Todas têm de aparecer no título. Normalmente a marca ou o tipo de bem.",
+   "proposta": null,
+   "tipo": "lista"
+  },
+  {
+   "chave": "alternativas",
+   "nome": "Pelo menos uma destas",
+   "descricao": "Basta aparecer uma. Serve para as várias formas de escrever o mesmo. Deixa vazio se não precisares.",
+   "proposta": null,
+   "tipo": "lista"
+  },
+  {
+   "chave": "excluir",
+   "nome": "Palavras a ignorar",
+   "descricao": "Se aparecer alguma, o anúncio não interessa de todo (acessórios, arrendamento…).",
+   "proposta": null,
+   "tipo": "lista"
+  },
+  {
+   "chave": "zona",
+   "nome": "Onde procurar",
+   "tipo": "zona",
+   "proposta": {
+    "modo": "pais"
+   },
+   "descricao": "Todo o país, perto de um local (com raio em km) ou só em concelhos e distritos escolhidos. Os locais escolhem-se de uma lista, para não haver erros de escrita. Anúncios cuja localização não se consegue confirmar ficam de fora."
+  },
+  {
+   "chave": "preco_max",
+   "nome": "Orçamento máximo",
+   "descricao": "Acima deste valor nunca avisa. Deixa vazio para não ter limite.",
+   "proposta": null,
+   "tipo": "numero",
+   "unidade": "€",
+   "min": 0
+  },
+  {
+   "chave": "comparar_por",
+   "nome": "Como comparar preços",
+   "descricao": "Preço total serve para motas, carros e objetos. Preço por m² serve para casas e terrenos, porque os tamanhos variam muito. Anúncios sem área indicada ficam de fora quando se compara por m².",
+   "proposta": "preco",
+   "tipo": "escolha",
+   "opcoes": [
+    {
+     "valor": "preco",
+     "rotulo": "Preço total"
+    },
+    {
+     "valor": "preco_m2",
+     "rotulo": "Preço por m²"
+    }
+   ]
+  },
+  {
+   "chave": "grupos",
+   "nome": "Comparar só iguais",
+   "descricao": "Palavras que separam versões com preços diferentes: cilindrada, modelo, tipologia (T2, T3), tipo de terreno. Um T2 só é comparado com outros T2.",
+   "proposta": null,
+   "tipo": "lista"
+  },
+  {
+   "chave": "desconto_minimo",
+   "nome": "Desconto mínimo só para esta procura",
+   "descricao": "Opcional. Se preencheres, substitui o valor das regras gerais nesta procura.",
+   "proposta": null,
+   "tipo": "numero",
+   "unidade": "%",
+   "min": 0,
+   "max": 80
+  },
+  {
+   "chave": "problemas_extra",
+   "nome": "Problemas razoáveis desta procura",
+   "descricao": "Somam-se aos problemas razoáveis gerais. Anúncios com estas palavras vão para \"A rever\".",
+   "proposta": null,
+   "tipo": "lista"
+  },
+  {
+   "chave": "graves_extra",
+   "nome": "Problemas graves desta procura",
+   "descricao": "Somam-se aos problemas graves gerais. Anúncios com estas palavras são descartados.",
+   "proposta": null,
+   "tipo": "lista"
+  },
+  {
+   "chave": "fontes",
+   "nome": "Sites",
+   "descricao": "Onde procurar.",
+   "proposta": [
+    "olx",
+    "custojusto"
+   ],
+   "tipo": "fontes",
+   "opcoes": [
+    "olx",
+    "custojusto"
+   ]
+  }
+ ],
+ "modelos": {
+  "mota": {
+   "nome": "Moto4 Suzuki 4x4",
+   "pesquisa": "moto4 suzuki",
+   "incluir": [
+    "suzuki"
+   ],
+   "alternativas": [
+    "moto4",
+    "moto 4",
+    "quad",
+    "4x4"
+   ],
+   "excluir": [
+    "pneus",
+    "jantes",
+    "capa",
+    "banco",
+    "capacete"
+   ],
+   "preco_max": 6000,
+   "grupos": [
+    "125",
+    "250",
+    "400",
+    "450",
+    "500",
+    "700",
+    "750"
+   ],
+   "comparar_por": "preco",
+   "problemas_extra": [
+    "sem inspecao",
+    "inspecao caducada",
+    "iuc em atraso",
+    "precisa de pneus"
+   ],
+   "graves_extra": [
+    "abatid"
+   ],
+   "fontes": [
+    "olx",
+    "custojusto"
+   ],
+   "zona": {
+    "modo": "pais"
+   }
+  },
+  "carro": {
+   "nome": "Renault Clio",
+   "pesquisa": "renault clio",
+   "incluir": [
+    "clio"
+   ],
+   "alternativas": [],
+   "excluir": [
+    "pecas",
+    "jantes",
+    "pneus",
+    "sucata",
+    "farol",
+    "capot",
+    "para choques"
+   ],
+   "preco_max": 8000,
+   "grupos": [
+    "diesel",
+    "gasolina",
+    "gpl",
+    "hibrido",
+    "eletrico"
+   ],
+   "comparar_por": "preco",
+   "problemas_extra": [
+    "sem inspecao",
+    "iuc em atraso",
+    "embraiagem",
+    "caixa de velocidades",
+    "junta da cabeca",
+    "motor a fumar",
+    "importado",
+    "salvado",
+    "luz do motor"
+   ],
+   "graves_extra": [
+    "abatid",
+    "sem matricula"
+   ],
+   "fontes": [
+    "olx",
+    "custojusto"
+   ],
+   "zona": {
+    "modo": "pais"
+   }
+  },
+  "casa": {
+   "nome": "Moradia",
+   "pesquisa": "moradia venda",
+   "incluir": [],
+   "alternativas": [
+    "moradia",
+    "vivenda",
+    "casa",
+    "apartamento"
+   ],
+   "excluir": [
+    "arrendamento",
+    "arrenda",
+    "arrendar",
+    "aluga",
+    "alugo",
+    "aluguer",
+    "ferias",
+    "quarto",
+    "trespasse"
+   ],
+   "preco_max": 150000,
+   "grupos": [
+    "t1",
+    "t2",
+    "t3",
+    "t4",
+    "t5"
+   ],
+   "comparar_por": "preco_m2",
+   "problemas_extra": [
+    "para recuperar",
+    "para remodelar",
+    "precisa de obras",
+    "ruina",
+    "sem licenca de habitacao",
+    "herdeiros",
+    "em partilhas",
+    "usufruto"
+   ],
+   "graves_extra": [
+    "leilao judicial"
+   ],
+   "fontes": [
+    "olx",
+    "custojusto"
+   ],
+   "zona": {
+    "modo": "pais"
+   }
+  },
+  "terreno": {
+   "nome": "Terreno",
+   "pesquisa": "terreno venda",
+   "incluir": [],
+   "alternativas": [
+    "terreno",
+    "quinta",
+    "lote",
+    "rustico",
+    "urbano",
+    "pinhal",
+    "olival"
+   ],
+   "excluir": [
+    "arrenda",
+    "aluga",
+    "aluguer",
+    "procuro",
+    "compro"
+   ],
+   "preco_max": 30000,
+   "grupos": [
+    "rustico",
+    "urbano"
+   ],
+   "comparar_por": "preco_m2",
+   "problemas_extra": [
+    "sem acesso",
+    "sem agua",
+    "sem luz",
+    "em partilhas",
+    "herdeiros",
+    "reserva ecologica",
+    "reserva agricola",
+    "declive",
+    "area ardida"
+   ],
+   "graves_extra": [
+    "servidao",
+    "leilao judicial"
+   ],
+   "fontes": [
+    "olx",
+    "custojusto"
+   ],
+   "zona": {
+    "modo": "pais"
+   }
+  },
+  "outro": {
+   "nome": "Nova procura",
+   "comparar_por": "preco",
+   "problemas_extra": [],
+   "graves_extra": [],
+   "fontes": [
+    "olx",
+    "custojusto"
+   ],
+   "zona": {
+    "modo": "pais"
+   }
+  }
+ }
+}

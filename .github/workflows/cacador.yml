@@ -1,0 +1,47 @@
+name: Caçador de Oportunidades
+
+on:
+  schedule:
+    - cron: "*/15 * * * *"   # de 15 em 15 min (o GitHub pode atrasar alguns minutos)
+  workflow_dispatch:          # botão "Run workflow" para correr à mão
+
+permissions:
+  contents: write             # para guardar estado/vistos.json
+
+concurrency:
+  group: cacador
+  cancel-in-progress: false
+
+jobs:
+  vigiar:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+
+      - run: pip install -r requirements.txt
+
+      - name: Preparar lista de localidades (só na primeira vez)
+        run: test -f docs/localidades.json || python -m cacador.localidades
+
+      - name: Procurar anúncios
+        env:
+          CALLMEBOT_PHONE: ${{ secrets.CALLMEBOT_PHONE }}
+          CALLMEBOT_APIKEY: ${{ secrets.CALLMEBOT_APIKEY }}
+        run: python -m cacador.main
+
+      - name: Guardar anúncios já vistos
+        run: |
+          git config user.name "cacador-bot"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add estado docs
+          if ! git diff --cached --quiet; then
+            git commit -m "estado: anúncios vistos"
+            git pull --rebase
+            git push
+          fi
