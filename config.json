@@ -27,10 +27,17 @@
         "king quad"
       ],
       "excluir": [
-        "pneus",
-        "jantes",
+        "banco",
         "capa",
-        "banco"
+        "capacete",
+        "escape",
+        "guarda lamas",
+        "jantes",
+        "kit",
+        "peca",
+        "pecas",
+        "pneus",
+        "sucata"
       ],
       "preco_max": 6000,
       "grupos": [

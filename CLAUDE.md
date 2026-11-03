@@ -6,11 +6,11 @@ explica os passos de forma simples e confirma antes de ações irreversíveis
 
 ## O que é
 
-Bot que vigia o OLX e o CustoJusto e avisa por WhatsApp (CallMeBot) **só de boas
-compras**: anúncios claramente abaixo do preço normal de mercado, que o próprio
-bot aprende com os anúncios que vai vendo. Corre no GitHub Actions de 15 em 15
-min (alternativa: Raspberry Pi com cron). Tem uma página (GitHub Pages, pasta
-`docs/`) com listagem e configurações.
+Bot que vigia o OLX e o CustoJusto e avisa por **Telegram** (WhatsApp/CallMeBot
+opcional) **só de boas compras**: anúncios claramente abaixo do preço normal de
+mercado, que o próprio bot aprende com os anúncios que vai vendo. Corre no GitHub
+Actions de 15 em 15 min. Tem uma página (GitHub Pages, pasta `docs/`) com
+listagem e configurações.
 
 ## Decisões do utilizador (respeitar)
 
@@ -27,60 +27,43 @@ min (alternativa: Raspberry Pi com cron). Tem uma página (GitHub Pages, pasta
 - **Não** desenvolver recolha de notícias aqui. Esta ferramenta é separada do
   Argos (investimentos) e dos bots de cripto; no futuro haverá um painel comum
   que só lê o estado de cada ferramenta.
-- Alertas por WhatsApp via CallMeBot.
+- Alertas por **Telegram** (decisão de 2026-11-03; antes era WhatsApp).
 
 ## Estrutura
 
-- `cacador/main.py` — ciclo principal (ler fontes → filtrar → avaliar → alertar → gravar)
-- `cacador/avaliar.py` — categorias boa / rever / descartado; mediana robusta
-- `cacador/config.py` — junta `config.json` com as propostas de `docs/regras.json`
-- `cacador/localidades.py` — base GeoNames (CC-BY), geolocalização e distâncias
-- `cacador/fontes/olx.py` — endpoint JSON `https://www.olx.pt/api/v1/offers/`
-- `cacador/fontes/custojusto.py` — página de pesquisa (JSON `__NEXT_DATA__` ou HTML)
-- `cacador/notificar.py` — mensagens WhatsApp (boas compras primeiro)
+- `bot/__main__.py` — entrada: `python -m bot` (opções `--sem-avisos`, `--telegram-teste`, `--localidades`)
+- `bot/cacador.py` — ciclo: ler fontes → filtrar → mercado → classificar → gravar; `processar()` não usa rede (testável)
+- `bot/analise.py` — filtros de palavras, mediana por grupo, categorias boa / rever
+- `bot/zonas.py` — localização dos anúncios e filtro de zona (país, raio, lista)
+- `bot/localidades.py` — cria `docs/localidades.json` a partir do GeoNames (CC BY)
+- `bot/fontes/olx.py` — `https://www.olx.pt/api/v1/offers/`
+- `bot/fontes/custojusto.py` — JSON `__NEXT_DATA__` da página de pesquisa
+- `bot/avisos.py`, `bot/telegram.py`, `bot/whatsapp.py` — texto e envio dos alertas
 - `config.json` — regras e procuras do utilizador (a página grava aqui via API do GitHub)
 - `docs/regras.json` — descrições, propostas e modelos por tipo
-- `docs/index.html` — página (Boas compras, A rever, Procuras, Regras)
-- `docs/dados.json`, `estado/vistos.json` — gerados pelo bot
+- `docs/index.html` — página (Boas, A rever, Procuras, Regras); `?demo` / `?real`
+- `docs/dados.json`, `estado/estado.json` — gerados pelo bot
 - `.github/workflows/cacador.yml` — agendamento e gravação do estado
+- `tests/` — `python -m unittest discover -s tests -t .`
 
-Comandos: `python -m cacador.main --teste` (não envia nem grava),
-`python -m cacador.main --testar-whatsapp`, `python -m cacador.localidades`.
+Segredos: `TELEGRAM_TOKEN`, `TELEGRAM_CHAT_ID` (opcional: `WHATSAPP_TELEFONE`, `WHATSAPP_APIKEY`).
 
-## Estado
+## Estado (2026-11-03)
 
-Todo o código foi testado **só com dados simulados** (o ambiente anterior não
-tinha internet). Nunca correu contra os sites reais.
-
-Numa leitura manual feita antes, confirmou-se:
-- O OLX bloqueou leituras feitas por ferramentas de pesquisa (deteção de bots).
-  O endpoint `/api/v1/offers/` ainda não foi testado a partir de um PC normal.
-- O CustoJusto deixa ler. Estrutura observada: cada anúncio tem título num link
-  (`/distrito/veiculos/motos/moto-4-quad/titulo-45373278`, id no fim), e **o
-  preço, o ano e a localidade estão fora do link**, em elementos irmãos. O leitor
-  HTML de reserva atual procura o preço dentro do link, por isso tem de ser
-  corrigido. Existem páginas por distrito e categoria, por exemplo
-  `https://www.custojusto.pt/leiria/veiculos/motos/moto-4-quad`.
-
-## Tarefas seguintes (por esta ordem)
-
-1. Instalar dependências (`pip install -r requirements.txt`) e correr
-   `python -m cacador.main --teste`. Ver quantos anúncios lê de cada site.
-2. Corrigir o leitor do CustoJusto (preço/local fora do link; confirmar se o
-   `__NEXT_DATA__` tem os anúncios). Usar `DEBUG_HTML=1` para guardar a página.
-3. Se o OLX bloquear, investigar alternativas (cabeçalhos, ritmo, outro endpoint)
-   sem violar os termos do site; se não houver forma, avisar o utilizador.
-4. Gerar `docs/localidades.json` com `python -m cacador.localidades` e testar a
-   escolha de zonas na página (abrir `docs/index.html` com um servidor local).
-5. Ajudar a criar o repositório `cacador-oportunidades` no GitHub da conta do
-   utilizador, fazer o push, configurar os Secrets `CALLMEBOT_PHONE` e
-   `CALLMEBOT_APIKEY`, ativar o GitHub Pages (branch `main`, pasta `/docs`) e
-   correr o workflow à mão.
-6. Mais tarde, se o utilizador quiser: Standvirtual (carros) e Imovirtual (casas).
+- O bot antigo (pacote `cacador/`) ficou guardado no ramo `bot-antigo`. Nunca
+  chegou a recolher anúncios: o OLX dava 403 e o leitor do CustoJusto falhava.
+- **CustoJusto funciona** (cerca de 40 anúncios por pesquisa). Campos reais:
+  `title`, `price`, `body`, `listID`, `url` (`/<distrito>/<categoria>/.../<anuncio>`),
+  `locationNames.county` (concelho), `locationNames.parish`, `params.size` (área).
+  As "palavras a ignorar" também se aplicam à categoria do link (`pecas` afasta peças).
+- **OLX responde 403** a pedidos automáticos, tanto do PC como do GitHub Actions.
+  Não contornar a deteção de bots (falsificar browser, etc.). Alternativas
+  legítimas a estudar com o utilizador: outras fontes (Standvirtual, Imovirtual)
+  ou deixar só o CustoJusto.
 
 ## Cuidados
 
-- Nunca pôr o número de telefone, a apikey do CallMeBot ou tokens no repositório:
+- Nunca pôr tokens, número de telefone ou chaves no repositório:
   só em Secrets do GitHub ou no `.env` (que está no `.gitignore`).
 - Com o repositório público, a página e o `config.json` ficam públicos. Não
   escrever dados pessoais do utilizador (morada, localidade) em ficheiros de

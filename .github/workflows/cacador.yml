@@ -2,18 +2,18 @@ name: Caçador de Oportunidades
 
 on:
   schedule:
-    - cron: "*/15 * * * *"   # de 15 em 15 min (o GitHub pode atrasar alguns minutos)
+    - cron: "*/15 * * * *"   # de 15 em 15 minutos (o GitHub pode atrasar alguns minutos)
   workflow_dispatch:          # botão "Run workflow" para correr à mão
 
 permissions:
-  contents: write             # para guardar estado/vistos.json
+  contents: write
 
 concurrency:
   group: cacador
   cancel-in-progress: false
 
 jobs:
-  vigiar:
+  verificar:
     runs-on: ubuntu-latest
     timeout-minutes: 10
     steps:
@@ -26,22 +26,21 @@ jobs:
 
       - run: pip install -r requirements.txt
 
-      - name: Preparar lista de localidades (só na primeira vez)
-        run: test -f docs/localidades.json || python -m cacador.localidades
-
-      - name: Procurar anúncios
+      - name: Verificar anúncios
         env:
-          CALLMEBOT_PHONE: ${{ secrets.CALLMEBOT_PHONE }}
-          CALLMEBOT_APIKEY: ${{ secrets.CALLMEBOT_APIKEY }}
-        run: python -m cacador.main
+          TELEGRAM_TOKEN: ${{ secrets.TELEGRAM_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+          WHATSAPP_TELEFONE: ${{ secrets.WHATSAPP_TELEFONE }}
+          WHATSAPP_APIKEY: ${{ secrets.WHATSAPP_APIKEY }}
+        run: python -m bot
 
-      - name: Guardar anúncios já vistos
+      - name: Guardar resultados
         run: |
           git config user.name "cacador-bot"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add estado docs
-          if ! git diff --cached --quiet; then
-            git commit -m "estado: anúncios vistos"
-            git pull --rebase
-            git push
-          fi
+          git add docs/dados.json docs/localidades.json estado/estado.json
+          if git diff --cached --quiet; then echo "Sem alterações"; exit 0; fi
+          git commit -m "Verificação automática" -q
+          # A página pode ter gravado o config.json entretanto: junta antes de enviar.
+          for i in 1 2 3; do git pull --rebase -q && git push -q && exit 0; sleep 5; done
+          exit 1
