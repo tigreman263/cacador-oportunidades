@@ -1,5 +1,5 @@
 {
- "atualizado": 1793903427.0048623,
+ "atualizado": 1793904327.3500524,
  "anuncios": {
   "autouncle-6575193": {
    "procura": "Jipe",
@@ -21,9 +21,9 @@
    "fonte": "AutoUncle",
    "local": null,
    "url": "https://www.autouncle.pt/pt/d/6575193-usado-1999-land-rover-freelander-97-cv",
-   "olx_pesquisa": "https://www.olx.pt/ads/q-4x4-vitara/?search%5Bfilter_float_price%3Ato%5D=3000",
+   "olx_pesquisa": "https://www.olx.pt/ads/q-vitara/?search%5Bfilter_float_price%3Ato%5D=3000",
    "primeiro": 1793902314.2074828,
-   "ultimo": 1793903427.0048623,
+   "ultimo": 1793904327.3500524,
    "km": null
   },
   "autouncle-6681557": {
@@ -46,9 +46,9 @@
    "fonte": "AutoUncle",
    "local": null,
    "url": "https://www.autouncle.pt/pt/d/6681557-usado-2001-jeep-grand-cherokee-laredo",
-   "olx_pesquisa": "https://www.olx.pt/ads/q-4x4-vitara/?search%5Bfilter_float_price%3Ato%5D=3000",
+   "olx_pesquisa": "https://www.olx.pt/ads/q-vitara/?search%5Bfilter_float_price%3Ato%5D=3000",
    "primeiro": 1793902314.2074828,
-   "ultimo": 1793903427.0048623,
+   "ultimo": 1793904327.3500524,
    "km": null
   },
   "autouncle-6449651": {
@@ -71,9 +71,9 @@
    "fonte": "AutoUncle",
    "local": null,
    "url": "https://www.autouncle.pt/pt/d/6449651-usado-2009-nissan-qashqai",
-   "olx_pesquisa": "https://www.olx.pt/ads/q-4x4-vitara/?search%5Bfilter_float_price%3Ato%5D=3000",
+   "olx_pesquisa": "https://www.olx.pt/ads/q-vitara/?search%5Bfilter_float_price%3Ato%5D=3000",
    "primeiro": 1793902314.2074828,
-   "ultimo": 1793903427.0048623,
+   "ultimo": 1793904327.3500524,
    "km": null
   },
   "autouncle-6704176": {
@@ -96,9 +96,9 @@
    "fonte": "AutoUncle",
    "local": null,
    "url": "https://www.autouncle.pt/pt/d/6704176-usado-2000-land-rover-freelander-100-cv",
-   "olx_pesquisa": "https://www.olx.pt/ads/q-4x4-vitara/?search%5Bfilter_float_price%3Ato%5D=3000",
+   "olx_pesquisa": "https://www.olx.pt/ads/q-vitara/?search%5Bfilter_float_price%3Ato%5D=3000",
    "primeiro": 1793902314.2074828,
-   "ultimo": 1793903427.0048623,
+   "ultimo": 1793904327.3500524,
    "km": null
   },
   "autouncle-6700722": {
@@ -121,9 +121,34 @@
    "fonte": "AutoUncle",
    "local": null,
    "url": "https://www.autouncle.pt/pt/d/6700722-usado-1998-land-rover-freelander",
-   "olx_pesquisa": "https://www.olx.pt/ads/q-4x4-vitara/?search%5Bfilter_float_price%3Ato%5D=3000",
+   "olx_pesquisa": "https://www.olx.pt/ads/q-vitara/?search%5Bfilter_float_price%3Ato%5D=3000",
    "primeiro": 1793902314.2074828,
-   "ultimo": 1793903427.0048623,
+   "ultimo": 1793904327.3500524,
+   "km": null
+  },
+  "cj-45231789": {
+   "procura": "Jipe",
+   "procura_id": "pmw3n3wfd5hyh",
+   "tipo": "carro",
+   "categoria": "boa",
+   "titulo": "Suzuki Grand Vitara suv - 98",
+   "preco": 2500.0,
+   "preco_antes": null,
+   "desconto": 0.444,
+   "mediana": 4500.0,
+   "unidade": "€",
+   "valor": 2500.0,
+   "area": null,
+   "amostras": 54,
+   "grupo": null,
+   "sinais": [],
+   "problemas": [],
+   "fonte": "CustoJusto",
+   "local": "Seixal",
+   "url": "https://www.custojusto.pt/setubal/veiculos/carros-usados/suv-tt/suzuki-grand-vitara-suv-45231789",
+   "olx_pesquisa": "https://www.olx.pt/ads/q-vitara/?search%5Bfilter_float_price%3Ato%5D=3000",
+   "primeiro": 1793904327.3500524,
+   "ultimo": 1793904327.3500524,
    "km": null
   }
  },
@@ -131,7 +156,7 @@
   "Jipe": {
    "todos": {
     "mediana": 4500.0,
-    "amostras": 54,
+    "amostras": 55,
     "unidade": "€"
    },
    "diesel": {
@@ -142,6 +167,23 @@
    "gasolina": {
     "mediana": 4900.0,
     "amostras": 2,
+    "unidade": "€"
+   }
+  },
+  "Moto4 Suzuki 4x4": {
+   "todos": {
+    "mediana": 9000.0,
+    "amostras": 3,
+    "unidade": "€"
+   },
+   "400": {
+    "mediana": 7500.0,
+    "amostras": 1,
+    "unidade": "€"
+   },
+   "450": {
+    "mediana": 9000.0,
+    "amostras": 1,
     "unidade": "€"
    }
   }
