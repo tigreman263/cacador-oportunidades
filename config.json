@@ -4,7 +4,7 @@
     "bonus_urgencia": 5,
     "desconto_minimo_com_problemas": 35,
     "alertar_com_problemas": true,
-    "minimo_amostras": 6,
+    "minimo_amostras": 3,
     "limite_burla": 50,
     "dias_na_listagem": 30
   },
