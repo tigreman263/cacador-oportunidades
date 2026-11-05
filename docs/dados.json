@@ -1,5 +1,5 @@
 {
- "atualizado": 1793879129.398587,
+ "atualizado": 1793880028.2521214,
  "anuncios": {
   "cj-43558104": {
    "procura": "Moradia",
@@ -9,12 +9,12 @@
    "titulo": "Moradia Para Recuperar Na Aldeia De Nozelos,...",
    "preco": 30000.0,
    "preco_antes": null,
-   "desconto": 0.946,
-   "mediana": 2862.76,
+   "desconto": 0.945,
+   "mediana": 2833.33,
    "unidade": "€/m²",
    "valor": 155.44,
    "area": 193.0,
-   "amostras": 72,
+   "amostras": 77,
    "grupo": null,
    "sinais": [],
    "problemas": [
@@ -25,7 +25,7 @@
    "local": "Torre de Moncorvo",
    "url": "https://www.custojusto.pt/braganca/imobiliario/moradias/moradia-para-recuperar-na-alde-43558104",
    "primeiro": 1793879129.398587,
-   "ultimo": 1793879129.398587,
+   "ultimo": 1793880028.2521214,
    "km": null
   },
   "cj-44168960": {
@@ -52,7 +52,7 @@
    "local": "Tábua",
    "url": "https://www.custojusto.pt/coimbra/imobiliario/moradias/moradia-t2-carapinha-p-recupe-44168960",
    "primeiro": 1793879129.398587,
-   "ultimo": 1793879129.398587,
+   "ultimo": 1793880028.2521214,
    "km": null
   }
  },
@@ -76,8 +76,8 @@
   },
   "Moradia": {
    "todos": {
-    "mediana": 2862.76,
-    "amostras": 72,
+    "mediana": 2833.33,
+    "amostras": 77,
     "unidade": "€/m²"
    },
    "t5": {
@@ -87,7 +87,7 @@
    },
    "t3": {
     "mediana": 2222.22,
-    "amostras": 29,
+    "amostras": 31,
     "unidade": "€/m²"
    },
    "t4": {
