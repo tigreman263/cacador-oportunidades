@@ -11,7 +11,7 @@
   "sinais": {},
   "procuras": [
     {
-      "id": "pmw3iluzrizwe",
+      "id": "pmw3n3wfd5hyh",
       "tipo": "carro",
       "ativa": true,
       "desconto_minimo": null,
@@ -19,26 +19,38 @@
         "olx",
         "custojusto"
       ],
-      "pesquisa": "Suzuki  Vitara",
-      "incluir": [],
-      "alternativas": [
-        "4x4",
-        "Vitara",
-        "Suzuki"
+      "pesquisa": "4x4 jipe carinha",
+      "incluir": [
+        "4x4"
       ],
-      "excluir": [],
+      "alternativas": [],
+      "excluir": [
+        "Sem documentos"
+      ],
       "zona": {
         "modo": "pais"
       },
-      "preco_max": 4000,
+      "preco_max": 3000,
       "grupos": [
         "diesel",
         "gasolina",
-        "gpl"
+        "gpl",
+        "hibrido",
+        "eletrico"
       ],
       "comparar_por": "preco",
-      "nome": "Vitara",
-      "problemas_extra": [],
+      "nome": "Jipe",
+      "problemas_extra": [
+        "sem inspecao",
+        "iuc em atraso",
+        "embraiagem",
+        "caixa de velocidades",
+        "junta da cabeca",
+        "motor a fumar",
+        "importado",
+        "salvado",
+        "luz do motor"
+      ],
       "graves_extra": [
         "abatid",
         "sem matricula"
