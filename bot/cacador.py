@@ -26,6 +26,11 @@ def gravar_json(caminho: Path, dados, compacto=False):
     caminho.write_text(texto + "\n", encoding="utf-8")
 
 
+def endereco_olx(p: dict) -> str:
+    from .fontes.olx import endereco_pesquisa
+    return endereco_pesquisa(p)
+
+
 def buscar_anuncios(sessao, p: dict, fontes: dict, pausa: float = 2.0) -> list:
     vistos, res = set(), []
     for nome in p.get("fontes") or ["olx", "custojusto"]:
@@ -97,6 +102,7 @@ def processar(config, regras, dados, estado, loc, anuncios_por_procura: dict, ag
                 "valor": round(valor, 2), "area": a.get("area"), "amostras": n, "grupo": info["grupo"],
                 "sinais": info["sinais"], "problemas": info["problemas"], "fonte": a["fonte"],
                 "local": (local or {}).get("nome") or a.get("cidade"), "url": a.get("url"),
+                "olx_pesquisa": endereco_olx(p),
                 "primeiro": (antigo or {}).get("primeiro", agora), "ultimo": agora, "km": km,
             }
             anuncios[a["id"]] = reg

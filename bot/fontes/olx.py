@@ -5,6 +5,20 @@ import re
 from ..texto import area_do_texto, numero
 
 API = "https://www.olx.pt/api/v1/offers/"
+SITE = "https://www.olx.pt"
+
+
+def endereco_pesquisa(p: dict) -> str:
+    """Link da pesquisa no site do OLX com o texto e o orçamento da procura, para o utilizador
+    abrir no seu navegador (botão "Abrir no OLX"). O bot não visita este endereço."""
+    from ..texto import normalizar
+    termo = "-".join(re.sub(r"[^a-z0-9]+", " ", normalizar(p.get("pesquisa") or "")).split())
+    if not termo:
+        return ""
+    url = f"{SITE}/ads/q-{termo}/"
+    if p.get("preco_max"):
+        url += f"?search%5Bfilter_float_price%3Ato%5D={int(p['preco_max'])}"
+    return url
 CHAVES_AREA = {"m", "area", "area_util", "area_bruta", "area_total", "area_de_terreno", "area_terreno"}
 log = logging.getLogger(__name__)
 

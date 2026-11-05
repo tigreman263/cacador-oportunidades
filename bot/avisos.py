@@ -82,4 +82,18 @@ def enviar_todos(sessao, boas: list, rever: list, so_mostrar: bool = False):
         print("\n---\n".join(montar_mensagens(boas, rever, "whatsapp")))
         return
     for nome, modulo, limite in configurados:
-        modulo.enviar(sessao, montar_mensagens(boas, rever, nome, limite))
+        if nome == "telegram":
+            modulo.enviar(sessao, montar_mensagens(boas, rever, nome, limite), botoes_olx(boas + rever))
+        else:
+            modulo.enviar(sessao, montar_mensagens(boas, rever, nome, limite))
+
+
+def botoes_olx(alertas: list) -> list:
+    """Um botão "Ver no OLX" por procura que tem alertas (abre a pesquisa no navegador)."""
+    vistos, res = set(), []
+    for a in alertas:
+        url, nome = a.get("olx_pesquisa"), a.get("procura") or "procura"
+        if url and nome not in vistos:
+            vistos.add(nome)
+            res.append({"text": f"🔎 Ver \"{nome}\" no OLX", "url": url})
+    return res[:5]

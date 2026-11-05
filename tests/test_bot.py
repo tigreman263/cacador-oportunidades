@@ -129,6 +129,15 @@ class CustoJustoEndereco(unittest.TestCase):
                          "https://www.custojusto.pt/portugal/veiculos/motos/moto-4-quad/q/suzuki?o=2")
 
 
+class OlxLink(unittest.TestCase):
+    def test_link_e_botoes(self):
+        self.assertEqual(olx.endereco_pesquisa({"pesquisa": "Moto 4 Suzuki", "preco_max": 6000}),
+                         "https://www.olx.pt/ads/q-moto-4-suzuki/?search%5Bfilter_float_price%3Ato%5D=6000")
+        b = avisos.botoes_olx([{"procura": "Moto", "olx_pesquisa": "u1"}, {"procura": "Moto", "olx_pesquisa": "u1"}])
+        self.assertEqual(len(b), 1)
+        self.assertEqual(b[0]["url"], "u1")
+
+
 class Intervalo(unittest.TestCase):
     def test_e_altura(self):
         g = {"intervalo_minutos": 60}

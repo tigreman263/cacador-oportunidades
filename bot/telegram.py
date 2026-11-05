@@ -27,9 +27,12 @@ def painel_url() -> str:
     return ""
 
 
-def _botao_painel():
-    url = painel_url()
-    return {"inline_keyboard": [[{"text": "📊 Abrir painel", "url": url}]]} if url else None
+def _botoes(extra=None):
+    """Teclado por baixo da mensagem: um botão por procura (abrir no OLX) e o do painel."""
+    linhas = [[b] for b in (extra or [])]
+    if painel_url():
+        linhas.append([{"text": "📊 Abrir painel", "url": painel_url()}])
+    return {"inline_keyboard": linhas} if linhas else None
 
 
 def configurado() -> bool:
@@ -45,7 +48,7 @@ def _chamar(sessao, metodo, **dados):
     return j["result"]
 
 
-def enviar(sessao, mensagens: list) -> bool:
+def enviar(sessao, mensagens: list, botoes: list = None) -> bool:
     chats = [c.strip() for c in os.environ.get("TELEGRAM_CHAT_ID", "").split(",") if c.strip()]
     ok = True
     for chat in chats:
@@ -53,8 +56,8 @@ def enviar(sessao, mensagens: list) -> bool:
             if i:
                 time.sleep(1)
             extra = {}
-            if i == len(mensagens) - 1 and _botao_painel():
-                extra["reply_markup"] = _botao_painel()  # botão só na última mensagem
+            if i == len(mensagens) - 1 and _botoes(botoes):
+                extra["reply_markup"] = _botoes(botoes)  # botões só na última mensagem
             try:
                 _chamar(sessao, "sendMessage", chat_id=chat, text=m, parse_mode="HTML",
                         disable_web_page_preview=len(mensagens) > 1 or m.count("<a ") > 1, **extra)

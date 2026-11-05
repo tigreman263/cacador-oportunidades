@@ -405,6 +405,14 @@ function mercadoDe(nome){
   }</div>`;
 }
 
+/* Link da pesquisa no OLX com o texto e o orçamento da procura (igual a bot/fontes/olx.py).
+   Abre no teu navegador: és tu que vês o OLX, o bot não lá vai. */
+function olxPesquisa(p){
+  const termo = semAcento(p.pesquisa || "").replace(/[^a-z0-9]+/g, " ").trim().split(/\s+/).filter(Boolean).join("-");
+  if (!termo) return "";
+  return `https://www.olx.pt/ads/q-${termo}/` + (p.preco_max ? `?search%5Bfilter_float_price%3Ato%5D=${Math.round(p.preco_max)}` : "");
+}
+
 function vistaProcuras(){
   if (!E.regras) return `<div class="vazio"><strong>Regras indisponíveis</strong>Não foi possível ler docs/regras.json.</div>`;
   let h = `<p class="intro">O que o bot anda a caçar. Podes ter várias procuras ao mesmo tempo: motas, carros, casas, terrenos… Toca numa para a editar. Cada campo explica o que faz e tem um exemplo.</p>`;
@@ -412,7 +420,7 @@ function vistaProcuras(){
   (E.config.procuras || []).forEach((p, i) => {
     h += `<details class="procura" ${E.aberta === i ? "open" : ""} data-i="${i}"><summary><div><b>${ICONE[p.tipo] || ICONE.outro} ${esc(p.nome || "Sem nome")}</b><span class="resumo">${esc(resumoProcura(p))}</span></div></summary><div class="corpo">${mercadoDe(p.nome)}`
       + E.regras.procura.map(r => campo(r, valorProcura(p, r), `procuras.${i}.${r.chave}`, "Exemplo")).join("")
-      + `<div style="margin-top:12px"><button class="perigo" data-apagar="${i}">Apagar esta procura</button></div></div></details>`;
+      + `<div style="margin-top:12px;display:flex;gap:8px;flex-wrap:wrap">${olxPesquisa(p) ? `<a class="botao-favorito" href="${esc(olxPesquisa(p))}" target="_blank" rel="noopener">🔎 Abrir no OLX</a>` : ""}<button class="perigo" data-apagar="${i}">Apagar esta procura</button></div></div></details>`;
   });
   if (!(E.config.procuras || []).length) h += `<div class="vazio"><strong>Cria a tua primeira procura</strong>Escolhe o tipo abaixo e ajusta os campos.</div>`;
   h += `<h2>Nova procura</h2><p class="intro">Escolhe o tipo. A procura já vem preenchida com um exemplo que podes alterar.</p><div class="tipos">`
