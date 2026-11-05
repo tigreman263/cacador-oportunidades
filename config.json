@@ -11,42 +11,58 @@
   "sinais": {},
   "procuras": [
     {
-      "id": "pmw3ftf7cmhgk",
-      "tipo": "outro",
+      "id": "pmw3ge7k4nvna",
+      "tipo": "mota",
       "ativa": true,
       "desconto_minimo": null,
       "fontes": [
         "olx",
         "custojusto"
       ],
-      "pesquisa": "compressor bmw",
+      "pesquisa": "moto 4",
       "incluir": [
-        "compressor"
+        "suzuki"
       ],
       "alternativas": [
-        "pneumatico"
+        "moto4",
+        "moto 4",
+        "quad",
+        "4x4"
       ],
-      "excluir": [],
+      "excluir": [
+        "banco",
+        "capa",
+        "capacete",
+        "escape",
+        "guarda lamas",
+        "jantes",
+        "kit",
+        "peca",
+        "pecas",
+        "pneus",
+        "sucata"
+      ],
       "zona": {
-        "modo": "raio",
-        "km": 10,
-        "centro": {
-          "nome": "Sertã",
-          "lat": 39.802,
-          "lon": -8.096,
-          "concelho": "Sertã",
-          "distrito": "Castelo Branco"
-        }
+        "modo": "pais"
       },
-      "preco_max": 100,
+      "preco_max": 6000,
       "grupos": [
-        "compressor",
-        "pneumaito",
-        "suspensão"
+        "125",
+        "250",
+        "400",
+        "450",
+        "500",
+        "700",
+        "750"
       ],
       "comparar_por": "preco",
-      "nome": "Bmw",
-      "problemas_extra": [],
+      "nome": "Moto",
+      "problemas_extra": [
+        "sem inspecao",
+        "inspecao caducada",
+        "iuc em atraso",
+        "precisa de pneus"
+      ],
       "graves_extra": [
         "abatid"
       ]
