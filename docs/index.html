@@ -69,7 +69,7 @@ button.perigo{color:var(--tijolo);border-color:var(--tijolo-bg)}
 .tipos button{min-height:64px;font-size:16px;background:var(--card)}
 .tipos button span{display:block;font-size:22px}
 details.procura>summary .resumo{display:block;font-size:13px;color:var(--ink-3);margin-top:2px}
-.botao-favorito{display:inline-block;padding:8px 14px;border-radius:999px;background:var(--pinho);color:#fff;text-decoration:none;font-weight:600;cursor:grab}
+.botao-olx{display:inline-block;padding:8px 14px;border-radius:999px;background:var(--pinho);color:#fff;text-decoration:none;font-weight:600}
 .vazio{text-align:center;color:var(--ink-2);padding:40px 12px}
 .vazio strong{display:block;font:600 22px var(--f-preco);color:var(--ink);margin-bottom:6px}
 
@@ -207,7 +207,6 @@ async function carregar(){
     await carregarConfig();
   }
   garantirIds();
-  lerOlxDoEndereco();
   E.original = JSON.stringify(E.config);
   document.getElementById("demo-aviso").innerHTML = modoDemo
     ? '<div class="aviso">Pré-visualização com dados de exemplo. No GitHub, esta página mostra os teus anúncios reais.</div>' : "";
@@ -374,8 +373,6 @@ function vistaRegras(){
   h += `<h2>Palavras-sinal</h2><p class="intro">O bot procura estas palavras no título e na descrição. Maiúsculas e acentos não contam. Uma palavra incompleta apanha as variações: "avariad" apanha avariado e avariada.</p>`;
   h += E.regras.sinais.map(r => campo(r, valorSinal(r), `sinais.${r.chave}`, "Proposta")).join("");
 
-  h += `<h2>Analisar pesquisas do OLX</h2>${blocoOlxInstrucoes()}`;
-
   h += `<h2>Ligação ao GitHub</h2>
     <div class="regra"><p class="desc">Para guardares as regras a partir desta página é preciso uma chave (token) do GitHub. Fica guardada só neste telemóvel.</p>
     <p class="desc">Como criar: GitHub, Settings, Developer settings, Fine-grained tokens, Generate new token. Em "Repository access" escolhe só este repositório e em "Permissions" dá "Contents: Read and write".</p>
@@ -420,7 +417,7 @@ function vistaProcuras(){
   (E.config.procuras || []).forEach((p, i) => {
     h += `<details class="procura" ${E.aberta === i ? "open" : ""} data-i="${i}"><summary><div><b>${ICONE[p.tipo] || ICONE.outro} ${esc(p.nome || "Sem nome")}</b><span class="resumo">${esc(resumoProcura(p))}</span></div></summary><div class="corpo">${mercadoDe(p.nome)}`
       + E.regras.procura.map(r => campo(r, valorProcura(p, r), `procuras.${i}.${r.chave}`, "Exemplo")).join("")
-      + `<div style="margin-top:12px;display:flex;gap:8px;flex-wrap:wrap">${olxPesquisa(p) ? `<a class="botao-favorito" href="${esc(olxPesquisa(p))}" target="_blank" rel="noopener">🔎 Abrir no OLX</a>` : ""}<button class="perigo" data-apagar="${i}">Apagar esta procura</button></div></div></details>`;
+      + `<div style="margin-top:12px;display:flex;gap:8px;flex-wrap:wrap">${olxPesquisa(p) ? `<a class="botao-olx" href="${esc(olxPesquisa(p))}" target="_blank" rel="noopener">🔎 Abrir no OLX</a>` : ""}<button class="perigo" data-apagar="${i}">Apagar esta procura</button></div></div></details>`;
   });
   if (!(E.config.procuras || []).length) h += `<div class="vazio"><strong>Cria a tua primeira procura</strong>Escolhe o tipo abaixo e ajusta os campos.</div>`;
   h += `<h2>Nova procura</h2><p class="intro">Escolhe o tipo. A procura já vem preenchida com um exemplo que podes alterar.</p><div class="tipos">`
@@ -667,106 +664,6 @@ document.getElementById("vista").addEventListener("click", ev => {
   }
 }, true);
 
-/* ---------- OLX: análise de uma pesquisa feita no teu navegador ----------
-   O OLX bloqueia pedidos automáticos, por isso o bot não lá vai. Em vez disso, um favorito
-   ("bookmarklet") lê os anúncios da página de resultados que TU abriste no OLX e envia-os
-   para aqui no endereço (#olx=...). A análise é feita nesta página, com o preço normal que
-   o bot já aprendeu (dados.json). */
-const PAINEL_URL = location.origin + location.pathname;
-const BOOKMARKLET = "javascript:(()=>{let a=[];try{let s=window.__PRERENDERED_STATE__;s=typeof s=='string'?JSON.parse(s):s;"
-  + "((s&&s.listing&&s.listing.listing&&s.listing.listing.ads)||[]).forEach(x=>a.push({t:x.title,p:x.price&&x.price.regularPrice?x.price.regularPrice.value:null,"
-  + "u:x.url,l:x.location?x.location.cityName:''}))}catch(e){}"
-  + "if(!a.length)document.querySelectorAll('[data-cy=\"l-card\"]').forEach(c=>{let h=c.querySelector('h4,h6'),pr=c.querySelector('[data-testid=\"ad-price\"]'),"
-  + "lk=c.querySelector('a[href]'),lo=c.querySelector('[data-testid=\"location-date\"]');let t=h?h.innerText.trim():'';"
-  + "let n=pr?parseFloat(pr.innerText.split('\\n')[0].replace(/[^0-9,]/g,'').replace(',','.')):NaN;"
-  + "if(t)a.push({t:t,p:isNaN(n)?null:n,u:lk?lk.href:'',l:lo?lo.innerText.split(' - ')[0]:''})});"
-  + "if(!a.length){alert('Caçador: não encontrei anúncios nesta página. Abre uma página de resultados de pesquisa do OLX.');return}"
-  + "window.open('" + PAINEL_URL + "#olx='+encodeURIComponent(JSON.stringify(a.slice(0,60))),'_blank')})()";
-
-function lerOlxDoEndereco(){
-  if (!location.hash.startsWith("#olx=")) return;
-  try {
-    const lista = JSON.parse(decodeURIComponent(location.hash.slice(5)));
-    E.olx = (Array.isArray(lista) ? lista : []).filter(x => x && x.t).map(x => ({
-      titulo: String(x.t), preco: typeof x.p === "number" ? x.p : null, url: String(x.u || ""), local: String(x.l || "")}));
-  } catch(e){ E.olx = []; }
-  E.vista = "olx";
-  document.querySelectorAll("nav button").forEach(x => x.setAttribute("aria-selected", "false"));
-  history.replaceState(null, "", location.pathname + location.search);
-}
-
-function blocoOlxInstrucoes(){
-  return `<div class="regra"><p class="desc">O OLX não deixa o bot pesquisar sozinho. Com este botão és tu que pesquisas no OLX e o painel diz-te quais anúncios estão abaixo do preço normal que o bot aprendeu.</p>
-    <p class="desc"><b>No computador:</b> arrasta este botão para a barra de favoritos do navegador:</p>
-    <p style="margin:10px 0"><a class="botao-favorito" href="${esc(BOOKMARKLET)}" onclick="event.preventDefault();toast('Arrasta-me para a barra de favoritos.')">🔎 Caçador: analisar OLX</a></p>
-    <p class="desc">Depois, no OLX, faz a pesquisa (ex.: "suzuki" em Moto 4 / Quad) e, com os resultados no ecrã, carrega no favorito. Abre-se esta página com a análise.</p>
-    <p class="desc"><b>No telemóvel (Chrome):</b> guarda uma página qualquer nos favoritos, edita esse favorito, dá-lhe o nome <i>cacador</i> e cola no endereço o código abaixo. No OLX, escreve <i>cacador</i> na barra de endereço e toca no favorito que aparece.</p>
-    <textarea readonly rows="3" style="width:100%;font-size:12px" onclick="this.select()">${esc(BOOKMARKLET)}</textarea>
-    <div style="margin-top:8px"><button id="copiar-olx">Copiar código</button></div></div>`;
-}
-
-/* filtros iguais aos do bot (bot/analise.py), aplicados só ao título */
-function temPalavra(texto, palavras, inteira){
-  const t = " " + semAcento(texto).replace(/[^a-z0-9.]+/g, " ") + " ";
-  return (palavras || []).filter(w => {
-    const p = semAcento(w).replace(/[^a-z0-9.]+/g, " ").trim();
-    return p && (inteira ? t.includes(" " + p + " ") : t.includes(" " + p));
-  });
-}
-
-function avaliarOlx(a, p){
-  const sinais = k => { const r = (E.regras.sinais || []).find(x => x.chave === k); return r ? valorSinal(r) : []; };
-  const geral = k => { const r = (E.regras.geral || []).find(x => x.chave === k); return r ? valorGeral(r) : null; };
-  if ((p.incluir || []).some(w => !temPalavra(a.titulo, [w]).length)) return {estado: "fora", motivo: "falta: " + (p.incluir || []).join(", ")};
-  if ((p.alternativas || []).length && !temPalavra(a.titulo, p.alternativas).length) return {estado: "fora", motivo: "sem: " + p.alternativas.join(" / ")};
-  const ex = temPalavra(a.titulo, p.excluir); if (ex.length) return {estado: "fora", motivo: "palavra a ignorar: " + ex[0]};
-  const gr = temPalavra(a.titulo, [...sinais("problemas_graves"), ...(p.graves_extra || [])]); if (gr.length) return {estado: "fora", motivo: "problema grave: " + gr[0]};
-  if (a.preco == null || a.preco <= 0) return {estado: "sem", motivo: "sem preço"};
-  const grupo = temPalavra(a.titulo, p.grupos, true)[0] || null;
-  const ref = ((E.dados.mercado || {})[p.nome] || {})[grupo || "todos"];
-  if (!ref || ref.amostras < (geral("minimo_amostras") || 6)) return {estado: "sem", motivo: `o bot ainda não conhece o preço normal${grupo ? " de " + grupo : ""}`, grupo};
-  const desconto = 1 - a.preco / ref.mediana;
-  const problemas = temPalavra(a.titulo, [...sinais("problemas_a_rever"), ...(p.problemas_extra || [])]);
-  const pressa = temPalavra(a.titulo, sinais("urgencia"));
-  let exigido = p.desconto_minimo != null ? p.desconto_minimo : geral("desconto_minimo");
-  if (pressa.length) exigido -= geral("bonus_urgencia") || 0;
-  let estado = "normal";
-  if (problemas.length) estado = desconto >= (geral("desconto_minimo_com_problemas") || 0) / 100 ? "rever" : "normal";
-  else if (a.preco < (geral("limite_burla") || 50) / 100 * ref.mediana) estado = "burla";
-  else if (desconto >= Math.max(exigido, 0) / 100) estado = "boa";
-  if (p.preco_max && a.preco > p.preco_max) estado = "caro";
-  return {estado, desconto, mediana: ref.mediana, amostras: ref.amostras, grupo, problemas, pressa};
-}
-
-function vistaOlx(){
-  const procuras = (E.config && E.config.procuras || []).filter(p => p.pesquisa);
-  if (!E.olx) return `<p class="intro">Análise de pesquisas feitas por ti no OLX.</p>${blocoOlxInstrucoes()}`;
-  if (!E.olx.length) return `<div class="vazio"><strong>Não chegaram anúncios</strong>Abre uma página de resultados do OLX e carrega outra vez no favorito.</div>${blocoOlxInstrucoes()}`;
-  if (!procuras.length) return `<div class="vazio"><strong>Sem procuras</strong>Cria primeiro uma procura no separador Procuras.</div>`;
-  const p = procuras.find(x => x.nome === E.olxProcura) || procuras[0];
-  const res = E.olx.map(a => ({a, r: avaliarOlx(a, p)}));
-  const ordem = {boa: 0, rever: 1, normal: 2, caro: 3, burla: 4, sem: 5, fora: 6};
-  res.sort((x, y) => ordem[x.r.estado] - ordem[y.r.estado] || (y.r.desconto || 0) - (x.r.desconto || 0));
-  const rotulo = {boa: "Boa compra", rever: "A rever", normal: "Preço normal", caro: "Acima do teu orçamento", burla: "Barato demais (cuidado)", sem: "Sem comparação"};
-  const n = e => res.filter(x => x.r.estado === e).length;
-  const cartaoOlx = ({a, r}) => `<article class="anuncio ${r.estado === "boa" ? "boa" : r.estado === "rever" ? "rever" : ""}">
-    <p class="de">OLX — ${esc(rotulo[r.estado])}</p><h3>${esc(a.titulo)}</h3>
-    <div class="linha-preco"><span class="preco">${euros(a.preco)}</span>${r.desconto != null ? `<span class="etiqueta">${r.desconto >= 0 ? "−" : "+"}${pct(Math.abs(r.desconto))}</span>` : ""}</div>
-    <p class="ref">${r.mediana ? `Preço normal ${euros(r.mediana)}, calculado com ${r.amostras} anúncios${r.grupo ? ` de ${esc(r.grupo)}` : ""}` : esc(r.motivo)}</p>
-    ${(r.problemas || []).length || (r.pressa || []).length ? `<div class="marcas">${(r.pressa||[]).map(x => `<span class="marca pressa">Pressa: ${esc(x)}</span>`).join("")}${(r.problemas||[]).map(x => `<span class="marca problema">${esc(x)}</span>`).join("")}</div>` : ""}
-    <div class="rodape"><span>${esc(a.local)}</span><a href="${esc(urlSegura(a.url))}" target="_blank" rel="noopener">Abrir no OLX</a></div></article>`;
-  const fora = res.filter(x => x.r.estado === "fora");
-  return `<p class="intro">${E.olx.length} anúncios do OLX comparados com o preço normal que o bot aprendeu. <b>${n("boa")}</b> boas compras, <b>${n("rever")}</b> a rever.</p>
-    <div class="filtro"><label for="olx-procura">Comparar com a procura</label> <select id="olx-procura">${procuras.map(x => `<option ${x === p ? "selected" : ""}>${esc(x.nome || "Sem nome")}</option>`).join("")}</select></div>
-    ${res.filter(x => x.r.estado !== "fora").map(cartaoOlx).join("")}
-    ${fora.length ? `<details><summary>${fora.length} anúncios não correspondem à procura</summary>${fora.map(({a, r}) => `<p class="desc">${esc(a.titulo)} — ${euros(a.preco)} <small>(${esc(r.motivo)})</small></p>`).join("")}</details>` : ""}`;
-}
-
-document.addEventListener("change", ev => { if (ev.target.id === "olx-procura"){ E.olxProcura = ev.target.value; desenhar(); } });
-document.addEventListener("click", ev => {
-  if (ev.target.id === "copiar-olx"){ navigator.clipboard.writeText(BOOKMARKLET).then(() => toast("Código copiado."), () => toast("Seleciona o texto e copia à mão.")); }
-});
-
 /* ---------- desenhar ---------- */
 function desenhar(){
   const n = c => Object.values(E.dados.anuncios || {}).filter(a => a.categoria === c).length;
@@ -776,8 +673,7 @@ function desenhar(){
   document.getElementById("atualizado").textContent = E.dados.atualizado ? "Verificado " + haQuanto(E.dados.atualizado) : "";
   const v = document.getElementById("vista");
   v.innerHTML = E.vista === "boa" ? vistaLista("boa") : E.vista === "rever" ? vistaLista("rever")
-              : E.vista === "mercado" ? vistaMercado() : E.vista === "procuras" ? vistaProcuras()
-              : E.vista === "olx" ? vistaOlx() : vistaRegras();
+              : E.vista === "mercado" ? vistaMercado() : E.vista === "procuras" ? vistaProcuras() : vistaRegras();
 }
 
 carregar();
