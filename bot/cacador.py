@@ -136,6 +136,7 @@ def processar(config, regras, dados, estado, loc, anuncios_por_procura: dict, ag
     return boas, rever
 
 
+CONTAGEM = {}  # anúncios recebidos por procura na última execução (para o resumo do Telegram)
 FOLGA_SEGUNDOS = 120  # o despertador pode tocar uns minutos antes ou depois da hora certa
 
 
@@ -175,6 +176,7 @@ def correr(sessao, fontes: dict, raiz: Path = RAIZ, agora: float = None, agendad
             continue
         lista = buscar_anuncios(sessao, p, fontes)
         log.info("%s: %d anúncios recebidos", p.get("nome"), len(lista))
+        CONTAGEM[p.get("nome") or "Sem nome"] = len(lista)
         por_procura[A.chave_procura(p)] = lista
 
     boas, rever = processar(config, regras, dados, estado, loc, por_procura, agora)

@@ -1,6 +1,7 @@
 """python -m bot                  verificação normal (pesquisa, grava, envia alertas)
    python -m bot --sem-avisos     igual, mas só escreve os alertas no ecrã
    python -m bot --agendada       só procura se já passou o intervalo das regras (despertador)
+   python -m bot --resumo         no fim manda um resumo no Telegram (botão "Procurar agora")
    python -m bot --telegram-teste mostra o chat id e envia uma mensagem de teste
    python -m bot --localidades    (re)cria docs/localidades.json a partir do GeoNames
 
@@ -35,6 +36,7 @@ def main():
     ap = argparse.ArgumentParser(prog="python -m bot")
     ap.add_argument("--sem-avisos", action="store_true", help="não envia alertas, só os mostra")
     ap.add_argument("--agendada", action="store_true", help="respeita o intervalo das regras")
+    ap.add_argument("--resumo", action="store_true", help="manda um resumo no Telegram no fim (botão Procurar agora)")
     ap.add_argument("--telegram-teste", action="store_true", help="testa a ligação ao Telegram")
     ap.add_argument("--localidades", action="store_true", help="recria docs/localidades.json")
     args = ap.parse_args()
@@ -64,6 +66,10 @@ def main():
         return
     boas, rever = res
     avisos.enviar_todos(sessao, boas, rever, so_mostrar=args.sem_avisos)
+    if args.resumo and telegram.configurado() and not args.sem_avisos:
+        vistos = ", ".join(f"{n}: {c}" for n, c in cacador.CONTAGEM.items()) or "nenhuma procura ativa"
+        novas = f"{len(boas)} boa(s) compra(s) e {len(rever)} a rever (enviadas acima)" if boas or rever else "sem oportunidades novas desta vez"
+        telegram.enviar(sessao, [f"✅ Procura terminada — {novas}.\nAnúncios vistos: {vistos}."])
 
 
 if __name__ == "__main__":

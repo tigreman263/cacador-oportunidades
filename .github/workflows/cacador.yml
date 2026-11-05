@@ -1,5 +1,5 @@
 name: Caçador de Oportunidades
-run-name: ${{ github.event_name == 'schedule' && 'automática (reserva do GitHub)' || (inputs.agendada && 'automática (despertador)' || 'manual') }}
+run-name: ${{ github.event_name == 'schedule' && 'automática (reserva do GitHub)' || (inputs.agendada && 'automática (despertador)' || (inputs.resumo && 'pedida no Telegram' || 'manual')) }}
 
 # Quem acorda o bot de 15 em 15 minutos é o Worker do Cloudflare (extras/cloudflare/worker.js),
 # que carrega no "Run workflow", porque o agendador do GitHub atrasa ou salta muitas execuções.
@@ -13,6 +13,10 @@ on:
     inputs:
       agendada:
         description: "Execução automática (respeita o intervalo das regras)"
+        type: boolean
+        default: false
+      resumo:
+        description: "Mandar resumo no Telegram no fim (botão Procurar agora)"
         type: boolean
         default: false
 
@@ -43,7 +47,7 @@ jobs:
           TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
           WHATSAPP_TELEFONE: ${{ secrets.WHATSAPP_TELEFONE }}
           WHATSAPP_APIKEY: ${{ secrets.WHATSAPP_APIKEY }}
-        run: python -m bot ${{ (github.event_name == 'schedule' || inputs.agendada) && '--agendada' || '' }}
+        run: python -m bot ${{ (github.event_name == 'schedule' || inputs.agendada) && '--agendada' || '' }} ${{ inputs.resumo && '--resumo' || '' }}
 
       - name: Guardar resultados
         run: |
