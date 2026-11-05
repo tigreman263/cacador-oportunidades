@@ -12,7 +12,12 @@ def endereco_pesquisa(p: dict) -> str:
     """Link da pesquisa no site do OLX com o texto e o orçamento da procura, para o utilizador
     abrir no seu navegador (botão "Abrir no OLX"). O bot não visita este endereço."""
     from ..texto import normalizar
-    termo = "-".join(re.sub(r"[^a-z0-9]+", " ", normalizar(p.get("pesquisa") or "")).split())
+    palavras = re.sub(r"[^a-z0-9]+", " ", normalizar(p.get("pesquisa") or "")).split()
+    for w in p.get("incluir") or []:  # palavras obrigatórias que ainda não estão no texto
+        for x in re.sub(r"[^a-z0-9]+", " ", normalizar(w)).split():
+            if x not in palavras:
+                palavras.append(x)
+    termo = "-".join(palavras)
     if not termo:
         return ""
     url = f"{SITE}/ads/q-{termo}/"

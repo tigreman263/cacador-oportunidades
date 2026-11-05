@@ -405,7 +405,10 @@ function mercadoDe(nome){
 /* Link da pesquisa no OLX com o texto e o orçamento da procura (igual a bot/fontes/olx.py).
    Abre no teu navegador: és tu que vês o OLX, o bot não lá vai. */
 function olxPesquisa(p){
-  const termo = semAcento(p.pesquisa || "").replace(/[^a-z0-9]+/g, " ").trim().split(/\s+/).filter(Boolean).join("-");
+  const partir = t => semAcento(t || "").replace(/[^a-z0-9]+/g, " ").trim().split(/\s+/).filter(Boolean);
+  const palavras = partir(p.pesquisa);
+  (p.incluir || []).forEach(w => partir(w).forEach(x => { if (!palavras.includes(x)) palavras.push(x); }));
+  const termo = palavras.join("-");
   if (!termo) return "";
   return `https://www.olx.pt/ads/q-${termo}/` + (p.preco_max ? `?search%5Bfilter_float_price%3Ato%5D=${Math.round(p.preco_max)}` : "");
 }
@@ -417,7 +420,7 @@ function vistaProcuras(){
   (E.config.procuras || []).forEach((p, i) => {
     h += `<details class="procura" ${E.aberta === i ? "open" : ""} data-i="${i}"><summary><div><b>${ICONE[p.tipo] || ICONE.outro} ${esc(p.nome || "Sem nome")}</b><span class="resumo">${esc(resumoProcura(p))}</span></div></summary><div class="corpo">${mercadoDe(p.nome)}`
       + E.regras.procura.map(r => campo(r, valorProcura(p, r), `procuras.${i}.${r.chave}`, "Exemplo")).join("")
-      + `<div style="margin-top:12px;display:flex;gap:8px;flex-wrap:wrap">${olxPesquisa(p) ? `<a class="botao-olx" href="${esc(olxPesquisa(p))}" target="_blank" rel="noopener">🔎 Abrir no OLX</a>` : ""}<button class="perigo" data-apagar="${i}">Apagar esta procura</button></div></div></details>`;
+      + `<div style="margin-top:12px;display:flex;gap:8px;flex-wrap:wrap"><a class="botao-olx" href="${esc(olxPesquisa(p) || "#")}" target="_blank" rel="noopener" ${olxPesquisa(p) ? "" : 'style="display:none"'}>🔎 Abrir no OLX</a><button class="perigo" data-apagar="${i}">Apagar esta procura</button></div></div></details>`;
   });
   if (!(E.config.procuras || []).length) h += `<div class="vazio"><strong>Cria a tua primeira procura</strong>Escolhe o tipo abaixo e ajusta os campos.</div>`;
   h += `<h2>Nova procura</h2><p class="intro">Escolhe o tipo. A procura já vem preenchida com um exemplo que podes alterar.</p><div class="tipos">`
@@ -465,6 +468,8 @@ function atualizarSemRedesenhar(el, caminho){
     if (p && d){
       d.querySelector("summary b").textContent = `${ICONE[p.tipo] || ICONE.outro} ${p.nome || "Sem nome"}`;
       d.querySelector("summary .resumo").textContent = resumoProcura(p);
+      const b = d.querySelector("a.botao-olx"), url = olxPesquisa(p);  // botão do OLX segue as mudanças
+      if (b){ b.href = url || "#"; b.style.display = url ? "" : "none"; }
     }
     document.getElementById("n-procuras").textContent = (E.config.procuras || []).filter(p => p.ativa !== false).length;
   }
