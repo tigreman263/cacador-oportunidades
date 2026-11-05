@@ -11,113 +11,39 @@
   "sinais": {},
   "procuras": [
     {
-      "id": "pmw3h12ydtc42",
-      "tipo": "mota",
+      "id": "pmw3iluzrizwe",
+      "tipo": "carro",
       "ativa": true,
       "desconto_minimo": null,
       "fontes": [
         "olx",
         "custojusto"
       ],
-      "pesquisa": "moto4 suzuki",
-      "incluir": [
-        "suzuki"
-      ],
-      "alternativas": [],
-      "excluir": [
-        "banco",
-        "capa",
-        "capacete",
-        "escape",
-        "guarda lamas",
-        "jantes",
-        "kit",
-        "peca",
-        "pecas",
-        "pneus",
-        "sucata"
-      ],
-      "zona": {
-        "modo": "pais"
-      },
-      "preco_max": 6000,
-      "grupos": [
-        "125",
-        "250",
-        "400",
-        "450",
-        "500",
-        "700",
-        "750"
-      ],
-      "comparar_por": "preco",
-      "nome": "Moto4 Suzuki 4x4",
-      "problemas_extra": [
-        "sem inspecao",
-        "inspecao caducada",
-        "iuc em atraso",
-        "precisa de pneus"
-      ],
-      "graves_extra": [
-        "abatid"
-      ],
-      "categoria": "veiculos/motos/moto-4-quad"
-    },
-    {
-      "id": "pmw3h19bi7pn0",
-      "tipo": "casa",
-      "ativa": true,
-      "desconto_minimo": null,
-      "fontes": [
-        "olx",
-        "custojusto"
-      ],
-      "pesquisa": "moradia venda",
+      "pesquisa": "Suzuki  Vitara",
       "incluir": [],
       "alternativas": [
-        "moradia",
-        "vivenda",
-        "casa",
-        "apartamento"
+        "4x4",
+        "Vitara",
+        "Suzuki"
       ],
-      "excluir": [
-        "arrendamento",
-        "arrenda",
-        "arrendar",
-        "aluga",
-        "alugo",
-        "aluguer",
-        "ferias",
-        "quarto",
-        "trespasse"
-      ],
+      "excluir": [],
       "zona": {
         "modo": "pais"
       },
-      "preco_max": 150000,
+      "preco_max": 4000,
       "grupos": [
-        "t1",
-        "t2",
-        "t3",
-        "t4",
-        "t5"
+        "diesel",
+        "gasolina",
+        "gpl"
       ],
-      "comparar_por": "preco_m2",
-      "nome": "Moradia",
-      "problemas_extra": [
-        "para recuperar",
-        "para remodelar",
-        "precisa de obras",
-        "ruina",
-        "sem licenca de habitacao",
-        "herdeiros",
-        "em partilhas",
-        "usufruto"
-      ],
+      "comparar_por": "preco",
+      "nome": "Vitara",
+      "problemas_extra": [],
       "graves_extra": [
-        "leilao judicial"
+        "abatid",
+        "sem matricula"
       ],
-      "categoria": "imobiliario/moradias"
+      "categoria": "veiculos/carros-usados"
     }
   ]
 }
