@@ -9,7 +9,8 @@ explica os passos de forma simples e confirma antes de ações irreversíveis
 Bot que vigia o OLX e o CustoJusto e avisa por **Telegram** (WhatsApp/CallMeBot
 opcional) **só de boas compras**: anúncios claramente abaixo do preço normal de
 mercado, que o próprio bot aprende com os anúncios que vai vendo. Corre no GitHub
-Actions de 15 em 15 min. Tem uma página (GitHub Pages, pasta `docs/`) com
+Actions; quem o acorda de 15 em 15 min é um Worker do Cloudflare (`extras/cloudflare/`),
+porque o agendador do GitHub salta muitas execuções (o `schedule` fica de reserva, 1×/hora). Tem uma página (GitHub Pages, pasta `docs/`) com
 listagem e configurações.
 
 ## Decisões do utilizador (respeitar)

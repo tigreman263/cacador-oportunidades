@@ -1,9 +1,13 @@
 name: Caçador de Oportunidades
+run-name: ${{ github.event_name == 'schedule' && 'automática (reserva do GitHub)' || 'despertador / manual' }}
 
+# Quem acorda o bot de 15 em 15 minutos é o Worker do Cloudflare (extras/cloudflare/worker.js),
+# que carrega no "Run workflow", porque o agendador do GitHub atrasa ou salta muitas execuções.
+# O "schedule" abaixo é só reserva (1 vez por hora), para o bot não parar se o Worker falhar.
 on:
   schedule:
-    - cron: "*/15 * * * *"   # de 15 em 15 minutos (o GitHub pode atrasar alguns minutos)
-  workflow_dispatch:          # botão "Run workflow" para correr à mão
+    - cron: "37 * * * *"     # reserva: 1 vez por hora, ao minuto 37
+  workflow_dispatch:          # usado pelo Worker e pelo botão "Run workflow"
 
 permissions:
   contents: write

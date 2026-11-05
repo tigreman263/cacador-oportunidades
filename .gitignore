@@ -5,3 +5,5 @@ venv/
 .env
 debug/
 *.log
+.wrangler/
+node_modules/

@@ -27,7 +27,8 @@ bot/                        o bot em Python
   zonas.py                  "Onde procurar": país, raio em km, concelhos/distritos
   avisos.py                 texto dos alertas e envio para os canais configurados
   telegram.py / whatsapp.py canais de alerta
-.github/workflows/cacador.yml   agendamento de 15 em 15 minutos
+.github/workflows/cacador.yml   o trabalho do bot (correr, avisar, gravar)
+extras/cloudflare/           despertador: Worker do Cloudflare que acorda o bot de 15 em 15 min
 tests/                      testes automáticos
 ```
 
@@ -86,7 +87,14 @@ e usa o id do grupo (começa por `-`). Para vários destinos, separa os ids por 
 
 4. **Primeira execução**: separador Actions → *Caçador de Oportunidades* → *Run workflow* (ou `gh workflow run cacador.yml`).
    Abre a execução e confirma no registo quantos anúncios cada fonte devolveu.
-   Depois disto, corre sozinho de 15 em 15 minutos.
+   Depois disto, corre sozinho (ver o passo 6).
+
+6. **Despertador regular (Cloudflare, grátis)**: o agendador do GitHub atrasa ou salta muitas execuções
+   (na prática corria de 4 em 4 a 8 em 8 horas). O Worker em `extras/cloudflare/` carrega no *Run workflow*
+   de 15 em 15 minutos; o `schedule` do workflow fica só como reserva (1 vez por hora).
+   - Token: GitHub → *Fine-grained tokens* → só este repositório, **Actions: Read and write**.
+   - Publicar: `cd extras/cloudflare && npx wrangler deploy` e `npx wrangler secret put GITHUB_TOKEN`.
+   - Abrir o endereço `https://cacador-oportunidades.<conta>.workers.dev` mostra se está tudo bem.
 
 5. **Ligar a página ao GitHub** para gravar regras a partir do telemóvel:
    GitHub → Settings → Developer settings → *Fine-grained tokens* → *Generate new token*,

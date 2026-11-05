@@ -1,0 +1,10 @@
+# Despertador do Caçador de Oportunidades (Worker do Cloudflare, plano gratuito).
+# Publicar: cd extras/cloudflare && npx wrangler deploy
+# Segredo obrigatório: npx wrangler secret put GITHUB_TOKEN
+name = "cacador-oportunidades"
+main = "worker.js"
+compatibility_date = "2026-10-01"
+workers_dev = true
+
+[triggers]
+crons = ["*/15 * * * *"]
