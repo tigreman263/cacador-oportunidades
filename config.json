@@ -62,6 +62,59 @@
       ],
       "categoria": "veiculos/carros-usados",
       "categoria_autouncle": "b-suv"
+    },
+    {
+      "id": "pmw3w2m1v9bfj",
+      "tipo": "mota",
+      "ativa": true,
+      "desconto_minimo": null,
+      "fontes": [
+        "olx",
+        "custojusto"
+      ],
+      "pesquisa": "moto4 suzuki",
+      "incluir": [
+        "suzuki"
+      ],
+      "alternativas": [],
+      "excluir": [
+        "banco",
+        "capa",
+        "capacete",
+        "escape",
+        "guarda lamas",
+        "jantes",
+        "kit",
+        "peca",
+        "pecas",
+        "pneus",
+        "sucata"
+      ],
+      "zona": {
+        "modo": "pais"
+      },
+      "preco_max": 6000,
+      "grupos": [
+        "125",
+        "250",
+        "400",
+        "450",
+        "500",
+        "700",
+        "750"
+      ],
+      "comparar_por": "preco",
+      "nome": "Moto4 Suzuki 4x4",
+      "problemas_extra": [
+        "sem inspecao",
+        "inspecao caducada",
+        "iuc em atraso",
+        "precisa de pneus"
+      ],
+      "graves_extra": [
+        "abatid"
+      ],
+      "categoria": "veiculos/motos/moto-4-quad"
     }
   ]
 }
