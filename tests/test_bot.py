@@ -4,7 +4,7 @@ from pathlib import Path
 
 from bot import analise as A
 from bot import avisos, cacador
-from bot.fontes import custojusto, olx
+from bot.fontes import autouncle, custojusto, olx
 from bot.texto import area_do_texto, encontrar, normalizar, numero
 from bot.zonas import Localidades, dentro_da_zona
 
@@ -136,6 +136,22 @@ class OlxLink(unittest.TestCase):
         b = avisos.botoes_olx([{"procura": "Moto", "olx_pesquisa": "u1"}, {"procura": "Moto", "olx_pesquisa": "u1"}])
         self.assertEqual(len(b), 1)
         self.assertEqual(b[0]["url"], "u1")
+
+
+class AutoUncle(unittest.TestCase):
+    def test_endereco_e_extrair(self):
+        self.assertEqual(autouncle.endereco("b-suv", 3000, 2),
+                         "https://www.autouncle.pt/pt/carros-usados/b-suv/mp-abaixo-de-5000-euro?page=2")
+        item = {"@type": ["Product", "Vehicle"], "name": "Usado (2001) Suzuki Jimny 80 HP", "vehicleModelDate": "2001",
+                "fuelType": "Gasolina", "bodyType": "SUV", "mileageFromOdometer": {"value": 175867},
+                "offers": {"price": 9980, "url": "https://www.autouncle.pt/pt/d/6646353-usado-2001-suzuki-jimny-80-cv#offer"}}
+        html = ('<script type="application/ld+json" id="schema-search-results">'
+                + json.dumps({"@graph": [{"@type": "ItemList", "itemListElement": [{"item": item}]}]}) + "</script>")
+        a = autouncle.extrair(html)[0]
+        self.assertEqual(a["id"], "autouncle-6646353")
+        self.assertEqual(a["titulo"], "Suzuki Jimny 80 cv - 2001 Gasolina SUV")
+        self.assertEqual(a["preco"], 9980.0)
+        self.assertTrue(a["url"].endswith("80-cv"))
 
 
 class Intervalo(unittest.TestCase):

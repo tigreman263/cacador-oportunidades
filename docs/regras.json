@@ -248,6 +248,51 @@
       ]
     },
     {
+      "chave": "categoria_autouncle",
+      "nome": "Tipo de carro (AutoUncle)",
+      "descricao": "Só para carros com o site AutoUncle ligado em \"Sites\". O AutoUncle não pesquisa por texto: escolhe o tipo de carro e o bot junta o teu orçamento. O título dos carros do AutoUncle inclui o combustível e o tipo (ex.: \"Suzuki Jimny 80 cv - 2001 Gasolina SUV\"), mas não diz se é 4x4.",
+      "proposta": "",
+      "tipo": "escolha",
+      "opcoes": [
+        {
+          "valor": "",
+          "rotulo": "Todos os carros"
+        },
+        {
+          "valor": "b-suv",
+          "rotulo": "SUV / jipe"
+        },
+        {
+          "valor": "b-carrinha-combi",
+          "rotulo": "Carrinha"
+        },
+        {
+          "valor": "b-van",
+          "rotulo": "Van / comercial"
+        },
+        {
+          "valor": "b-utilitario",
+          "rotulo": "Utilitário"
+        },
+        {
+          "valor": "b-sedan",
+          "rotulo": "Sedan"
+        },
+        {
+          "valor": "b-monovolume",
+          "rotulo": "Monovolume"
+        },
+        {
+          "valor": "b-coupe",
+          "rotulo": "Coupé"
+        },
+        {
+          "valor": "b-cabrios",
+          "rotulo": "Descapotável"
+        }
+      ]
+    },
+    {
       "chave": "incluir",
       "nome": "Palavras obrigatórias",
       "descricao": "Todas têm de aparecer no título. Normalmente a marca ou o tipo de bem.",
@@ -337,7 +382,7 @@
     {
       "chave": "fontes",
       "nome": "Sites",
-      "descricao": "Onde procurar.",
+      "descricao": "Onde procurar. O OLX bloqueia o bot (só funciona o botão \"Abrir no OLX\"). O AutoUncle só tem carros, de muitos sites ao mesmo tempo.",
       "proposta": [
         "olx",
         "custojusto"
@@ -345,7 +390,8 @@
       "tipo": "fontes",
       "opcoes": [
         "olx",
-        "custojusto"
+        "custojusto",
+        "autouncle"
       ]
     }
   ],
@@ -461,12 +507,14 @@
       ],
       "fontes": [
         "olx",
-        "custojusto"
+        "custojusto",
+        "autouncle"
       ],
       "zona": {
         "modo": "pais"
       },
-      "categoria": "veiculos/carros-usados"
+      "categoria": "veiculos/carros-usados",
+      "categoria_autouncle": ""
     },
     "casa": {
       "nome": "Moradia",

@@ -2,6 +2,6 @@
 
   id, fonte, titulo, descricao, preco, area, url, cidade, distrito, lat, lon
 """
-from . import custojusto, olx
+from . import autouncle, custojusto, olx
 
-FONTES = {"olx": olx.procurar, "custojusto": custojusto.procurar}
+FONTES = {"olx": olx.procurar, "custojusto": custojusto.procurar, "autouncle": autouncle.procurar}

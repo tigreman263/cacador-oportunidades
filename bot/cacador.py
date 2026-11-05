@@ -38,7 +38,11 @@ def buscar_anuncios(sessao, p: dict, fontes: dict, pausa: float = 2.0) -> list:
         if not f:
             continue
         try:
-            extra = {"categoria": p.get("categoria") or ""} if nome == "custojusto" else {}
+            if nome == "autouncle" and (p.get("tipo") or "outro") not in ("carro", "outro"):
+                continue  # o AutoUncle só tem carros
+            extra = ({"categoria": p.get("categoria") or ""} if nome == "custojusto"
+                     else {"tipo_carro": p.get("categoria_autouncle") or "", "preco_max": p.get("preco_max")} if nome == "autouncle"
+                     else {})
             for a in f(sessao, p["pesquisa"], **extra):
                 if a["id"] not in vistos:
                     vistos.add(a["id"])

@@ -335,7 +335,7 @@ function campo(r, valor, caminho, rotuloProposta){
   } else if (r.tipo === "texto"){
     entrada = `<input type="text" id="${id}" data-caminho="${caminho}" value="${esc(valor ?? "")}">`;
   } else if (r.tipo === "fontes"){
-    entrada = r.opcoes.map(o => `<label class="interruptor"><input type="checkbox" data-caminho="${caminho}" data-opcao="${o}" ${(valor||[]).includes(o) ? "checked" : ""}> ${o === "olx" ? "OLX" : "CustoJusto"}</label>`).join("");
+    entrada = r.opcoes.map(o => `<label class="interruptor"><input type="checkbox" data-caminho="${caminho}" data-opcao="${o}" ${(valor||[]).includes(o) ? "checked" : ""}> ${({olx: "OLX", custojusto: "CustoJusto", autouncle: "AutoUncle (só carros)"})[o] || esc(o)}</label>`).join("");
   } else { // lista
     entrada = `<div class="fichas">${(valor||[]).map((p, i) => `<span class="ficha">${esc(p)}<button aria-label="Retirar ${esc(p)}" data-retirar="${caminho}" data-i="${i}">×</button></span>`).join("") || '<span class="desc">Lista vazia</span>'}</div>
       <div class="acrescentar"><input type="text" placeholder="Nova palavra" data-nova="${caminho}" aria-label="Acrescentar a ${esc(r.nome)}"><button data-acrescentar="${caminho}">Acrescentar</button></div>`;

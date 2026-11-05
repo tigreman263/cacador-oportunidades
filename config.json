@@ -17,13 +17,18 @@
       "desconto_minimo": null,
       "fontes": [
         "olx",
-        "custojusto"
+        "custojusto",
+        "autouncle"
       ],
       "pesquisa": "4x4 jipe carinha",
-      "incluir": [
-        "4x4"
+      "incluir": [],
+      "alternativas": [
+        "4x4",
+        "jipe",
+        "jeep",
+        "todo terreno",
+        "suv"
       ],
-      "alternativas": [],
       "excluir": [
         "Sem documentos"
       ],
@@ -55,7 +60,8 @@
         "abatid",
         "sem matricula"
       ],
-      "categoria": "veiculos/carros-usados"
+      "categoria": "veiculos/carros-usados",
+      "categoria_autouncle": "b-suv"
     }
   ]
 }

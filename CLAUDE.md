@@ -40,7 +40,8 @@ listagem e configurações.
 - `bot/zonas.py` — localização dos anúncios e filtro de zona (país, raio, lista)
 - `bot/localidades.py` — cria `docs/localidades.json` a partir do GeoNames (CC BY)
 - `bot/fontes/olx.py` — `https://www.olx.pt/api/v1/offers/`
-- `bot/fontes/custojusto.py` — JSON `__NEXT_DATA__` da página de pesquisa
+- `bot/fontes/custojusto.py` — JSON `__NEXT_DATA__` da página de pesquisa (com categoria por procura)
+- `bot/fontes/autouncle.py` — carros de vários sites (schema.org ld+json); sem pesquisa por texto: tipo de carro (`categoria_autouncle`) + teto de preço
 - `bot/avisos.py`, `bot/telegram.py`, `bot/whatsapp.py` — texto e envio dos alertas
 - `config.json` — regras e procuras do utilizador (a página grava aqui via API do GitHub)
 - `docs/regras.json` — descrições, propostas e modelos por tipo
