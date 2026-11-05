@@ -89,10 +89,17 @@ def enviar_todos(sessao, boas: list, rever: list, so_mostrar: bool = False):
 
 
 def botoes_olx(alertas: list) -> list:
-    """Um botão "Ver no OLX" por procura que tem alertas (abre a pesquisa no navegador)."""
+    """Um botão "Ver no OLX" por procura que tem alertas (abre a pesquisa no navegador).
+    Passa pelo painel (#ir-olx=<procura>), que lê a procura como está agora e salta para o OLX:
+    assim o botão de uma mensagem antiga segue as mudanças feitas depois. "u" é a reserva."""
+    from urllib.parse import urlencode
+    from .telegram import painel_url
+    painel = painel_url()
     vistos, res = set(), []
     for a in alertas:
         url, nome = a.get("olx_pesquisa"), a.get("procura") or "procura"
+        if url and painel and a.get("procura_id"):
+            url = painel + "#" + urlencode({"ir-olx": a["procura_id"], "u": url})
         if url and nome not in vistos:
             vistos.add(nome)
             res.append({"text": f"🔎 Ver \"{nome}\" no OLX", "url": url})

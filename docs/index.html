@@ -206,6 +206,7 @@ async function carregar(){
     try { E.dados = await (await fetch("./dados.json", {cache:"no-store"})).json(); } catch(e){}
     await carregarConfig();
   }
+  if (irParaOlx()) return;
   garantirIds();
   E.original = JSON.stringify(E.config);
   document.getElementById("demo-aviso").innerHTML = modoDemo
@@ -411,6 +412,19 @@ function olxPesquisa(p){
   const termo = palavras.join("-");
   if (!termo) return "";
   return `https://www.olx.pt/ads/q-${termo}/` + (p.preco_max ? `?search%5Bfilter_float_price%3Ato%5D=${Math.round(p.preco_max)}` : "");
+}
+
+/* Botão "Ver no OLX" do Telegram: abre o painel com #ir-olx=<procura>&u=<reserva>; o painel lê a
+   procura como está agora (texto e palavras atuais) e salta para o OLX. */
+function irParaOlx(){
+  if (!location.hash.startsWith("#ir-olx=")) return false;
+  const q = new URLSearchParams(location.hash.slice(1)), id = q.get("ir-olx"), reserva = q.get("u") || "";
+  const p = (E.config && E.config.procuras || []).find(x => x.id === id || "nome:" + semAcento(x.nome) === id);
+  const url = (p && olxPesquisa(p)) || (/^https:\/\/www\.olx\.pt\//.test(reserva) ? reserva : "");
+  if (!url) return false;
+  document.getElementById("vista").innerHTML = `<div class="vazio"><strong>A abrir o OLX…</strong>Se não abrir sozinho, <a href="${esc(url)}">toca aqui</a>.</div>`;
+  location.replace(url);
+  return true;
 }
 
 function vistaProcuras(){

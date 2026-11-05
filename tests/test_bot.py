@@ -135,9 +135,17 @@ class OlxLink(unittest.TestCase):
                          "https://www.olx.pt/ads/q-moto-4-suzuki/?search%5Bfilter_float_price%3Ato%5D=6000")
         self.assertEqual(olx.endereco_pesquisa({"pesquisa": "jipe", "incluir": ["4x4", "Jipe"]}),
                          "https://www.olx.pt/ads/q-jipe-4x4/")
+        import os
+        os.environ.pop("PAINEL_URL", None); os.environ.pop("GITHUB_REPOSITORY", None)
         b = avisos.botoes_olx([{"procura": "Moto", "olx_pesquisa": "u1"}, {"procura": "Moto", "olx_pesquisa": "u1"}])
         self.assertEqual(len(b), 1)
         self.assertEqual(b[0]["url"], "u1")
+        os.environ["PAINEL_URL"] = "https://x.github.io/c/"
+        try:
+            b = avisos.botoes_olx([{"procura": "Moto", "procura_id": "abc", "olx_pesquisa": "https://www.olx.pt/ads/q-a/"}])
+            self.assertEqual(b[0]["url"], "https://x.github.io/c/#ir-olx=abc&u=https%3A%2F%2Fwww.olx.pt%2Fads%2Fq-a%2F")
+        finally:
+            os.environ.pop("PAINEL_URL", None)
 
 
 class AutoUncle(unittest.TestCase):
