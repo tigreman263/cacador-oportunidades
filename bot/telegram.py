@@ -3,6 +3,8 @@
 Configuração (segredos do repositório no GitHub, ou variáveis de ambiente no PC):
   TELEGRAM_TOKEN    o token que o @BotFather te dá, ex.: 123456789:AA...
   TELEGRAM_CHAT_ID  o teu chat (ou de um grupo). Vários: separados por vírgula.
+  PAINEL_URL        (opcional) endereço do painel; no GitHub Actions é deduzido do repositório.
+Cada alerta leva um botão "Abrir painel", e o --telegram-teste põe o botão de menu "Painel" no bot.
 Para descobrir o chat id: envia uma mensagem ao teu bot e corre  python -m bot --telegram-teste
 """
 import logging
@@ -11,6 +13,23 @@ import time
 
 API = "https://api.telegram.org/bot{token}/{metodo}"
 log = logging.getLogger(__name__)
+
+
+def painel_url() -> str:
+    """Endereço do painel no GitHub Pages: PAINEL_URL, ou <dono>.github.io/<repo>/ a partir do GITHUB_REPOSITORY."""
+    url = os.environ.get("PAINEL_URL", "").strip()
+    if url:
+        return url
+    repo = os.environ.get("GITHUB_REPOSITORY", "")
+    if "/" in repo:
+        dono, nome = repo.split("/", 1)
+        return f"https://{dono.lower()}.github.io/{nome}/"
+    return ""
+
+
+def _botao_painel():
+    url = painel_url()
+    return {"inline_keyboard": [[{"text": "📊 Abrir painel", "url": url}]]} if url else None
 
 
 def configurado() -> bool:
@@ -33,9 +52,12 @@ def enviar(sessao, mensagens: list) -> bool:
         for i, m in enumerate(mensagens):
             if i:
                 time.sleep(1)
+            extra = {}
+            if i == len(mensagens) - 1 and _botao_painel():
+                extra["reply_markup"] = _botao_painel()  # botão só na última mensagem
             try:
                 _chamar(sessao, "sendMessage", chat_id=chat, text=m, parse_mode="HTML",
-                        disable_web_page_preview=len(mensagens) > 1 or m.count("<a ") > 1)
+                        disable_web_page_preview=len(mensagens) > 1 or m.count("<a ") > 1, **extra)
             except Exception as e:
                 log.warning("Telegram (chat %s): %s", chat, e)
                 ok = False
@@ -61,6 +83,10 @@ def teste(sessao):
             print(f"  {i}  {nome}")
     else:
         print(f"Nenhum chat ainda. Abre o Telegram, procura @{eu['username']}, carrega em Iniciar, envia 'olá' e repete.")
+    url = painel_url()
+    if url:
+        _chamar(sessao, "setChatMenuButton", menu_button={"type": "web_app", "text": "📊 Painel", "web_app": {"url": url}})
+        print(f"Botão de menu 'Painel' ligado a {url}")
     if os.environ.get("TELEGRAM_CHAT_ID"):
         print("Mensagem de teste enviada." if enviar(sessao, ["✅ Caçador de Oportunidades ligado. Os alertas vão chegar aqui."])
               else "Falhou o envio de teste: confirma o TELEGRAM_CHAT_ID.")
