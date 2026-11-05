@@ -1,5 +1,5 @@
 {
- "atualizado": 1793880028.2521214,
+ "atualizado": 1793880929.8425982,
  "anuncios": {
   "cj-43558104": {
    "procura": "Moradia",
@@ -10,11 +10,11 @@
    "preco": 30000.0,
    "preco_antes": null,
    "desconto": 0.945,
-   "mediana": 2833.33,
+   "mediana": 2840.91,
    "unidade": "€/m²",
    "valor": 155.44,
    "area": 193.0,
-   "amostras": 77,
+   "amostras": 79,
    "grupo": null,
    "sinais": [],
    "problemas": [
@@ -25,7 +25,7 @@
    "local": "Torre de Moncorvo",
    "url": "https://www.custojusto.pt/braganca/imobiliario/moradias/moradia-para-recuperar-na-alde-43558104",
    "primeiro": 1793879129.398587,
-   "ultimo": 1793880028.2521214,
+   "ultimo": 1793880929.8425982,
    "km": null
   },
   "cj-44168960": {
@@ -52,7 +52,7 @@
    "local": "Tábua",
    "url": "https://www.custojusto.pt/coimbra/imobiliario/moradias/moradia-t2-carapinha-p-recupe-44168960",
    "primeiro": 1793879129.398587,
-   "ultimo": 1793880028.2521214,
+   "ultimo": 1793880929.8425982,
    "km": null
   }
  },
@@ -76,8 +76,8 @@
   },
   "Moradia": {
    "todos": {
-    "mediana": 2833.33,
-    "amostras": 77,
+    "mediana": 2840.91,
+    "amostras": 79,
     "unidade": "€/m²"
    },
    "t5": {
@@ -91,8 +91,8 @@
     "unidade": "€/m²"
    },
    "t4": {
-    "mediana": 3190.75,
-    "amostras": 16,
+    "mediana": 3381.5,
+    "amostras": 17,
     "unidade": "€/m²"
    },
    "t2": {
