@@ -62,6 +62,62 @@
         "abatid"
       ],
       "categoria": "veiculos/motos/moto-4-quad"
+    },
+    {
+      "id": "pmw3h19bi7pn0",
+      "tipo": "casa",
+      "ativa": true,
+      "desconto_minimo": null,
+      "fontes": [
+        "olx",
+        "custojusto"
+      ],
+      "pesquisa": "moradia venda",
+      "incluir": [],
+      "alternativas": [
+        "moradia",
+        "vivenda",
+        "casa",
+        "apartamento"
+      ],
+      "excluir": [
+        "arrendamento",
+        "arrenda",
+        "arrendar",
+        "aluga",
+        "alugo",
+        "aluguer",
+        "ferias",
+        "quarto",
+        "trespasse"
+      ],
+      "zona": {
+        "modo": "pais"
+      },
+      "preco_max": 150000,
+      "grupos": [
+        "t1",
+        "t2",
+        "t3",
+        "t4",
+        "t5"
+      ],
+      "comparar_por": "preco_m2",
+      "nome": "Moradia",
+      "problemas_extra": [
+        "para recuperar",
+        "para remodelar",
+        "precisa de obras",
+        "ruina",
+        "sem licenca de habitacao",
+        "herdeiros",
+        "em partilhas",
+        "usufruto"
+      ],
+      "graves_extra": [
+        "leilao judicial"
+      ],
+      "categoria": "imobiliario/moradias"
     }
   ]
 }
