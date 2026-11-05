@@ -6,6 +6,7 @@ Se o site mudar e nada for encontrado, o bot regista um aviso e continua só com
 """
 import json
 import logging
+import time
 import re
 from urllib.parse import quote
 
@@ -104,13 +105,28 @@ def extrair(html: str) -> list:
     return res
 
 
-def procurar(sessao, pesquisa: str, paginas: int = 1):
-    url = f"{BASE}/portugal/q/{quote(pesquisa)}"
-    r = sessao.get(url, timeout=30)
-    if r.status_code != 200:
-        log.warning("CustoJusto respondeu %s para '%s'", r.status_code, pesquisa)
-        return
-    anuncios = extrair(r.text)
-    if not anuncios:
-        log.warning("CustoJusto: nenhum anúncio reconhecido em '%s' (o site pode ter mudado)", pesquisa)
-    yield from anuncios
+def endereco(pesquisa: str, categoria: str = "", pagina: int = 1) -> str:
+    """Pesquisa no país todo; com categoria (ex.: "veiculos/motos/moto-4-quad") só procura lá dentro."""
+    cat = (categoria or "").strip("/ ")
+    caminho = f"/portugal/{cat}" if cat else "/portugal"
+    if pesquisa.strip():
+        caminho += f"/q/{quote(pesquisa.strip())}"
+    return BASE + caminho + (f"?o={pagina}" if pagina > 1 else "")
+
+
+def procurar(sessao, pesquisa: str, paginas: int = 2, categoria: str = "", pausa: float = 2.0):
+    vistos = set()
+    for pagina in range(1, paginas + 1):
+        if pagina > 1:
+            time.sleep(pausa)
+        r = sessao.get(endereco(pesquisa, categoria, pagina), timeout=30)
+        if r.status_code != 200:
+            log.warning("CustoJusto respondeu %s para '%s' (página %d)", r.status_code, pesquisa, pagina)
+            return
+        novos = [a for a in extrair(r.text) if a["id"] not in vistos]
+        if not novos:
+            if pagina == 1:
+                log.warning("CustoJusto: nenhum anúncio reconhecido em '%s' (o site pode ter mudado)", pesquisa)
+            return
+        vistos.update(a["id"] for a in novos)
+        yield from novos

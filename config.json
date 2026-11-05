@@ -19,16 +19,11 @@
         "olx",
         "custojusto"
       ],
-      "pesquisa": "moto 4",
+      "pesquisa": "suzuki",
       "incluir": [
         "suzuki"
       ],
-      "alternativas": [
-        "moto4",
-        "moto 4",
-        "quad",
-        "4x4"
-      ],
+      "alternativas": [],
       "excluir": [
         "banco",
         "capa",
@@ -63,7 +58,8 @@
       ],
       "graves_extra": [
         "abatid"
-      ]
+      ],
+      "categoria": "veiculos/motos/moto-4-quad"
     }
   ]
 }

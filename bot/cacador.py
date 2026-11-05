@@ -33,7 +33,8 @@ def buscar_anuncios(sessao, p: dict, fontes: dict, pausa: float = 2.0) -> list:
         if not f:
             continue
         try:
-            for a in f(sessao, p["pesquisa"]):
+            extra = {"categoria": p.get("categoria") or ""} if nome == "custojusto" else {}
+            for a in f(sessao, p["pesquisa"], **extra):
                 if a["id"] not in vistos:
                     vistos.add(a["id"])
                     res.append(a)

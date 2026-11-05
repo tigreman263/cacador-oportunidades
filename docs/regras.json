@@ -195,6 +195,59 @@
       "tipo": "texto"
     },
     {
+      "chave": "categoria",
+      "nome": "Categoria (CustoJusto)",
+      "descricao": "Procura só dentro desta secção do CustoJusto. Afasta peças, brinquedos e anúncios de outras coisas que usam as mesmas palavras. Com a categoria certa já não precisas de \"Pelo menos uma destas\" (ex.: em Moto 4 / Quad, os títulos são do género \"Suzuki LT - 00\", sem a palavra moto4).",
+      "proposta": "",
+      "tipo": "escolha",
+      "opcoes": [
+        {
+          "valor": "",
+          "rotulo": "Todas (pesquisa em todo o site)"
+        },
+        {
+          "valor": "veiculos/motos",
+          "rotulo": "Motos (todas)"
+        },
+        {
+          "valor": "veiculos/motos/moto-4-quad",
+          "rotulo": "Moto 4 / Quad"
+        },
+        {
+          "valor": "veiculos/motos/mota-de-estrada",
+          "rotulo": "Mota de estrada"
+        },
+        {
+          "valor": "veiculos/motos/scooter",
+          "rotulo": "Scooter"
+        },
+        {
+          "valor": "veiculos/carros-usados",
+          "rotulo": "Carros usados"
+        },
+        {
+          "valor": "veiculos/pecas-acessorios",
+          "rotulo": "Peças e acessórios"
+        },
+        {
+          "valor": "imobiliario/moradias",
+          "rotulo": "Moradias"
+        },
+        {
+          "valor": "imobiliario/apartamentos",
+          "rotulo": "Apartamentos"
+        },
+        {
+          "valor": "imobiliario/terrenos-quintas",
+          "rotulo": "Terrenos e quintas"
+        },
+        {
+          "valor": "equipamento",
+          "rotulo": "Equipamento e ferramentas"
+        }
+      ]
+    },
+    {
       "chave": "incluir",
       "nome": "Palavras obrigatórias",
       "descricao": "Todas têm de aparecer no título. Normalmente a marca ou o tipo de bem.",
@@ -303,12 +356,7 @@
       "incluir": [
         "suzuki"
       ],
-      "alternativas": [
-        "moto4",
-        "moto 4",
-        "quad",
-        "4x4"
-      ],
+      "alternativas": [],
       "excluir": [
         "banco",
         "capa",
@@ -348,7 +396,8 @@
       ],
       "zona": {
         "modo": "pais"
-      }
+      },
+      "categoria": "veiculos/motos/moto-4-quad"
     },
     "carro": {
       "nome": "Renault Clio",
@@ -416,7 +465,8 @@
       ],
       "zona": {
         "modo": "pais"
-      }
+      },
+      "categoria": "veiculos/carros-usados"
     },
     "casa": {
       "nome": "Moradia",
@@ -467,7 +517,8 @@
       ],
       "zona": {
         "modo": "pais"
-      }
+      },
+      "categoria": "imobiliario/moradias"
     },
     "terreno": {
       "nome": "Terreno",
@@ -516,7 +567,8 @@
       ],
       "zona": {
         "modo": "pais"
-      }
+      },
+      "categoria": "imobiliario/terrenos-quintas"
     },
     "outro": {
       "nome": "Nova procura",
@@ -529,7 +581,8 @@
       ],
       "zona": {
         "modo": "pais"
-      }
+      },
+      "categoria": ""
     }
   }
 }

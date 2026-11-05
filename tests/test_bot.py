@@ -122,6 +122,13 @@ class Fluxo(unittest.TestCase):
         self.assertTrue(all(len(x) <= 3800 for x in m))
 
 
+class CustoJustoEndereco(unittest.TestCase):
+    def test_endereco(self):
+        self.assertEqual(custojusto.endereco("moto4 suzuki"), "https://www.custojusto.pt/portugal/q/moto4%20suzuki")
+        self.assertEqual(custojusto.endereco("suzuki", "veiculos/motos/moto-4-quad", 2),
+                         "https://www.custojusto.pt/portugal/veiculos/motos/moto-4-quad/q/suzuki?o=2")
+
+
 class Intervalo(unittest.TestCase):
     def test_e_altura(self):
         g = {"intervalo_minutos": 60}
