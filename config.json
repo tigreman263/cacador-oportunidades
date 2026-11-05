@@ -6,7 +6,7 @@
     "alertar_com_problemas": true,
     "minimo_amostras": 3,
     "limite_burla": 50,
-    "dias_na_listagem": 30
+    "dias_na_listagem": 120
   },
   "sinais": {},
   "procuras": [
