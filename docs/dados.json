@@ -1,95 +1,104 @@
 {
- "atualizado": 1793878061.9017687,
+ "atualizado": 1793879129.398587,
  "anuncios": {
-  "cj-45389302": {
-   "procura": "Moto",
-   "procura_id": "pmw3ge7k4nvna",
-   "tipo": "mota",
-   "categoria": "boa",
-   "titulo": "Suzuki LT - 00",
-   "preco": 3750.0,
+  "cj-43558104": {
+   "procura": "Moradia",
+   "procura_id": "pmw3h19bi7pn0",
+   "tipo": "casa",
+   "categoria": "rever",
+   "titulo": "Moradia Para Recuperar Na Aldeia De Nozelos,...",
+   "preco": 30000.0,
    "preco_antes": null,
-   "desconto": 0.286,
-   "mediana": 5250.0,
-   "unidade": "€",
-   "valor": 3750.0,
-   "area": null,
-   "amostras": 12,
+   "desconto": 0.946,
+   "mediana": 2862.76,
+   "unidade": "€/m²",
+   "valor": 155.44,
+   "area": 193.0,
+   "amostras": 72,
    "grupo": null,
    "sinais": [],
-   "problemas": [],
+   "problemas": [
+    "para recuperar",
+    "ruina"
+   ],
    "fonte": "CustoJusto",
-   "local": "Vila Nova de Gaia",
-   "url": "https://www.custojusto.pt/porto/veiculos/motos/moto-4-quad/suzuki-lt-45389302",
-   "primeiro": 1793878061.9017687,
-   "ultimo": 1793878061.9017687,
+   "local": "Torre de Moncorvo",
+   "url": "https://www.custojusto.pt/braganca/imobiliario/moradias/moradia-para-recuperar-na-alde-43558104",
+   "primeiro": 1793879129.398587,
+   "ultimo": 1793879129.398587,
    "km": null
   },
-  "cj-42943731": {
-   "procura": "Moto",
-   "procura_id": "pmw3ge7k4nvna",
-   "tipo": "mota",
-   "categoria": "boa",
-   "titulo": "Moto 4 Suzuki LT 160 com matricula nacional 1 dono - 98",
-   "preco": 3000.0,
+  "cj-44168960": {
+   "procura": "Moradia",
+   "procura_id": "pmw3h19bi7pn0",
+   "tipo": "casa",
+   "categoria": "rever",
+   "titulo": "Moradia T2 Carapinha p/ recuperar",
+   "preco": 49500.0,
    "preco_antes": null,
-   "desconto": 0.429,
-   "mediana": 5250.0,
-   "unidade": "€",
-   "valor": 3000.0,
-   "area": null,
-   "amostras": 12,
-   "grupo": null,
+   "desconto": 0.897,
+   "mediana": 2413.34,
+   "unidade": "€/m²",
+   "valor": 247.5,
+   "area": 200.0,
+   "amostras": 4,
+   "grupo": "t2",
    "sinais": [],
-   "problemas": [],
+   "problemas": [
+    "para recuperar",
+    "ruina"
+   ],
    "fonte": "CustoJusto",
-   "local": "Rio Maior",
-   "url": "https://www.custojusto.pt/santarem/veiculos/motos/moto-4-quad/moto-4-suzuki-lt-160-com-matri-42943731",
-   "primeiro": 1793878061.9017687,
-   "ultimo": 1793878061.9017687,
-   "km": null
-  },
-  "cj-45167269": {
-   "procura": "Moto",
-   "procura_id": "pmw3ge7k4nvna",
-   "tipo": "mota",
-   "categoria": "boa",
-   "titulo": "Suzuki LT-Z 250 (original) - 04",
-   "preco": 3500.0,
-   "preco_antes": null,
-   "desconto": 0.333,
-   "mediana": 5250.0,
-   "unidade": "€",
-   "valor": 3500.0,
-   "area": null,
-   "amostras": 12,
-   "grupo": null,
-   "sinais": [],
-   "problemas": [],
-   "fonte": "CustoJusto",
-   "local": "Seixal",
-   "url": "https://www.custojusto.pt/setubal/veiculos/motos/moto-4-quad/suzuki-lt-z-250-original-45167269",
-   "primeiro": 1793878061.9017687,
-   "ultimo": 1793878061.9017687,
+   "local": "Tábua",
+   "url": "https://www.custojusto.pt/coimbra/imobiliario/moradias/moradia-t2-carapinha-p-recupe-44168960",
+   "primeiro": 1793879129.398587,
+   "ultimo": 1793879129.398587,
    "km": null
   }
  },
  "mercado": {
-  "Moto": {
+  "Moto4 Suzuki 4x4": {
    "todos": {
-    "mediana": 5000.0,
-    "amostras": 13,
+    "mediana": 9000.0,
+    "amostras": 3,
     "unidade": "€"
    },
    "400": {
-    "mediana": 8000.0,
-    "amostras": 2,
+    "mediana": 7500.0,
+    "amostras": 1,
     "unidade": "€"
    },
    "450": {
     "mediana": 9000.0,
     "amostras": 1,
     "unidade": "€"
+   }
+  },
+  "Moradia": {
+   "todos": {
+    "mediana": 2862.76,
+    "amostras": 72,
+    "unidade": "€/m²"
+   },
+   "t5": {
+    "mediana": 3729.95,
+    "amostras": 6,
+    "unidade": "€/m²"
+   },
+   "t3": {
+    "mediana": 2222.22,
+    "amostras": 29,
+    "unidade": "€/m²"
+   },
+   "t4": {
+    "mediana": 3190.75,
+    "amostras": 16,
+    "unidade": "€/m²"
+   },
+   "t2": {
+    "mediana": 2413.34,
+    "amostras": 4,
+    "unidade": "€/m²"
    }
   }
  }
