@@ -122,6 +122,15 @@ class Fluxo(unittest.TestCase):
         self.assertTrue(all(len(x) <= 3800 for x in m))
 
 
+class Intervalo(unittest.TestCase):
+    def test_e_altura(self):
+        g = {"intervalo_minutos": 60}
+        self.assertTrue(cacador.e_altura(g, {}, 1000))                                   # nunca correu
+        self.assertFalse(cacador.e_altura(g, {"ultima_verificacao": 0}, 30 * 60))         # só 30 min
+        self.assertTrue(cacador.e_altura(g, {"ultima_verificacao": 0}, 59 * 60))          # folga de 2 min
+        self.assertTrue(cacador.e_altura({"intervalo_minutos": 5}, {"ultima_verificacao": 0}, 14 * 60))  # mínimo 15
+
+
 class Fontes(unittest.TestCase):
     def test_olx(self):
         o = {"id": 9, "title": "Moradia T3 190 m²", "description": "<p>Boa</p>", "url": "https://www.olx.pt/d/x",

@@ -1,6 +1,16 @@
 {
   "geral": [
     {
+      "chave": "intervalo_minutos",
+      "nome": "De quanto em quanto tempo procurar",
+      "descricao": "Tempo entre cada visita do bot ao OLX e ao CustoJusto. Mais curto = sabes das oportunidades mais cedo; mais longo = menos pedidos aos sites. O despertador toca de 15 em 15 minutos, por isso usa múltiplos de 15 (15, 30, 60, 120…). Correr à mão (botão \"Run workflow\") ignora este tempo.",
+      "proposta": 15,
+      "tipo": "numero",
+      "unidade": "minutos",
+      "min": 15,
+      "max": 1440
+    },
+    {
       "chave": "desconto_minimo",
       "nome": "Desconto mínimo para boa compra",
       "descricao": "Quanto abaixo do preço normal de mercado um anúncio tem de estar para ser considerado boa compra. Mais alto = menos alertas, mas melhores. Mais baixo = mais alertas.",

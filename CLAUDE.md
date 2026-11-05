@@ -28,6 +28,8 @@ listagem e configurações.
 - **Não** desenvolver recolha de notícias aqui. Esta ferramenta é separada do
   Argos (investimentos) e dos bots de cripto; no futuro haverá um painel comum
   que só lê o estado de cada ferramenta.
+- Frequência de procura escolhida no painel (regra `intervalo_minutos`, mínimo 15 min,
+  o despertador toca de 15 em 15 min e o bot salta as execuções antes da altura).
 - Alertas por **Telegram** (decisão de 2026-11-03; antes era WhatsApp).
 
 ## Estrutura

@@ -2,7 +2,8 @@
 //
 // O agendador do GitHub atrasa ou salta muitas execuções. Este Worker tem um Cron Trigger
 // de 15 em 15 minutos que pede ao GitHub para correr o workflow "cacador.yml" (como o botão
-// "Run workflow"). O "schedule" do workflow fica como reserva.
+// "Run workflow") com agendada=true: o bot só vai aos sites se já passou o tempo da regra
+// "De quanto em quanto tempo procurar". O "schedule" do workflow fica como reserva.
 //
 // Variáveis (Settings > Variables and secrets), do tipo "Secret":
 //   GITHUB_TOKEN      token fine-grained só deste repositório, com Actions: Read and write
@@ -50,7 +51,7 @@ async function gh(env, caminho, opcoes = {}) {
 async function despertar(env) {
   try {
     await gh(env, `/repos/${repo(env)}/actions/workflows/${WORKFLOW}/dispatches`, {
-      method: "POST", body: { ref: RAMO },
+      method: "POST", body: { ref: RAMO, inputs: { agendada: "true" } },
     });
   } catch (e) {
     console.log("despertador falhou: " + e.message);

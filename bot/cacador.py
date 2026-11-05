@@ -125,7 +125,20 @@ def processar(config, regras, dados, estado, loc, anuncios_por_procura: dict, ag
     return boas, rever
 
 
-def correr(sessao, fontes: dict, raiz: Path = RAIZ, agora: float = None):
+FOLGA_SEGUNDOS = 120  # o despertador pode tocar uns minutos antes ou depois da hora certa
+
+
+def e_altura(geral: dict, estado: dict, agora: float) -> bool:
+    """Nas execuções agendadas, só procura quando já passou o intervalo escolhido nas regras."""
+    ultima = estado.get("ultima_verificacao")
+    if ultima is None:
+        return True
+    intervalo = max(15, float(geral.get("intervalo_minutos") or 15)) * 60
+    return agora - ultima >= intervalo - FOLGA_SEGUNDOS
+
+
+def correr(sessao, fontes: dict, raiz: Path = RAIZ, agora: float = None, agendada: bool = False):
+    """Devolve (boas, rever), ou None se for uma execução agendada e ainda não for altura."""
     agora = agora or time.time()
     config = ler_json(raiz / "config.json", {"procuras": []})
     regras = ler_json(raiz / "docs" / "regras.json", None)
@@ -133,6 +146,12 @@ def correr(sessao, fontes: dict, raiz: Path = RAIZ, agora: float = None):
         raise SystemExit("Falta docs/regras.json")
     dados = ler_json(raiz / "docs" / "dados.json", {"anuncios": {}, "mercado": {}})
     estado = ler_json(raiz / "estado" / "estado.json", {"amostras": {}, "alertados": {}})
+    if agendada:
+        geral, _ = A.regras_efetivas(regras, config)
+        if not e_altura(geral, estado, agora):
+            falta = (estado["ultima_verificacao"] + float(geral.get("intervalo_minutos") or 15) * 60 - agora) / 60
+            log.info("Ainda não é altura (intervalo de %s min; faltam cerca de %d min).", geral.get("intervalo_minutos"), max(1, round(falta)))
+            return None
 
     loc_json = ler_json(raiz / "docs" / "localidades.json", None)
     loc = Localidades(loc_json) if loc_json else None
@@ -148,6 +167,7 @@ def correr(sessao, fontes: dict, raiz: Path = RAIZ, agora: float = None):
         por_procura[A.chave_procura(p)] = lista
 
     boas, rever = processar(config, regras, dados, estado, loc, por_procura, agora)
+    estado["ultima_verificacao"] = agora
     gravar_json(raiz / "docs" / "dados.json", dados)
     gravar_json(raiz / "estado" / "estado.json", estado, compacto=True)
     log.info("Novas: %d boas, %d a rever. Na lista: %d.", len(boas), len(rever), len(dados["anuncios"]))
