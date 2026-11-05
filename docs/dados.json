@@ -1,7 +1,96 @@
 {
- "atualizado": 1793877326.7861817,
- "anuncios": {},
+ "atualizado": 1793878061.9017687,
+ "anuncios": {
+  "cj-45389302": {
+   "procura": "Moto",
+   "procura_id": "pmw3ge7k4nvna",
+   "tipo": "mota",
+   "categoria": "boa",
+   "titulo": "Suzuki LT - 00",
+   "preco": 3750.0,
+   "preco_antes": null,
+   "desconto": 0.286,
+   "mediana": 5250.0,
+   "unidade": "€",
+   "valor": 3750.0,
+   "area": null,
+   "amostras": 12,
+   "grupo": null,
+   "sinais": [],
+   "problemas": [],
+   "fonte": "CustoJusto",
+   "local": "Vila Nova de Gaia",
+   "url": "https://www.custojusto.pt/porto/veiculos/motos/moto-4-quad/suzuki-lt-45389302",
+   "primeiro": 1793878061.9017687,
+   "ultimo": 1793878061.9017687,
+   "km": null
+  },
+  "cj-42943731": {
+   "procura": "Moto",
+   "procura_id": "pmw3ge7k4nvna",
+   "tipo": "mota",
+   "categoria": "boa",
+   "titulo": "Moto 4 Suzuki LT 160 com matricula nacional 1 dono - 98",
+   "preco": 3000.0,
+   "preco_antes": null,
+   "desconto": 0.429,
+   "mediana": 5250.0,
+   "unidade": "€",
+   "valor": 3000.0,
+   "area": null,
+   "amostras": 12,
+   "grupo": null,
+   "sinais": [],
+   "problemas": [],
+   "fonte": "CustoJusto",
+   "local": "Rio Maior",
+   "url": "https://www.custojusto.pt/santarem/veiculos/motos/moto-4-quad/moto-4-suzuki-lt-160-com-matri-42943731",
+   "primeiro": 1793878061.9017687,
+   "ultimo": 1793878061.9017687,
+   "km": null
+  },
+  "cj-45167269": {
+   "procura": "Moto",
+   "procura_id": "pmw3ge7k4nvna",
+   "tipo": "mota",
+   "categoria": "boa",
+   "titulo": "Suzuki LT-Z 250 (original) - 04",
+   "preco": 3500.0,
+   "preco_antes": null,
+   "desconto": 0.333,
+   "mediana": 5250.0,
+   "unidade": "€",
+   "valor": 3500.0,
+   "area": null,
+   "amostras": 12,
+   "grupo": null,
+   "sinais": [],
+   "problemas": [],
+   "fonte": "CustoJusto",
+   "local": "Seixal",
+   "url": "https://www.custojusto.pt/setubal/veiculos/motos/moto-4-quad/suzuki-lt-z-250-original-45167269",
+   "primeiro": 1793878061.9017687,
+   "ultimo": 1793878061.9017687,
+   "km": null
+  }
+ },
  "mercado": {
-  "Bmw": {}
+  "Moto": {
+   "todos": {
+    "mediana": 5000.0,
+    "amostras": 13,
+    "unidade": "€"
+   },
+   "400": {
+    "mediana": 8000.0,
+    "amostras": 2,
+    "unidade": "€"
+   },
+   "450": {
+    "mediana": 9000.0,
+    "amostras": 1,
+    "unidade": "€"
+   }
+  }
  }
 }
