@@ -11,7 +11,7 @@
   "sinais": {},
   "procuras": [
     {
-      "id": "pmw3ge7k4nvna",
+      "id": "pmw3h12ydtc42",
       "tipo": "mota",
       "ativa": true,
       "desconto_minimo": null,
@@ -19,7 +19,7 @@
         "olx",
         "custojusto"
       ],
-      "pesquisa": "suzuki",
+      "pesquisa": "moto4 suzuki",
       "incluir": [
         "suzuki"
       ],
@@ -42,6 +42,8 @@
       },
       "preco_max": 6000,
       "grupos": [
+        "125",
+        "250",
         "400",
         "450",
         "500",
@@ -49,7 +51,7 @@
         "750"
       ],
       "comparar_por": "preco",
-      "nome": "Moto",
+      "nome": "Moto4 Suzuki 4x4",
       "problemas_extra": [
         "sem inspecao",
         "inspecao caducada",
