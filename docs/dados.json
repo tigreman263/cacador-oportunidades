@@ -1,75 +1,11 @@
 {
- "atualizado": 1793888128.4401317,
- "anuncios": {
-  "cj-44848072": {
-   "procura": "Vitara",
-   "procura_id": "pmw3iluzrizwe",
-   "tipo": "carro",
-   "categoria": "boa",
-   "titulo": "Suzuki Vitara 1.6 - 96",
-   "preco": 3300.0,
-   "preco_antes": null,
-   "desconto": 0.484,
-   "mediana": 6400.0,
-   "unidade": "€",
-   "valor": 3300.0,
-   "area": null,
-   "amostras": 37,
-   "grupo": null,
-   "sinais": [],
-   "problemas": [],
-   "fonte": "CustoJusto",
-   "local": "Aveiro",
-   "url": "https://www.custojusto.pt/aveiro/veiculos/carros-usados/suv-tt/suzuki-vitara-1-6-44848072",
-   "primeiro": 1793881829.973647,
-   "ultimo": 1793888128.4401317,
-   "km": null
-  },
-  "cj-45386441": {
-   "procura": "Vitara",
-   "procura_id": "pmw3iluzrizwe",
-   "tipo": "carro",
-   "categoria": "boa",
-   "titulo": "Suzuki Grand Vitara Td - 00",
-   "preco": 3600.0,
-   "preco_antes": null,
-   "desconto": 0.438,
-   "mediana": 6400.0,
-   "unidade": "€",
-   "valor": 3600.0,
-   "area": null,
-   "amostras": 37,
-   "grupo": null,
-   "sinais": [],
-   "problemas": [],
-   "fonte": "CustoJusto",
-   "local": "Braga",
-   "url": "https://www.custojusto.pt/braga/veiculos/carros-usados/monovolume/suzuki-grand-vitara-td-45386441",
-   "primeiro": 1793881829.973647,
-   "ultimo": 1793888128.4401317,
-   "km": null
-  }
- },
+ "atualizado": 1793889029.8810294,
+ "anuncios": {},
  "mercado": {
-  "Vitara": {
+  "Jipe": {
    "todos": {
-    "mediana": 6175.0,
-    "amostras": 38,
-    "unidade": "€"
-   },
-   "diesel": {
-    "mediana": 5950.0,
+    "mediana": 10650.0,
     "amostras": 2,
-    "unidade": "€"
-   },
-   "gpl": {
-    "mediana": 5800.0,
-    "amostras": 1,
-    "unidade": "€"
-   },
-   "gasolina": {
-    "mediana": 9000.0,
-    "amostras": 1,
     "unidade": "€"
    }
   }
