@@ -1,5 +1,5 @@
 {
- "atualizado": 1793902314.2074828,
+ "atualizado": 1793903427.0048623,
  "anuncios": {
   "autouncle-6575193": {
    "procura": "Jipe",
@@ -21,9 +21,9 @@
    "fonte": "AutoUncle",
    "local": null,
    "url": "https://www.autouncle.pt/pt/d/6575193-usado-1999-land-rover-freelander-97-cv",
-   "olx_pesquisa": "https://www.olx.pt/ads/q-4x4-jipe-carinha/?search%5Bfilter_float_price%3Ato%5D=3000",
+   "olx_pesquisa": "https://www.olx.pt/ads/q-4x4-vitara/?search%5Bfilter_float_price%3Ato%5D=3000",
    "primeiro": 1793902314.2074828,
-   "ultimo": 1793902314.2074828,
+   "ultimo": 1793903427.0048623,
    "km": null
   },
   "autouncle-6681557": {
@@ -46,9 +46,9 @@
    "fonte": "AutoUncle",
    "local": null,
    "url": "https://www.autouncle.pt/pt/d/6681557-usado-2001-jeep-grand-cherokee-laredo",
-   "olx_pesquisa": "https://www.olx.pt/ads/q-4x4-jipe-carinha/?search%5Bfilter_float_price%3Ato%5D=3000",
+   "olx_pesquisa": "https://www.olx.pt/ads/q-4x4-vitara/?search%5Bfilter_float_price%3Ato%5D=3000",
    "primeiro": 1793902314.2074828,
-   "ultimo": 1793902314.2074828,
+   "ultimo": 1793903427.0048623,
    "km": null
   },
   "autouncle-6449651": {
@@ -71,9 +71,9 @@
    "fonte": "AutoUncle",
    "local": null,
    "url": "https://www.autouncle.pt/pt/d/6449651-usado-2009-nissan-qashqai",
-   "olx_pesquisa": "https://www.olx.pt/ads/q-4x4-jipe-carinha/?search%5Bfilter_float_price%3Ato%5D=3000",
+   "olx_pesquisa": "https://www.olx.pt/ads/q-4x4-vitara/?search%5Bfilter_float_price%3Ato%5D=3000",
    "primeiro": 1793902314.2074828,
-   "ultimo": 1793902314.2074828,
+   "ultimo": 1793903427.0048623,
    "km": null
   },
   "autouncle-6704176": {
@@ -96,9 +96,9 @@
    "fonte": "AutoUncle",
    "local": null,
    "url": "https://www.autouncle.pt/pt/d/6704176-usado-2000-land-rover-freelander-100-cv",
-   "olx_pesquisa": "https://www.olx.pt/ads/q-4x4-jipe-carinha/?search%5Bfilter_float_price%3Ato%5D=3000",
+   "olx_pesquisa": "https://www.olx.pt/ads/q-4x4-vitara/?search%5Bfilter_float_price%3Ato%5D=3000",
    "primeiro": 1793902314.2074828,
-   "ultimo": 1793902314.2074828,
+   "ultimo": 1793903427.0048623,
    "km": null
   },
   "autouncle-6700722": {
@@ -121,17 +121,17 @@
    "fonte": "AutoUncle",
    "local": null,
    "url": "https://www.autouncle.pt/pt/d/6700722-usado-1998-land-rover-freelander",
-   "olx_pesquisa": "https://www.olx.pt/ads/q-4x4-jipe-carinha/?search%5Bfilter_float_price%3Ato%5D=3000",
+   "olx_pesquisa": "https://www.olx.pt/ads/q-4x4-vitara/?search%5Bfilter_float_price%3Ato%5D=3000",
    "primeiro": 1793902314.2074828,
-   "ultimo": 1793902314.2074828,
+   "ultimo": 1793903427.0048623,
    "km": null
   }
  },
  "mercado": {
   "Jipe": {
    "todos": {
-    "mediana": 4495.0,
-    "amostras": 52,
+    "mediana": 4500.0,
+    "amostras": 54,
     "unidade": "€"
    },
    "diesel": {
