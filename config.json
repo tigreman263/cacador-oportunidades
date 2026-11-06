@@ -1,12 +1,12 @@
 {
   "geral": {
-    "desconto_minimo": 15,
+    "desconto_minimo": 1,
     "bonus_urgencia": 5,
     "desconto_minimo_com_problemas": 35,
     "alertar_com_problemas": true,
-    "minimo_amostras": 3,
+    "minimo_amostras": 6,
     "limite_burla": 50,
-    "dias_na_listagem": 120
+    "dias_na_listagem": 30
   },
   "sinais": {},
   "procuras": [
