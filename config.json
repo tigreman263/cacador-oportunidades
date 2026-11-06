@@ -11,78 +11,25 @@
   "sinais": {},
   "procuras": [
     {
-      "id": "pmw3n3wfd5hyh",
-      "tipo": "carro",
-      "ativa": true,
-      "desconto_minimo": null,
-      "fontes": [
-        "olx",
-        "custojusto",
-        "autouncle"
-      ],
-      "pesquisa": "vitara",
-      "incluir": [],
-      "alternativas": [
-        "4x4",
-        "jipe",
-        "jeep",
-        "todo terreno",
-        "suv"
-      ],
-      "excluir": [
-        "Sem documentos"
-      ],
-      "zona": {
-        "modo": "pais"
-      },
-      "preco_max": 3000,
-      "grupos": [
-        "diesel",
-        "gasolina",
-        "gpl",
-        "hibrido",
-        "eletrico"
-      ],
-      "comparar_por": "preco",
-      "nome": "Jipe",
-      "problemas_extra": [
-        "sem inspecao",
-        "iuc em atraso",
-        "embraiagem",
-        "caixa de velocidades",
-        "junta da cabeca",
-        "motor a fumar",
-        "importado",
-        "salvado",
-        "luz do motor"
-      ],
-      "graves_extra": [
-        "abatid",
-        "sem matricula"
-      ],
-      "categoria": "veiculos/carros-usados",
-      "categoria_autouncle": "b-suv"
-    },
-    {
-      "id": "pmw3w2m1v9bfj",
+      "id": "pmw5hpi2e8ze2",
       "tipo": "mota",
       "ativa": true,
       "desconto_minimo": null,
       "fontes": [
-        "olx",
         "custojusto"
       ],
-      "pesquisa": "moto4 suzuki",
-      "incluir": [
-        "suzuki"
+      "pesquisa": "moto4",
+      "incluir": [],
+      "alternativas": [
+        "4x4",
+        "1000cc",
+        "600cc",
+        "500cc",
+        "400cc"
       ],
-      "alternativas": [],
       "excluir": [
-        "banco",
-        "capa",
         "capacete",
         "escape",
-        "guarda lamas",
         "jantes",
         "kit",
         "peca",
@@ -93,7 +40,7 @@
       "zona": {
         "modo": "pais"
       },
-      "preco_max": 6000,
+      "preco_max": 4000,
       "grupos": [
         "125",
         "250",
@@ -101,16 +48,12 @@
         "450",
         "500",
         "700",
-        "750"
+        "750",
+        "1000"
       ],
       "comparar_por": "preco",
-      "nome": "Moto4 Suzuki 4x4",
-      "problemas_extra": [
-        "sem inspecao",
-        "inspecao caducada",
-        "iuc em atraso",
-        "precisa de pneus"
-      ],
+      "nome": "Moto4",
+      "problemas_extra": [],
       "graves_extra": [
         "abatid"
       ],
