@@ -1,5 +1,5 @@
 {
- "atualizado": 1793942126.5752292,
+ "atualizado": 1793943029.2493198,
  "anuncios": {
   "autouncle-6575193": {
    "procura": "Jipe",
@@ -9,12 +9,12 @@
    "titulo": "Land Rover Freelander 97 cv - 1999 Diesel SUV",
    "preco": 2900.0,
    "preco_antes": null,
-   "desconto": 0.326,
-   "mediana": 4300.0,
+   "desconto": 0.34,
+   "mediana": 4395.0,
    "unidade": "€",
    "valor": 2900.0,
    "area": null,
-   "amostras": 47,
+   "amostras": 48,
    "grupo": "diesel",
    "sinais": [],
    "problemas": [],
@@ -23,7 +23,7 @@
    "url": "https://www.autouncle.pt/pt/d/6575193-usado-1999-land-rover-freelander-97-cv",
    "olx_pesquisa": "https://www.olx.pt/ads/q-vitara/?search%5Bfilter_float_price%3Ato%5D=3000",
    "primeiro": 1793902314.2074828,
-   "ultimo": 1793942126.5752292,
+   "ultimo": 1793943029.2493198,
    "km": null
   },
   "autouncle-6681557": {
@@ -34,12 +34,12 @@
    "titulo": "Jeep Grand Cherokee Laredo - 2001 Diesel SUV",
    "preco": 2200.0,
    "preco_antes": null,
-   "desconto": 0.488,
-   "mediana": 4300.0,
+   "desconto": 0.499,
+   "mediana": 4395.0,
    "unidade": "€",
    "valor": 2200.0,
    "area": null,
-   "amostras": 47,
+   "amostras": 48,
    "grupo": "diesel",
    "sinais": [],
    "problemas": [],
@@ -48,7 +48,7 @@
    "url": "https://www.autouncle.pt/pt/d/6681557-usado-2001-jeep-grand-cherokee-laredo",
    "olx_pesquisa": "https://www.olx.pt/ads/q-vitara/?search%5Bfilter_float_price%3Ato%5D=3000",
    "primeiro": 1793902314.2074828,
-   "ultimo": 1793942126.5752292,
+   "ultimo": 1793943029.2493198,
    "km": null
   },
   "autouncle-6449651": {
@@ -59,12 +59,12 @@
    "titulo": "Nissan Qashqai - 2009 Diesel SUV",
    "preco": 3000.0,
    "preco_antes": null,
-   "desconto": 0.302,
-   "mediana": 4300.0,
+   "desconto": 0.317,
+   "mediana": 4395.0,
    "unidade": "€",
    "valor": 3000.0,
    "area": null,
-   "amostras": 47,
+   "amostras": 48,
    "grupo": "diesel",
    "sinais": [],
    "problemas": [],
@@ -73,7 +73,7 @@
    "url": "https://www.autouncle.pt/pt/d/6449651-usado-2009-nissan-qashqai",
    "olx_pesquisa": "https://www.olx.pt/ads/q-vitara/?search%5Bfilter_float_price%3Ato%5D=3000",
    "primeiro": 1793902314.2074828,
-   "ultimo": 1793942126.5752292,
+   "ultimo": 1793943029.2493198,
    "km": null
   },
   "autouncle-6704176": {
@@ -84,12 +84,12 @@
    "titulo": "Land Rover Freelander 100 cv - 2000 Diesel SUV",
    "preco": 2990.0,
    "preco_antes": null,
-   "desconto": 0.305,
-   "mediana": 4300.0,
+   "desconto": 0.32,
+   "mediana": 4395.0,
    "unidade": "€",
    "valor": 2990.0,
    "area": null,
-   "amostras": 47,
+   "amostras": 48,
    "grupo": "diesel",
    "sinais": [],
    "problemas": [],
@@ -98,7 +98,7 @@
    "url": "https://www.autouncle.pt/pt/d/6704176-usado-2000-land-rover-freelander-100-cv",
    "olx_pesquisa": "https://www.olx.pt/ads/q-vitara/?search%5Bfilter_float_price%3Ato%5D=3000",
    "primeiro": 1793902314.2074828,
-   "ultimo": 1793942126.5752292,
+   "ultimo": 1793943029.2493198,
    "km": null
   },
   "autouncle-6700722": {
@@ -109,12 +109,12 @@
    "titulo": "Land Rover Freelander - 1998 Diesel SUV",
    "preco": 2775.0,
    "preco_antes": null,
-   "desconto": 0.355,
-   "mediana": 4300.0,
+   "desconto": 0.369,
+   "mediana": 4395.0,
    "unidade": "€",
    "valor": 2775.0,
    "area": null,
-   "amostras": 47,
+   "amostras": 48,
    "grupo": "diesel",
    "sinais": [],
    "problemas": [],
@@ -123,7 +123,7 @@
    "url": "https://www.autouncle.pt/pt/d/6700722-usado-1998-land-rover-freelander",
    "olx_pesquisa": "https://www.olx.pt/ads/q-vitara/?search%5Bfilter_float_price%3Ato%5D=3000",
    "primeiro": 1793902314.2074828,
-   "ultimo": 1793942126.5752292,
+   "ultimo": 1793943029.2493198,
    "km": null
   },
   "cj-45231789": {
@@ -139,7 +139,7 @@
    "unidade": "€",
    "valor": 2500.0,
    "area": null,
-   "amostras": 57,
+   "amostras": 58,
    "grupo": null,
    "sinais": [],
    "problemas": [],
@@ -148,7 +148,7 @@
    "url": "https://www.custojusto.pt/setubal/veiculos/carros-usados/suv-tt/suzuki-grand-vitara-suv-45231789",
    "olx_pesquisa": "https://www.olx.pt/ads/q-vitara/?search%5Bfilter_float_price%3Ato%5D=3000",
    "primeiro": 1793904327.3500524,
-   "ultimo": 1793942126.5752292,
+   "ultimo": 1793943029.2493198,
    "km": null
   }
  },
@@ -156,12 +156,12 @@
   "Jipe": {
    "todos": {
     "mediana": 4500.0,
-    "amostras": 58,
+    "amostras": 59,
     "unidade": "€"
    },
    "diesel": {
-    "mediana": 4275.0,
-    "amostras": 48,
+    "mediana": 4300.0,
+    "amostras": 49,
     "unidade": "€"
    },
    "gasolina": {
