@@ -18,8 +18,10 @@
       "fontes": [
         "custojusto"
       ],
-      "pesquisa": "moto4",
-      "incluir": [],
+      "pesquisa": "moto 4 ATV",
+      "incluir": [
+        "4x4"
+      ],
       "alternativas": [
         "4x4",
         "1000cc",
