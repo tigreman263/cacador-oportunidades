@@ -7,3 +7,4 @@ debug/
 *.log
 .wrangler/
 node_modules/
+estado/drive_cache/

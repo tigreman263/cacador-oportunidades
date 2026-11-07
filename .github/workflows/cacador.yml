@@ -30,7 +30,7 @@ concurrency:
 jobs:
   verificar:
     runs-on: ubuntu-latest
-    timeout-minutes: 10
+    timeout-minutes: 20   # a primeira leitura da base do Drive pode demorar; depois é rápida
     steps:
       - uses: actions/checkout@v4
 
@@ -41,12 +41,21 @@ jobs:
 
       - run: pip install -r requirements.txt
 
+      # Cópia privada dos ficheiros da base do Drive (não vai para o repositório público).
+      # Assim só se descarregam de novo os ficheiros que mudaram no Drive.
+      - uses: actions/cache@v4
+        with:
+          path: estado/drive_cache
+          key: drive-${{ github.run_id }}
+          restore-keys: drive-
+
       - name: Verificar anúncios
         env:
           TELEGRAM_TOKEN: ${{ secrets.TELEGRAM_TOKEN }}
           TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
           WHATSAPP_TELEFONE: ${{ secrets.WHATSAPP_TELEFONE }}
           WHATSAPP_APIKEY: ${{ secrets.WHATSAPP_APIKEY }}
+          GOOGLE_DRIVE_CHAVE: ${{ secrets.GOOGLE_DRIVE_CHAVE }}
         run: python -m bot ${{ (github.event_name == 'schedule' || inputs.agendada) && '--agendada' || '' }} ${{ inputs.resumo && '--resumo' || '' }}
 
       - name: Guardar resultados

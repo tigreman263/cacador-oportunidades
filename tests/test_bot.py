@@ -4,7 +4,7 @@ from pathlib import Path
 
 from bot import analise as A
 from bot import avisos, cacador
-from bot.fontes import autouncle, custojusto
+from bot.fontes import autouncle, custojusto, drive
 from bot.texto import area_do_texto, encontrar, normalizar, numero
 from bot.zonas import Localidades, dentro_da_zona
 
@@ -156,6 +156,75 @@ class Fontes(unittest.TestCase):
         self.assertEqual((r[2]["cidade"], r[2]["distrito"], r[2]["area"]), ("Penela", "castelo branco", 1260))
         local = LOC.resolver(r[2]["cidade"], r[2]["distrito"])
         self.assertEqual(local["concelho"], "Penela")
+
+
+CSV_DRIVE = ("\ufeff" "origem;especialidade;subcategoria;titulo;preco;preco\\_num;negociavel;distrito;concelho;localidade;"
+             "marca;modelo;ano;km;combustivel;estado;tipologia;area\\_m2;detalhes;profissional;publicado;atualizado;link;descarregado\\_em\n"
+             "OLX;Carros;Nissan;Marta Ferreira Ferreira;1.500 €;1500,00;;Braga;Penela;Rio Caldo;;Primera;;;Diesel;Usado;;;"
+             "Cilindrada: 2.200;não;2026-10-20;2026-10-20;https://www.olx.pt/d/anuncio/marta-ferreira-ferreira-IDJENfU.html;2026-11-07 12:40\n"
+             "OLX;Motociclos - Scooters;KTM;Ktm exc 450 , ano 2007;3.300 €;3300,00;sim;Braga;Penela;Cabeceiras;;EXC;2007;;Gasolina;Usado;;;"
+             "Cilindrada: 126 - 500 cc;não;2026-10-11;2026-10-11;https://www.olx.pt/d/anuncio/ktm-exc-450-ano-2007-IDJDP4m.html;2026-11-07 12:40\n"
+             "OLX;Animais De Quinta;Ovelhas;Sufollk malatas e malato;Troca;0,00;;Évora;Redondo;Redondo;;;;;;;;;;não;2026-10-18;2026-10-18;"
+             "https://www.olx.pt/d/anuncio/sufollk-malatas-e-malato-IDJEvpB.html;2026-11-07 18:25\n")
+
+
+class Drive(unittest.TestCase):
+    def test_ler_csv(self):
+        a, b = drive.ler_csv(CSV_DRIVE)  # o anúncio "Troca" (sem preço) fica de fora
+        self.assertEqual(a["id"], "drive-IDJENfU")
+        self.assertEqual(a["preco"], 1500)
+        self.assertEqual(a["titulo"], "Marta Ferreira Ferreira (Nissan Primera)")  # marca/modelo que faltavam
+        self.assertEqual((a["cidade"], a["distrito"], a["publicado"]), ("Penela", "Braga", "2026-10-20"))
+        self.assertEqual(b["titulo"], "Ktm exc 450 , ano 2007")  # já tinha marca e modelo
+        self.assertIn("negociavel", b["descricao"])
+        self.assertEqual(b["url"], "https://www.olx.pt/d/anuncio/ktm-exc-450-ano-2007-IDJDP4m.html")
+
+    def test_pesquisa(self):
+        a, b = drive.ler_csv(CSV_DRIVE)
+        p = drive.palavras_pesquisa("moradia venda")
+        self.assertEqual(p, ["moradia"])
+        self.assertTrue(drive.corresponde(a, drive.palavras_pesquisa("nissan")))
+        self.assertFalse(drive.corresponde(b, drive.palavras_pesquisa("nissan")))
+        self.assertTrue(drive.corresponde(b, []))
+
+    def test_procurar_sem_familias_ou_sem_chave(self):
+        self.assertEqual(list(drive.procurar(None, "ktm", familias=[])), [])
+        import os
+        antes = os.environ.pop("GOOGLE_DRIVE_CHAVE", None)
+        try:
+            self.assertEqual(list(drive.procurar(None, "ktm", familias=["carros"])), [])
+        finally:
+            if antes is not None:
+                os.environ["GOOGLE_DRIVE_CHAVE"] = antes
+
+    def test_procurar_usa_familias(self):
+        import os
+        drive._linhas.clear()
+        drive._linhas["carros"] = drive.ler_csv(CSV_DRIVE)
+        os.environ["GOOGLE_DRIVE_CHAVE"] = "{}"
+        try:
+            r = list(drive.procurar(None, "nissan", familias=["carros"]))
+        finally:
+            del os.environ["GOOGLE_DRIVE_CHAVE"]
+            drive._linhas.clear()
+        self.assertEqual([x["id"] for x in r], ["drive-IDJENfU"])
+
+    def test_fonte_ligada_no_ciclo(self):
+        chamado = {}
+        def falsa(sessao, pesquisa, familias=None):
+            chamado["familias"] = familias
+            return iter(drive.ler_csv(CSV_DRIVE)[:1])
+        p = {"nome": "Carro", "pesquisa": "nissan", "fontes": ["drive"], "familias_drive": ["carros"]}
+        r = cacador.buscar_anuncios(None, p, {"drive": falsa}, pausa=0)
+        self.assertEqual(chamado["familias"], ["carros"])
+        self.assertEqual(r[0]["fonte"], "OLX (Drive)")
+
+    def test_regras_tem_familias(self):
+        r = next(x for x in REGRAS["procura"] if x["chave"] == "familias_drive")
+        valores = {o["valor"] for o in r["opcoes"]}
+        for m in REGRAS["modelos"].values():
+            self.assertIn("drive", m["fontes"])
+            self.assertTrue(set(m["familias_drive"]) <= valores)
 
 
 if __name__ == "__main__":

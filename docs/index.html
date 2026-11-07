@@ -118,6 +118,10 @@ details.procura>summary::-webkit-details-marker{display:none}
 details.procura>summary b{font:600 20px var(--f-preco)}
 details.procura>summary span{font-size:13px;color:var(--ink-3)}
 details.procura .corpo{padding:0 14px 14px}
+details.familias{border:1px solid var(--line);border-radius:10px;padding:10px 12px}
+details.familias>summary{cursor:pointer}
+details.familias>summary small{color:var(--ink-3)}
+.familias-lista{max-height:320px;overflow-y:auto;margin-top:8px}
 details.procura .regra{border:none;padding:12px 0 4px;border-top:1px solid var(--line);border-radius:0;margin:0}
 .barra-guardar{position:fixed;left:0;right:0;bottom:0;padding:10px 16px calc(10px + 64px + env(safe-area-inset-bottom,0px));background:var(--card);border-top:1px solid var(--line);display:none;justify-content:center;gap:10px;z-index:4}
 .barra-guardar.ativa{display:flex}
@@ -280,7 +284,7 @@ function cartao(a){
     ${a.preco_antes ? `<p class="baixou">Baixou de ${euros(a.preco_antes)}</p>` : ""}
     <p class="ref">Preço normal ${valorFmt(a.mediana, a.unidade)}, calculado com ${a.amostras} anúncios${a.grupo ? ` de ${esc(a.grupo)}` : ""}</p>
     ${marcas ? `<div class="marcas">${marcas}</div>` : ""}
-    <div class="rodape"><span>${esc(a.local || "")}${a.km != null ? ` (a ${a.km} km)` : ""} ${a.local ? "—" : ""} ${esc(a.fonte)}, ${haQuanto(a.primeiro)}</span>
+    <div class="rodape"><span>${esc(a.local || "")}${a.km != null ? ` (a ${a.km} km)` : ""} ${a.local ? "—" : ""} ${esc(a.fonte)}, ${a.publicado ? "publicado a " + esc(a.publicado.split("-").reverse().join("/")) : haQuanto(a.primeiro)}</span>
       <a href="${esc(urlSegura(a.url))}" target="_blank" rel="noopener">Abrir anúncio</a></div>
   </article>`;
 }
@@ -334,7 +338,11 @@ function campo(r, valor, caminho, rotuloProposta){
   } else if (r.tipo === "texto"){
     entrada = `<input type="text" id="${id}" data-caminho="${caminho}" value="${esc(valor ?? "")}">`;
   } else if (r.tipo === "fontes"){
-    entrada = r.opcoes.map(o => `<label class="interruptor"><input type="checkbox" data-caminho="${caminho}" data-opcao="${o}" ${(valor||[]).includes(o) ? "checked" : ""}> ${({custojusto: "CustoJusto", autouncle: "AutoUncle (só carros)"})[o] || esc(o)}</label>`).join("");
+    entrada = r.opcoes.map(o => `<label class="interruptor"><input type="checkbox" data-caminho="${caminho}" data-opcao="${o}" ${(valor||[]).includes(o) ? "checked" : ""}> ${({custojusto: "CustoJusto", autouncle: "AutoUncle (só carros)", drive: "Base do Drive (OLX)"})[o] || esc(o)}</label>`).join("");
+  } else if (r.tipo === "familias"){
+    const marcadas = r.opcoes.filter(o => (valor||[]).includes(o.valor)).map(o => o.rotulo);
+    entrada = `<details class="familias"><summary>${marcadas.length ? esc(marcadas.join(", ")) : "Nenhuma família escolhida"} <small>(tocar para escolher)</small></summary><div class="familias-lista">${
+      r.opcoes.map(o => `<label class="interruptor"><input type="checkbox" data-caminho="${caminho}" data-opcao="${esc(o.valor)}" ${(valor||[]).includes(o.valor) ? "checked" : ""}> ${esc(o.rotulo)}</label>`).join("")}</div></details>`;
   } else { // lista
     entrada = `<div class="fichas">${(valor||[]).map((p, i) => `<span class="ficha">${esc(p)}<button aria-label="Retirar ${esc(p)}" data-retirar="${caminho}" data-i="${i}">×</button></span>`).join("") || '<span class="desc">Lista vazia</span>'}</div>
       <div class="acrescentar"><input type="text" placeholder="Nova palavra" data-nova="${caminho}" aria-label="Acrescentar a ${esc(r.nome)}"><button data-acrescentar="${caminho}">Acrescentar</button></div>`;
@@ -355,7 +363,7 @@ function htmlProposta(r, valor, caminho, rotuloProposta){
 function valorProcura(p, r){
   const v = p[r.chave];
   if (v != null) return v;
-  if (r.tipo === "lista" || r.tipo === "fontes") return [];
+  if (r.tipo === "lista" || r.tipo === "fontes" || r.tipo === "familias") return [];
   if (r.tipo === "sim_nao") return r.proposta;
   return null;
 }
@@ -480,7 +488,7 @@ document.getElementById("vista").addEventListener("change", ev => {
   else if (r.tipo === "escolha") o[k] = el.value;
   else if (r.tipo === "sim_nao") o[k] = el.checked;
   else if (r.tipo === "texto") o[k] = el.value.trim();
-  else if (r.tipo === "fontes"){
+  else if (r.tipo === "fontes" || r.tipo === "familias"){
     const atual = new Set(o[k] || []); el.checked ? atual.add(el.dataset.opcao) : atual.delete(el.dataset.opcao); o[k] = [...atual];
   }
   marcarAlterado();
@@ -521,7 +529,7 @@ document.getElementById("vista").addEventListener("click", ev => {
   if (b.dataset.novoTipo){
     const tipo = b.dataset.novoTipo, m = structuredClone((E.regras.modelos || {})[tipo] || {});
     E.config.procuras = E.config.procuras || [];
-    E.config.procuras.push({id:novoId(), tipo, ativa:true, desconto_minimo:null, fontes:["custojusto"],
+    E.config.procuras.push({id:novoId(), tipo, ativa:true, desconto_minimo:null, fontes:["custojusto","drive"], familias_drive:[],
       pesquisa:"", incluir:[], alternativas:[], excluir:[], zona:{modo:"pais"}, preco_max:null, grupos:[], comparar_por:"preco", ...m,
       nome: m.nome || "Nova procura"});
     E.aberta = E.config.procuras.length - 1; marcarAlterado(); desenhar();

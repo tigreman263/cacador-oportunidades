@@ -382,14 +382,489 @@
     {
       "chave": "fontes",
       "nome": "Sites",
-      "descricao": "Onde procurar. O AutoUncle só tem carros, de muitos sites ao mesmo tempo.",
+      "descricao": "Onde procurar. O AutoUncle só tem carros, de muitos sites ao mesmo tempo. A \"Base do Drive\" são os anúncios que juntas na pasta OLX do teu Google Drive (escolhe as famílias no campo seguinte).",
       "proposta": [
-        "custojusto"
+        "custojusto",
+        "drive"
       ],
       "tipo": "fontes",
       "opcoes": [
         "custojusto",
-        "autouncle"
+        "autouncle",
+        "drive"
+      ]
+    },
+    {
+      "chave": "familias_drive",
+      "nome": "Famílias da base do Drive",
+      "descricao": "Só para a \"Base do Drive\". Escolhe os ficheiros (famílias) onde o bot procura, por exemplo \"carros\" para carros. A base tem milhares de ficheiros, por isso o bot só lê as famílias marcadas. Dentro delas usa o texto de pesquisa e os filtros de palavras, como nos sites.",
+      "proposta": [],
+      "tipo": "familias",
+      "opcoes": [
+        {
+          "valor": "acessorios",
+          "rotulo": "Acessorios"
+        },
+        {
+          "valor": "acessorios_automoveis",
+          "rotulo": "Acessorios automoveis"
+        },
+        {
+          "valor": "administrativo_e_secretariado",
+          "rotulo": "Administrativo e secretariado"
+        },
+        {
+          "valor": "alfaias_agricolas",
+          "rotulo": "Alfaias agricolas"
+        },
+        {
+          "valor": "alugueres",
+          "rotulo": "Alugueres"
+        },
+        {
+          "valor": "animais_de_quinta",
+          "rotulo": "Animais de quinta"
+        },
+        {
+          "valor": "animais_para_adopcao",
+          "rotulo": "Animais para adopcao"
+        },
+        {
+          "valor": "apartamentos",
+          "rotulo": "Apartamentos"
+        },
+        {
+          "valor": "armazens",
+          "rotulo": "Armazens"
+        },
+        {
+          "valor": "assistente_de_loja_e_caixa",
+          "rotulo": "Assistente de loja e caixa"
+        },
+        {
+          "valor": "auriculares",
+          "rotulo": "Auriculares"
+        },
+        {
+          "valor": "autocaravanas_reboques",
+          "rotulo": "Autocaravanas reboques"
+        },
+        {
+          "valor": "aves",
+          "rotulo": "Aves"
+        },
+        {
+          "valor": "barcos_lanchas",
+          "rotulo": "Barcos lanchas"
+        },
+        {
+          "valor": "bicicletas",
+          "rotulo": "Bicicletas"
+        },
+        {
+          "valor": "bilhar",
+          "rotulo": "Bilhar"
+        },
+        {
+          "valor": "bilhetes_espectaculos",
+          "rotulo": "Bilhetes espectaculos"
+        },
+        {
+          "valor": "brinquedos_jogos",
+          "rotulo": "Brinquedos jogos"
+        },
+        {
+          "valor": "caca",
+          "rotulo": "Caca"
+        },
+        {
+          "valor": "caes",
+          "rotulo": "Caes"
+        },
+        {
+          "valor": "calcado",
+          "rotulo": "Calcado"
+        },
+        {
+          "valor": "call_center_helpdesk_e_telemarketing",
+          "rotulo": "Call center helpdesk e telemarketing"
+        },
+        {
+          "valor": "caminhada_corrida_e_atletismo",
+          "rotulo": "Caminhada corrida e atletismo"
+        },
+        {
+          "valor": "campismo",
+          "rotulo": "Campismo"
+        },
+        {
+          "valor": "carros",
+          "rotulo": "Carros"
+        },
+        {
+          "valor": "casas_de_ferias",
+          "rotulo": "Casas de ferias"
+        },
+        {
+          "valor": "cavalos",
+          "rotulo": "Cavalos"
+        },
+        {
+          "valor": "coleccoes_antiguidades",
+          "rotulo": "Coleccoes antiguidades"
+        },
+        {
+          "valor": "comerciais_camioes",
+          "rotulo": "Comerciais camioes"
+        },
+        {
+          "valor": "comercial",
+          "rotulo": "Comercial"
+        },
+        {
+          "valor": "computadores_informatica",
+          "rotulo": "Computadores informatica"
+        },
+        {
+          "valor": "construcao_civil",
+          "rotulo": "Construcao civil"
+        },
+        {
+          "valor": "desporto_e_fitness",
+          "rotulo": "Desporto e fitness"
+        },
+        {
+          "valor": "desportos_de_combate",
+          "rotulo": "Desportos de combate"
+        },
+        {
+          "valor": "discos_vinil_cds_musica",
+          "rotulo": "Discos vinil cds musica"
+        },
+        {
+          "valor": "domesticos",
+          "rotulo": "Domesticos"
+        },
+        {
+          "valor": "domesticos_e_limpezas",
+          "rotulo": "Domesticos e limpezas"
+        },
+        {
+          "valor": "dvd_filmes",
+          "rotulo": "Dvd filmes"
+        },
+        {
+          "valor": "electrodomesticos",
+          "rotulo": "Electrodomesticos"
+        },
+        {
+          "valor": "electronica",
+          "rotulo": "Electronica"
+        },
+        {
+          "valor": "equipamento_de_hotelaria_e_restauracao",
+          "rotulo": "Equipamento de hotelaria e restauracao"
+        },
+        {
+          "valor": "equipamento_e_materiais_de_construcao_civil",
+          "rotulo": "Equipamento e materiais de construcao civil"
+        },
+        {
+          "valor": "equipamento_industrial",
+          "rotulo": "Equipamento industrial"
+        },
+        {
+          "valor": "equipamento_para_lojas_e_comercio",
+          "rotulo": "Equipamento para lojas e comercio"
+        },
+        {
+          "valor": "escritorios_lojas",
+          "rotulo": "Escritorios lojas"
+        },
+        {
+          "valor": "estabelecimentos_comerciais",
+          "rotulo": "Estabelecimentos comerciais"
+        },
+        {
+          "valor": "eventos",
+          "rotulo": "Eventos"
+        },
+        {
+          "valor": "ferramentas",
+          "rotulo": "Ferramentas"
+        },
+        {
+          "valor": "formacao_ensino_e_educacao",
+          "rotulo": "Formacao ensino e educacao"
+        },
+        {
+          "valor": "futsal_e_futebol",
+          "rotulo": "Futsal e futebol"
+        },
+        {
+          "valor": "garagens_e_estacionamento",
+          "rotulo": "Garagens e estacionamento"
+        },
+        {
+          "valor": "gatos",
+          "rotulo": "Gatos"
+        },
+        {
+          "valor": "golfe",
+          "rotulo": "Golfe"
+        },
+        {
+          "valor": "industrial_fabrico_e_confeccao_textil",
+          "rotulo": "Industrial fabrico e confeccao textil"
+        },
+        {
+          "valor": "instrumentos_musicais",
+          "rotulo": "Instrumentos musicais"
+        },
+        {
+          "valor": "it_e_telecomunicacoes",
+          "rotulo": "It e telecomunicacoes"
+        },
+        {
+          "valor": "jardim_e_bricolage",
+          "rotulo": "Jardim e bricolage"
+        },
+        {
+          "valor": "joias_relogios_e_bijuteria",
+          "rotulo": "Joias relogios e bijuteria"
+        },
+        {
+          "valor": "licencas_e_alvaras",
+          "rotulo": "Licencas e alvaras"
+        },
+        {
+          "valor": "livros_revistas",
+          "rotulo": "Livros revistas"
+        },
+        {
+          "valor": "lojas",
+          "rotulo": "Lojas"
+        },
+        {
+          "valor": "malas_e_acessorios",
+          "rotulo": "Malas e acessorios"
+        },
+        {
+          "valor": "marketing_publicidade_e_eventos",
+          "rotulo": "Marketing publicidade e eventos"
+        },
+        {
+          "valor": "material_escolar",
+          "rotulo": "Material escolar"
+        },
+        {
+          "valor": "moradias_casas",
+          "rotulo": "Moradias casas"
+        },
+        {
+          "valor": "motociclos_scooters",
+          "rotulo": "Motociclos scooters"
+        },
+        {
+          "valor": "moveis",
+          "rotulo": "Moveis"
+        },
+        {
+          "valor": "musculacao_e_fitness",
+          "rotulo": "Musculacao e fitness"
+        },
+        {
+          "valor": "natacao",
+          "rotulo": "Natacao"
+        },
+        {
+          "valor": "outros",
+          "rotulo": "Outros"
+        },
+        {
+          "valor": "outros_artigos",
+          "rotulo": "Outros artigos"
+        },
+        {
+          "valor": "outros_desportos",
+          "rotulo": "Outros desportos"
+        },
+        {
+          "valor": "outros_servicos",
+          "rotulo": "Outros servicos"
+        },
+        {
+          "valor": "outros_veiculos",
+          "rotulo": "Outros veiculos"
+        },
+        {
+          "valor": "padel",
+          "rotulo": "Padel"
+        },
+        {
+          "valor": "passeio",
+          "rotulo": "Passeio"
+        },
+        {
+          "valor": "patins_e_skates",
+          "rotulo": "Patins e skates"
+        },
+        {
+          "valor": "pecas_automoveis",
+          "rotulo": "Pecas automoveis"
+        },
+        {
+          "valor": "pecas_e_acessorios_para_motos",
+          "rotulo": "Pecas e acessorios para motos"
+        },
+        {
+          "valor": "pecas_para_camioes",
+          "rotulo": "Pecas para camioes"
+        },
+        {
+          "valor": "pecas_para_maquinas_agricolas",
+          "rotulo": "Pecas para maquinas agricolas"
+        },
+        {
+          "valor": "pecas_para_maquinas_e_veiculos",
+          "rotulo": "Pecas para maquinas e veiculos"
+        },
+        {
+          "valor": "peixes",
+          "rotulo": "Peixes"
+        },
+        {
+          "valor": "pesca_e_mergulho",
+          "rotulo": "Pesca e mergulho"
+        },
+        {
+          "valor": "pneus_e_jantes",
+          "rotulo": "Pneus e jantes"
+        },
+        {
+          "valor": "produtos_quimicos_automoveis",
+          "rotulo": "Produtos quimicos automoveis"
+        },
+        {
+          "valor": "quartos_para_arrendar",
+          "rotulo": "Quartos para arrendar"
+        },
+        {
+          "valor": "refeicao",
+          "rotulo": "Refeicao"
+        },
+        {
+          "valor": "relaxar_e_dormir",
+          "rotulo": "Relaxar e dormir"
+        },
+        {
+          "valor": "reparacao_manutencao_e_oficinas",
+          "rotulo": "Reparacao manutencao e oficinas"
+        },
+        {
+          "valor": "reparacoes_e_mudancas",
+          "rotulo": "Reparacoes e mudancas"
+        },
+        {
+          "valor": "restauracao_hotelaria_e_turismo",
+          "rotulo": "Restauracao hotelaria e turismo"
+        },
+        {
+          "valor": "retrosaria",
+          "rotulo": "Retrosaria"
+        },
+        {
+          "valor": "roupa",
+          "rotulo": "Roupa"
+        },
+        {
+          "valor": "roupinhas",
+          "rotulo": "Roupinhas"
+        },
+        {
+          "valor": "salvados",
+          "rotulo": "Salvados"
+        },
+        {
+          "valor": "saude_beleza",
+          "rotulo": "Saude beleza"
+        },
+        {
+          "valor": "saude_e_beleza",
+          "rotulo": "Saude e beleza"
+        },
+        {
+          "valor": "seguranca",
+          "rotulo": "Seguranca"
+        },
+        {
+          "valor": "sementes_arvores_e_produtos_agricolas",
+          "rotulo": "Sementes arvores e produtos agricolas"
+        },
+        {
+          "valor": "ski_e_snowboard",
+          "rotulo": "Ski e snowboard"
+        },
+        {
+          "valor": "smartwatches",
+          "rotulo": "Smartwatches"
+        },
+        {
+          "valor": "surf_e_bodyboard",
+          "rotulo": "Surf e bodyboard"
+        },
+        {
+          "valor": "tablets",
+          "rotulo": "Tablets"
+        },
+        {
+          "valor": "tecnicos",
+          "rotulo": "Tecnicos"
+        },
+        {
+          "valor": "telemoveis",
+          "rotulo": "Telemoveis"
+        },
+        {
+          "valor": "tenis",
+          "rotulo": "Tenis"
+        },
+        {
+          "valor": "terrenos_e_quintas",
+          "rotulo": "Terrenos e quintas"
+        },
+        {
+          "valor": "tractores",
+          "rotulo": "Tractores"
+        },
+        {
+          "valor": "transportes_e_logistica",
+          "rotulo": "Transportes e logistica"
+        },
+        {
+          "valor": "trotinetes_e_outros_veiculos",
+          "rotulo": "Trotinetes e outros veiculos"
+        },
+        {
+          "valor": "tv_som_e_fotografia_e_video",
+          "rotulo": "Tv som e fotografia e video"
+        },
+        {
+          "valor": "utilidades_e_decoracao",
+          "rotulo": "Utilidades e decoracao"
+        },
+        {
+          "valor": "veiculos_para_pecas",
+          "rotulo": "Veiculos para pecas"
+        },
+        {
+          "valor": "viagens_e_atividades_turisticas",
+          "rotulo": "Viagens e atividades turisticas"
+        },
+        {
+          "valor": "videojogos_consolas",
+          "rotulo": "Videojogos consolas"
+        }
       ]
     }
   ],
@@ -435,12 +910,17 @@
         "abatid"
       ],
       "fontes": [
-        "custojusto"
+        "custojusto",
+        "drive"
       ],
       "zona": {
         "modo": "pais"
       },
-      "categoria": "veiculos/motos/moto-4-quad"
+      "categoria": "veiculos/motos/moto-4-quad",
+      "familias_drive": [
+        "motociclos_scooters",
+        "outros_veiculos"
+      ]
     },
     "carro": {
       "nome": "Renault Clio",
@@ -504,13 +984,16 @@
       ],
       "fontes": [
         "custojusto",
-        "autouncle"
+        "drive"
       ],
       "zona": {
         "modo": "pais"
       },
       "categoria": "veiculos/carros-usados",
-      "categoria_autouncle": ""
+      "categoria_autouncle": "",
+      "familias_drive": [
+        "carros"
+      ]
     },
     "casa": {
       "nome": "Moradia",
@@ -556,12 +1039,17 @@
         "leilao judicial"
       ],
       "fontes": [
-        "custojusto"
+        "custojusto",
+        "drive"
       ],
       "zona": {
         "modo": "pais"
       },
-      "categoria": "imobiliario/moradias"
+      "categoria": "imobiliario/moradias",
+      "familias_drive": [
+        "moradias_casas",
+        "apartamentos"
+      ]
     },
     "terreno": {
       "nome": "Terreno",
@@ -605,12 +1093,16 @@
         "leilao judicial"
       ],
       "fontes": [
-        "custojusto"
+        "custojusto",
+        "drive"
       ],
       "zona": {
         "modo": "pais"
       },
-      "categoria": "imobiliario/terrenos-quintas"
+      "categoria": "imobiliario/terrenos-quintas",
+      "familias_drive": [
+        "terrenos_e_quintas"
+      ]
     },
     "outro": {
       "nome": "Nova procura",
@@ -618,12 +1110,14 @@
       "problemas_extra": [],
       "graves_extra": [],
       "fontes": [
-        "custojusto"
+        "custojusto",
+        "drive"
       ],
       "zona": {
         "modo": "pais"
       },
-      "categoria": ""
+      "categoria": "",
+      "familias_drive": []
     }
   }
 }

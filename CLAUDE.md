@@ -41,6 +41,10 @@ listagem e configurações.
 - `bot/localidades.py` — cria `docs/localidades.json` a partir do GeoNames (CC BY)
 - `bot/fontes/custojusto.py` — JSON `__NEXT_DATA__` da página de pesquisa (com categoria por procura)
 - `bot/fontes/autouncle.py` — carros de vários sites (schema.org ld+json); sem pesquisa por texto: tipo de carro (`categoria_autouncle`) + teto de preço
+- `bot/fontes/drive.py` — "Base do Drive": CSVs que o utilizador junta à mão no Google Drive
+  (`OLX/base/<distrito>/<concelho>/<família>.csv`, separador `;`). Cada procura escolhe as famílias
+  (`familias_drive`); o bot só lê essas. Nunca vai ao site do OLX: só lê os ficheiros. Cópia local em
+  `estado/drive_cache` (fora do Git, guardada com `actions/cache`), só descarrega o que mudou.
 - `bot/avisos.py`, `bot/telegram.py`, `bot/whatsapp.py` — texto e envio dos alertas
 - `config.json` — regras e procuras do utilizador (a página grava aqui via API do GitHub)
 - `docs/regras.json` — descrições, propostas e modelos por tipo
@@ -49,7 +53,7 @@ listagem e configurações.
 - `.github/workflows/cacador.yml` — agendamento e gravação do estado
 - `tests/` — `python -m unittest discover -s tests -t .`
 
-Segredos: `TELEGRAM_TOKEN`, `TELEGRAM_CHAT_ID` (opcional: `WHATSAPP_TELEFONE`, `WHATSAPP_APIKEY`).
+Segredos: `TELEGRAM_TOKEN`, `TELEGRAM_CHAT_ID`, `GOOGLE_DRIVE_CHAVE` (JSON da conta de serviço Google, com a pasta OLX partilhada só para leitura) (opcional: `WHATSAPP_TELEFONE`, `WHATSAPP_APIKEY`).
 
 ## Estado (2026-11-03)
 

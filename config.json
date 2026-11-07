@@ -16,7 +16,8 @@
       "ativa": true,
       "desconto_minimo": null,
       "fontes": [
-        "custojusto"
+        "custojusto",
+        "drive"
       ],
       "pesquisa": "4x4",
       "incluir": [
@@ -59,7 +60,11 @@
       "graves_extra": [
         "abatid"
       ],
-      "categoria": "veiculos/motos/moto-4-quad"
+      "categoria": "veiculos/motos/moto-4-quad",
+      "familias_drive": [
+        "motociclos_scooters",
+        "outros_veiculos"
+      ]
     }
   ]
 }

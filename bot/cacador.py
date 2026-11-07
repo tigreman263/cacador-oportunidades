@@ -37,6 +37,7 @@ def buscar_anuncios(sessao, p: dict, fontes: dict, pausa: float = 2.0) -> list:
                 continue  # o AutoUncle só tem carros
             extra = ({"categoria": p.get("categoria") or ""} if nome == "custojusto"
                      else {"tipo_carro": p.get("categoria_autouncle") or "", "preco_max": p.get("preco_max")} if nome == "autouncle"
+                     else {"familias": p.get("familias_drive") or []} if nome == "drive"
                      else {})
             for a in f(sessao, p["pesquisa"], **extra):
                 if a["id"] not in vistos:
@@ -44,7 +45,8 @@ def buscar_anuncios(sessao, p: dict, fontes: dict, pausa: float = 2.0) -> list:
                     res.append(a)
         except Exception as e:
             log.warning("%s falhou em '%s': %s", nome, p.get("nome"), e)
-        time.sleep(pausa)
+        if nome != "drive":  # o Drive não é um site: não precisa de pausa
+            time.sleep(pausa)
     return res
 
 
@@ -102,6 +104,7 @@ def processar(config, regras, dados, estado, loc, anuncios_por_procura: dict, ag
                 "sinais": info["sinais"], "problemas": info["problemas"], "fonte": a["fonte"],
                 "local": (local or {}).get("nome") or a.get("cidade"), "url": a.get("url"),
                 "primeiro": (antigo or {}).get("primeiro", agora), "ultimo": agora, "km": km,
+                "publicado": a.get("publicado"),
             }
             anuncios[a["id"]] = reg
             ja = alertados.get(a["id"])
