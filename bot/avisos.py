@@ -44,7 +44,8 @@ def bloco(a: dict, f: Formato) -> str:
     local = a.get("local") or ""
     if a.get("km") is not None:
         local += f" (a {a['km']} km)"
-    linhas.append(f.t(f"{local} — {a['fonte']}".strip(" —")))
+    fonte = a["fonte"] + (f", publicado a {'/'.join(reversed(a['publicado'].split('-')))}" if a.get("publicado") else "")
+    linhas.append(f.t(f"{local} — {fonte}".strip(" —")))
     linhas.append(f.ligacao(a.get("url")))
     return "\n".join(l for l in linhas if l)
 

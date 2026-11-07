@@ -3,6 +3,7 @@
    python -m bot --agendada       só procura se já passou o intervalo das regras (despertador)
    python -m bot --resumo         no fim manda um resumo no Telegram (botão "Procurar agora")
    python -m bot --telegram-teste mostra o chat id e envia uma mensagem de teste
+   python -m bot --teste-alerta   envia como alerta os anúncios de exemplo da lista (para ver o aspeto)
    python -m bot --localidades    (re)cria docs/localidades.json a partir do GeoNames
 
 No PC, os segredos podem ficar num ficheiro .env na raiz do projeto (não vai para o GitHub):
@@ -38,6 +39,7 @@ def main():
     ap.add_argument("--agendada", action="store_true", help="respeita o intervalo das regras")
     ap.add_argument("--resumo", action="store_true", help="manda um resumo no Telegram no fim (botão Procurar agora)")
     ap.add_argument("--telegram-teste", action="store_true", help="testa a ligação ao Telegram")
+    ap.add_argument("--teste-alerta", action="store_true", help="envia os anúncios de exemplo como alerta")
     ap.add_argument("--localidades", action="store_true", help="recria docs/localidades.json")
     args = ap.parse_args()
     logging.basicConfig(level=logging.INFO, format="%(levelname)s %(name)s: %(message)s")
@@ -48,6 +50,15 @@ def main():
 
     if args.telegram_teste:
         telegram.teste(sessao)
+        return
+
+    if args.teste_alerta:
+        dados = cacador.ler_json(cacador.RAIZ / "docs" / "dados.json", {})
+        exemplos = [a for a in (dados.get("anuncios") or {}).values() if a.get("exemplo")]
+        if not exemplos:
+            logging.warning("Não há anúncios de exemplo na lista (campo \"exemplo\").")
+        avisos.enviar_todos(sessao, [a for a in exemplos if a["categoria"] == "boa"],
+                            [a for a in exemplos if a["categoria"] != "boa"], so_mostrar=args.sem_avisos)
         return
 
     destino = cacador.RAIZ / "docs" / "localidades.json"

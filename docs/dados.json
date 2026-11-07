@@ -100,6 +100,34 @@
    "ultimo": 1794078693.0963118,
    "km": null,
    "publicado": null
+  },
+  "exemplo-drive": {
+   "procura": "Exemplo Drive (4x4)",
+   "procura_id": "pmw5hpi2e8ze2",
+   "tipo": "carro",
+   "categoria": "boa",
+   "titulo": "EXEMPLO – Land Rover Discovery",
+   "preco": 7000.0,
+   "preco_antes": null,
+   "desconto": 0.263,
+   "mediana": 9500.0,
+   "unidade": "€",
+   "valor": 7000.0,
+   "area": null,
+   "amostras": 12,
+   "grupo": null,
+   "sinais": [
+    "negociavel"
+   ],
+   "problemas": [],
+   "fonte": "OLX (Drive)",
+   "local": "Terras de Bouro",
+   "url": "https://www.olx.pt/d/anuncio/land-rover-discovery-IDJzARw.html",
+   "primeiro": 1794078889.587975,
+   "ultimo": 1794078889.587975,
+   "km": null,
+   "publicado": "2026-09-07",
+   "exemplo": true
   }
  },
  "mercado": {

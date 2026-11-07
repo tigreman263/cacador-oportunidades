@@ -19,6 +19,10 @@ on:
         description: "Mandar resumo no Telegram no fim (botão Procurar agora)"
         type: boolean
         default: false
+      teste_alerta:
+        description: "Só enviar para o Telegram os anúncios de exemplo (para ver o aspeto)"
+        type: boolean
+        default: false
 
 permissions:
   contents: write
@@ -56,7 +60,7 @@ jobs:
           WHATSAPP_TELEFONE: ${{ secrets.WHATSAPP_TELEFONE }}
           WHATSAPP_APIKEY: ${{ secrets.WHATSAPP_APIKEY }}
           GOOGLE_DRIVE_CHAVE: ${{ secrets.GOOGLE_DRIVE_CHAVE }}
-        run: python -m bot ${{ (github.event_name == 'schedule' || inputs.agendada) && '--agendada' || '' }} ${{ inputs.resumo && '--resumo' || '' }}
+        run: python -m bot ${{ (github.event_name == 'schedule' || inputs.agendada) && '--agendada' || '' }} ${{ inputs.resumo && '--resumo' || '' }} ${{ inputs.teste_alerta && '--teste-alerta' || '' }}
 
       - name: Guardar resultados
         run: |
