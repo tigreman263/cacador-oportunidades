@@ -121,6 +121,7 @@ details.procura .corpo{padding:0 14px 14px}
 details.familias{border:1px solid var(--line);border-radius:10px;padding:10px 12px}
 details.familias>summary{cursor:pointer}
 details.familias>summary small{color:var(--ink-3)}
+.familias-filtro{width:100%;margin-top:8px}
 .familias-lista{max-height:320px;overflow-y:auto;margin-top:8px}
 details.procura .regra{border:none;padding:12px 0 4px;border-top:1px solid var(--line);border-radius:0;margin:0}
 .barra-guardar{position:fixed;left:0;right:0;bottom:0;padding:10px 16px calc(10px + 64px + env(safe-area-inset-bottom,0px));background:var(--card);border-top:1px solid var(--line);display:none;justify-content:center;gap:10px;z-index:4}
@@ -341,8 +342,10 @@ function campo(r, valor, caminho, rotuloProposta){
     entrada = r.opcoes.map(o => `<label class="interruptor"><input type="checkbox" data-caminho="${caminho}" data-opcao="${o}" ${(valor||[]).includes(o) ? "checked" : ""}> ${({custojusto: "CustoJusto", autouncle: "AutoUncle (só carros)", drive: "Base do Drive (OLX)"})[o] || esc(o)}</label>`).join("");
   } else if (r.tipo === "familias"){
     const marcadas = r.opcoes.filter(o => (valor||[]).includes(o.valor)).map(o => o.rotulo);
-    entrada = `<details class="familias"><summary>${marcadas.length ? esc(marcadas.join(", ")) : "Nenhuma família escolhida"} <small>(tocar para escolher)</small></summary><div class="familias-lista">${
-      r.opcoes.map(o => `<label class="interruptor"><input type="checkbox" data-caminho="${caminho}" data-opcao="${esc(o.valor)}" ${(valor||[]).includes(o.valor) ? "checked" : ""}> ${esc(o.rotulo)}</label>`).join("")}</div></details>`;
+    entrada = `<details class="familias"><summary>${marcadas.length ? esc(marcadas.join(", ")) : "Nenhuma família escolhida"} <small>(tocar para escolher)</small></summary>
+      <input type="search" class="familias-filtro" placeholder="Filtrar famílias (ex.: moto, carro, casa)" aria-label="Filtrar famílias">
+      <div class="familias-lista">${
+      r.opcoes.map(o => `<label class="interruptor" data-rotulo="${esc(semAcento(o.rotulo))}"><input type="checkbox" data-caminho="${caminho}" data-opcao="${esc(o.valor)}" ${(valor||[]).includes(o.valor) ? "checked" : ""}> ${esc(o.rotulo)}</label>`).join("")}</div></details>`;
   } else { // lista
     entrada = `<div class="fichas">${(valor||[]).map((p, i) => `<span class="ficha">${esc(p)}<button aria-label="Retirar ${esc(p)}" data-retirar="${caminho}" data-i="${i}">×</button></span>`).join("") || '<span class="desc">Lista vazia</span>'}</div>
       <div class="acrescentar"><input type="text" placeholder="Nova palavra" data-nova="${caminho}" aria-label="Acrescentar a ${esc(r.nome)}"><button data-acrescentar="${caminho}">Acrescentar</button></div>`;
@@ -496,7 +499,22 @@ document.getElementById("vista").addEventListener("change", ev => {
   if (r.tipo === "escolha") desenhar(); else atualizarSemRedesenhar(el, caminho);
 });
 
+/* Filtro da lista de famílias: esconde as que não têm o texto escrito (sem redesenhar a página). */
+document.getElementById("vista").addEventListener("input", ev => {
+  if (!ev.target.classList.contains("familias-filtro")) return;
+  const q = semAcento(ev.target.value), lista = ev.target.parentElement.querySelector(".familias-lista");
+  let visiveis = 0;
+  lista.querySelectorAll("label[data-rotulo]").forEach(l => {
+    const ok = !q || l.dataset.rotulo.split(/\s+/).some(w => w.startsWith(q)) || l.dataset.rotulo.includes(q);
+    l.hidden = !ok; if (ok) visiveis++;
+  });
+  let nada = lista.querySelector(".familias-nada");
+  if (!nada){ nada = document.createElement("div"); nada.className = "desc familias-nada"; nada.textContent = "Nenhuma família com esse nome."; lista.appendChild(nada); }
+  nada.hidden = visiveis > 0;
+});
+
 document.getElementById("vista").addEventListener("keydown", ev => {
+  if (ev.target.classList && ev.target.classList.contains("familias-filtro") && ev.key === "Enter"){ ev.preventDefault(); return; }
   if (ev.key === "Enter" && ev.target.dataset.nova){ ev.preventDefault(); acrescentar(ev.target.dataset.nova); }
 });
 
