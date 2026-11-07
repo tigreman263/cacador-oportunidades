@@ -57,6 +57,14 @@ Segredos: `TELEGRAM_TOKEN`, `TELEGRAM_CHAT_ID`, `GOOGLE_DRIVE_CHAVE` (JSON da co
 
 ## Estado (2026-11-03)
 
+- **Base do Drive ligada (2026-11-07).** Projeto Google Cloud `cacador-514020`, conta de serviço
+  `cacador-bot@cacador-514020.iam.gserviceaccount.com` (pasta OLX partilhada como Leitor), chave no
+  segredo `GOOGLE_DRIVE_CHAVE`. A procura Moto4 lê `motociclos_scooters` e `outros_veiculos`.
+  Há um anúncio de EXEMPLO (`exemplo-drive` em `docs/dados.json`, campo `exemplo: true`) que sai sozinho
+  ao fim de 30 dias; `python -m bot --teste-alerta` (ou `teste_alerta` no workflow) envia-o ao Telegram.
+- Pendente: duas execuções ao mesmo tempo podem chocar ao gravar `dados.json`/`estado.json`
+  (aconteceu uma vez; o utilizador ainda não pediu correção).
+
 - O bot antigo (pacote `cacador/`) ficou guardado no ramo `bot-antigo`. Nunca
   chegou a recolher anúncios: o OLX dava 403 e o leitor do CustoJusto falhava.
 - **CustoJusto funciona** (cerca de 40 anúncios por pesquisa). Campos reais:
