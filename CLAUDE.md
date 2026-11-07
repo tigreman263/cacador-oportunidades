@@ -6,7 +6,7 @@ explica os passos de forma simples e confirma antes de ações irreversíveis
 
 ## O que é
 
-Bot que vigia o OLX e o CustoJusto e avisa por **Telegram** (WhatsApp/CallMeBot
+Bot que vigia o CustoJusto (e o AutoUncle, para carros) e avisa por **Telegram** (WhatsApp/CallMeBot
 opcional) **só de boas compras**: anúncios claramente abaixo do preço normal de
 mercado, que o próprio bot aprende com os anúncios que vai vendo. Corre no GitHub
 Actions; quem o acorda de 15 em 15 min é um Worker do Cloudflare (`extras/cloudflare/`),
@@ -39,7 +39,6 @@ listagem e configurações.
 - `bot/analise.py` — filtros de palavras, mediana por grupo, categorias boa / rever
 - `bot/zonas.py` — localização dos anúncios e filtro de zona (país, raio, lista)
 - `bot/localidades.py` — cria `docs/localidades.json` a partir do GeoNames (CC BY)
-- `bot/fontes/olx.py` — `https://www.olx.pt/api/v1/offers/`
 - `bot/fontes/custojusto.py` — JSON `__NEXT_DATA__` da página de pesquisa (com categoria por procura)
 - `bot/fontes/autouncle.py` — carros de vários sites (schema.org ld+json); sem pesquisa por texto: tipo de carro (`categoria_autouncle`) + teto de preço
 - `bot/avisos.py`, `bot/telegram.py`, `bot/whatsapp.py` — texto e envio dos alertas
@@ -61,9 +60,11 @@ Segredos: `TELEGRAM_TOKEN`, `TELEGRAM_CHAT_ID` (opcional: `WHATSAPP_TELEFONE`, `
   `locationNames.county` (concelho), `locationNames.parish`, `params.size` (área).
   As "palavras a ignorar" também se aplicam à categoria do link (`pecas` afasta peças).
 - **OLX responde 403** a pedidos automáticos, tanto do PC como do GitHub Actions.
-  Não contornar a deteção de bots (falsificar browser, etc.). Alternativas
-  legítimas a estudar com o utilizador: outras fontes (Standvirtual, Imovirtual)
-  ou deixar só o CustoJusto.
+  Em 2026-11-07, a pedido do utilizador, **tudo o que era OLX foi apagado** (leitor,
+  botões "Abrir/Ver no OLX", opção nos Sites). Não contornar a deteção de bots.
+  O utilizador quer testar outra abordagem mais tarde.
+- O CustoJusto, quando a pesquisa tem poucos resultados, enche a página com
+  "destaques" de outras categorias; o bot ignora-os (`da_categoria`).
 
 ## Cuidados
 

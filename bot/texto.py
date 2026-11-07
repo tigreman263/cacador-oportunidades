@@ -16,7 +16,7 @@ def sem_acento(s) -> str:
 
 
 def normalizar(s) -> str:
-    s = re.sub(r"<[^>]+>", " ", str(s or ""))  # descrições do OLX vêm em HTML
+    s = re.sub(r"<[^>]+>", " ", str(s or ""))  # algumas descrições vêm em HTML
     s = sem_acento(s)
     s = re.sub(r"[^a-z0-9.,/+]+", " ", s)
     return re.sub(r"\s+", " ", s).strip()

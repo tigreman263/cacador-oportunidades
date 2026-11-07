@@ -2,7 +2,7 @@
 
 A estrutura interna desse JSON não é pública e pode mudar, por isso a extração é "defensiva":
 procura no JSON listas de objetos que pareçam anúncios (têm título, preço e id/url).
-Se o site mudar e nada for encontrado, o bot regista um aviso e continua só com o OLX.
+Se o site mudar e nada for encontrado, o bot regista um aviso e continua com as outras fontes.
 """
 import json
 import logging
@@ -114,6 +114,12 @@ def endereco(pesquisa: str, categoria: str = "", pagina: int = 1) -> str:
     return BASE + caminho + (f"?o={pagina}" if pagina > 1 else "")
 
 
+def da_categoria(a: dict, categoria: str) -> bool:
+    """True se o anúncio é da categoria pedida (ex.: "veiculos/motos/moto-4-quad"), ou se não há categoria."""
+    cat = (categoria or "").strip("/ ").replace("/", " ").replace("-", " ")
+    return not cat or not a.get("categoria") or (a["categoria"] + " ").startswith(cat + " ")
+
+
 def procurar(sessao, pesquisa: str, paginas: int = 2, categoria: str = "", pausa: float = 2.0):
     vistos = set()
     for pagina in range(1, paginas + 1):
@@ -123,10 +129,15 @@ def procurar(sessao, pesquisa: str, paginas: int = 2, categoria: str = "", pausa
         if r.status_code != 200:
             log.warning("CustoJusto respondeu %s para '%s' (página %d)", r.status_code, pesquisa, pagina)
             return
-        novos = [a for a in extrair(r.text) if a["id"] not in vistos]
-        if not novos:
+        todos = [a for a in extrair(r.text) if a["id"] not in vistos]
+        # Com poucos resultados, o site enche a página com "destaques" de outras categorias
+        # (carros numa procura de motos 4). Esses ficam de fora.
+        novos = [a for a in todos if da_categoria(a, categoria)]
+        if not todos:
             if pagina == 1:
                 log.warning("CustoJusto: nenhum anúncio reconhecido em '%s' (o site pode ter mudado)", pesquisa)
             return
-        vistos.update(a["id"] for a in novos)
+        vistos.update(a["id"] for a in todos)
         yield from novos
+        if not novos:
+            return  # a página já só tinha destaques: as seguintes também

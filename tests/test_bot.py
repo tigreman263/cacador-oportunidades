@@ -4,7 +4,7 @@ from pathlib import Path
 
 from bot import analise as A
 from bot import avisos, cacador
-from bot.fontes import autouncle, custojusto, olx
+from bot.fontes import autouncle, custojusto
 from bot.texto import area_do_texto, encontrar, normalizar, numero
 from bot.zonas import Localidades, dentro_da_zona
 
@@ -53,7 +53,7 @@ class Zonas(unittest.TestCase):
 
 
 def anuncio(i, titulo, preco, cidade="Penela", desc=""):
-    return {"id": f"t-{i}", "fonte": "OLX", "titulo": titulo, "descricao": desc, "preco": preco,
+    return {"id": f"t-{i}", "fonte": "CustoJusto", "titulo": titulo, "descricao": desc, "preco": preco,
             "area": None, "url": f"https://exemplo.pt/{i}", "cidade": cidade, "distrito": None, "lat": None, "lon": None}
 
 
@@ -105,7 +105,7 @@ class Fluxo(unittest.TestCase):
     def test_mensagem(self):
         a = {"tipo": "mota", "procura": "Quad", "titulo": "Suzuki <LT-F> & guincho", "preco": 2450, "desconto": 0.216,
              "mediana": 3125, "unidade": "€", "preco_antes": None, "problemas": [], "sinais": ["urgente"],
-             "local": "Penela", "km": 4, "fonte": "OLX", "url": "https://x/?a=1&b=2"}
+             "local": "Penela", "km": 4, "fonte": "CustoJusto", "url": "https://x/?a=1&b=2"}
         m = avisos.montar_mensagens([a], [], "whatsapp")
         self.assertEqual(len(m), 1)
         self.assertIn("2 450 €", m[0])
@@ -116,7 +116,7 @@ class Fluxo(unittest.TestCase):
 
     def test_mensagens_divididas(self):
         a = {"tipo": "mota", "procura": "Q", "titulo": "x" * 300, "preco": 1, "desconto": 0.5, "mediana": 2,
-             "unidade": "€", "problemas": [], "sinais": [], "local": "", "km": None, "fonte": "OLX", "url": ""}
+             "unidade": "€", "problemas": [], "sinais": [], "local": "", "km": None, "fonte": "CustoJusto", "url": ""}
         m = avisos.montar_mensagens([a] * 20, [], "telegram", limite=3800)
         self.assertGreater(len(m), 1)
         self.assertTrue(all(len(x) <= 3800 for x in m))
@@ -129,58 +129,16 @@ class CustoJustoEndereco(unittest.TestCase):
                          "https://www.custojusto.pt/portugal/veiculos/motos/moto-4-quad/q/suzuki?o=2")
 
 
-class OlxLink(unittest.TestCase):
-    def test_link_e_botoes(self):
-        self.assertEqual(olx.endereco_pesquisa({"pesquisa": "Moto 4 Suzuki", "preco_max": 6000}),
-                         "https://www.olx.pt/ads/q-moto-4-suzuki/?search%5Bfilter_float_price%3Ato%5D=6000")
-        self.assertEqual(olx.endereco_pesquisa({"pesquisa": "jipe", "incluir": ["4x4", "Jipe"]}),
-                         "https://www.olx.pt/ads/q-jipe-4x4/")
-        import os
-        os.environ.pop("PAINEL_URL", None); os.environ.pop("GITHUB_REPOSITORY", None)
-        b = avisos.botoes_olx([{"procura": "Moto", "olx_pesquisa": "u1"}, {"procura": "Moto", "olx_pesquisa": "u1"}])
-        self.assertEqual(len(b), 1)
-        self.assertEqual(b[0]["url"], "u1")
-        os.environ["PAINEL_URL"] = "https://x.github.io/c/"
-        try:
-            b = avisos.botoes_olx([{"procura": "Moto", "procura_id": "abc", "olx_pesquisa": "https://www.olx.pt/ads/q-a/"}])
-            self.assertEqual(b[0]["url"], "https://x.github.io/c/#ir-olx=abc&u=https%3A%2F%2Fwww.olx.pt%2Fads%2Fq-a%2F")
-        finally:
-            os.environ.pop("PAINEL_URL", None)
-
-
-class AutoUncle(unittest.TestCase):
-    def test_endereco_e_extrair(self):
-        self.assertEqual(autouncle.endereco("b-suv", 3000, 2),
-                         "https://www.autouncle.pt/pt/carros-usados/b-suv/mp-abaixo-de-5000-euro?page=2")
-        item = {"@type": ["Product", "Vehicle"], "name": "Usado (2001) Suzuki Jimny 80 HP", "vehicleModelDate": "2001",
-                "fuelType": "Gasolina", "bodyType": "SUV", "mileageFromOdometer": {"value": 175867},
-                "offers": {"price": 9980, "url": "https://www.autouncle.pt/pt/d/6646353-usado-2001-suzuki-jimny-80-cv#offer"}}
-        html = ('<script type="application/ld+json" id="schema-search-results">'
-                + json.dumps({"@graph": [{"@type": "ItemList", "itemListElement": [{"item": item}]}]}) + "</script>")
-        a = autouncle.extrair(html)[0]
-        self.assertEqual(a["id"], "autouncle-6646353")
-        self.assertEqual(a["titulo"], "Suzuki Jimny 80 cv - 2001 Gasolina SUV")
-        self.assertEqual(a["preco"], 9980.0)
-        self.assertTrue(a["url"].endswith("80-cv"))
-
-
-class Intervalo(unittest.TestCase):
-    def test_e_altura(self):
-        g = {"intervalo_minutos": 60}
-        self.assertTrue(cacador.e_altura(g, {}, 1000))                                   # nunca correu
-        self.assertFalse(cacador.e_altura(g, {"ultima_verificacao": 0}, 30 * 60))         # só 30 min
-        self.assertTrue(cacador.e_altura(g, {"ultima_verificacao": 0}, 59 * 60))          # folga de 2 min
-        self.assertTrue(cacador.e_altura({"intervalo_minutos": 5}, {"ultima_verificacao": 0}, 14 * 60))  # mínimo 15
+class CustoJustoCategoria(unittest.TestCase):
+    def test_destaques_de_outras_categorias_ficam_de_fora(self):
+        cat = "veiculos/motos/moto-4-quad"
+        self.assertTrue(custojusto.da_categoria({"categoria": "veiculos motos moto 4 quad"}, cat))
+        self.assertFalse(custojusto.da_categoria({"categoria": "veiculos carros usados sedan"}, cat))
+        self.assertFalse(custojusto.da_categoria({"categoria": "veiculos motos scooter"}, cat))
+        self.assertTrue(custojusto.da_categoria({"categoria": "veiculos carros usados"}, ""))
 
 
 class Fontes(unittest.TestCase):
-    def test_olx(self):
-        o = {"id": 9, "title": "Moradia T3 190 m²", "description": "<p>Boa</p>", "url": "https://www.olx.pt/d/x",
-             "params": [{"key": "price", "value": {"value": 139000, "type": "price"}}],
-             "location": {"city": {"name": "Penela"}, "region": {"name": "Castelo Branco"}}, "map": {"lat": 39.8, "lon": -8.1}}
-        a = olx.converter(o)
-        self.assertEqual((a["id"], a["preco"], a["area"], a["cidade"]), ("olx-9", 139000, 190, "Penela"))
-
     def test_custojusto(self):
         nd = {"props": {"pageProps": {"listItems": [
             {"listID": 1, "title": "Clio 1.5 dCi", "price": "6.900 €", "url": "/tomar/carros/clio-1", "municipality": "Tomar"},

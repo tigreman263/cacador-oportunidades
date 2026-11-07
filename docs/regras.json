@@ -3,7 +3,7 @@
     {
       "chave": "intervalo_minutos",
       "nome": "De quanto em quanto tempo procurar",
-      "descricao": "Tempo entre cada visita do bot ao OLX e ao CustoJusto. Mais curto = sabes das oportunidades mais cedo; mais longo = menos pedidos aos sites. O despertador toca de 15 em 15 minutos, por isso usa múltiplos de 15 (15, 30, 60, 120…). Correr à mão (botão \"Run workflow\") ignora este tempo.",
+      "descricao": "Tempo entre cada visita do bot aos sites. Mais curto = sabes das oportunidades mais cedo; mais longo = menos pedidos aos sites. O despertador toca de 15 em 15 minutos, por isso usa múltiplos de 15 (15, 30, 60, 120…). Correr à mão (botão \"Run workflow\") ignora este tempo.",
       "proposta": 15,
       "tipo": "numero",
       "unidade": "minutos",
@@ -382,14 +382,12 @@
     {
       "chave": "fontes",
       "nome": "Sites",
-      "descricao": "Onde procurar. O OLX bloqueia o bot (só funciona o botão \"Abrir no OLX\"). O AutoUncle só tem carros, de muitos sites ao mesmo tempo.",
+      "descricao": "Onde procurar. O AutoUncle só tem carros, de muitos sites ao mesmo tempo.",
       "proposta": [
-        "olx",
         "custojusto"
       ],
       "tipo": "fontes",
       "opcoes": [
-        "olx",
         "custojusto",
         "autouncle"
       ]
@@ -437,7 +435,6 @@
         "abatid"
       ],
       "fontes": [
-        "olx",
         "custojusto"
       ],
       "zona": {
@@ -506,7 +503,6 @@
         "sem matricula"
       ],
       "fontes": [
-        "olx",
         "custojusto",
         "autouncle"
       ],
@@ -560,7 +556,6 @@
         "leilao judicial"
       ],
       "fontes": [
-        "olx",
         "custojusto"
       ],
       "zona": {
@@ -610,7 +605,6 @@
         "leilao judicial"
       ],
       "fontes": [
-        "olx",
         "custojusto"
       ],
       "zona": {
@@ -624,7 +618,6 @@
       "problemas_extra": [],
       "graves_extra": [],
       "fontes": [
-        "olx",
         "custojusto"
       ],
       "zona": {

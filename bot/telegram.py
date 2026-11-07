@@ -28,7 +28,7 @@ def painel_url() -> str:
 
 
 def _botoes(extra=None):
-    """Teclado por baixo da mensagem: um botão por procura (abrir no OLX) e o do painel."""
+    """Teclado por baixo da mensagem: botões extra (se houver) e o do painel."""
     linhas = [[b] for b in (extra or [])]
     if painel_url():
         linhas.append([{"text": "📊 Abrir painel", "url": painel_url()}])

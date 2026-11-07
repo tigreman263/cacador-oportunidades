@@ -1,6 +1,6 @@
 # Caçador de Oportunidades
 
-Bot pessoal que procura anúncios no **OLX** e no **CustoJusto** (motas, carros, casas, terrenos, outras coisas),
+Bot pessoal que procura anúncios no **CustoJusto** e no **AutoUncle** (só carros) (motas, carros, casas, terrenos, outras coisas),
 calcula o **preço normal** de mercado (mediana) de cada procura e avisa no **Telegram** quando aparece algo bem abaixo desse preço.
 O WhatsApp (CallMeBot) também funciona, como canal opcional.
 
@@ -21,7 +21,6 @@ docs/                       página publicada no GitHub Pages
   localidades.json          distritos, concelhos e lugares (dados GeoNames)
 estado/estado.json          histórico de preços e alertas já enviados (memória do bot)
 bot/                        o bot em Python
-  fontes/olx.py             OLX (API das listagens do site)
   fontes/custojusto.py      CustoJusto (JSON da página)
   analise.py                filtros, preço normal e classificação
   zonas.py                  "Onde procurar": país, raio em km, concelhos/distritos
@@ -125,7 +124,7 @@ e usa o id do grupo (começa por `-`). Para vários destinos, separa os ids por 
   O bot identifica-se honestamente, faz poucos pedidos e, quando uma fonte falha, regista um aviso e continua com as outras.
   Confirma que este uso respeita os termos de cada site.
   - Em 2026-11-03, a partir de um PC em Portugal: **o CustoJusto respondeu** (cerca de 40 anúncios por pesquisa)
-    e **o OLX recusou (HTTP 403)**. Do GitHub Actions o resultado pode ser diferente: confirma no registo da primeira execução.
+    e **o OLX recusou (HTTP 403)**, também a partir do GitHub Actions. Por isso o OLX foi retirado do bot (2026-11-07).
 - **A pesquisa é nacional** (os anúncios mais recentes) e a zona é filtrada depois.
   Para casas e terrenos numa zona pequena, põe o nome da terra no *Texto de pesquisa* (ex.: `moradia tomar`).
 - **O mercado demora a aprender**: nos primeiros dias não há alertas, até haver amostras suficientes.
