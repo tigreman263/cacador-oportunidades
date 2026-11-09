@@ -65,6 +65,49 @@
         "motociclos_scooters",
         "outros_veiculos"
       ]
+    },
+    {
+      "id": "pmw9nwphmq27l",
+      "tipo": "outro",
+      "ativa": true,
+      "desconto_minimo": null,
+      "fontes": [
+        "custojusto",
+        "drive"
+      ],
+      "familias_drive": [
+        "electronica"
+      ],
+      "pesquisa": "Mini pc",
+      "incluir": [
+        "16gb"
+      ],
+      "alternativas": [
+        "I7",
+        "16gb",
+        "I5",
+        "Ssd",
+        "Ram"
+      ],
+      "excluir": [],
+      "zona": {
+        "modo": "pais"
+      },
+      "preco_max": null,
+      "grupos": [
+        "Pc",
+        "I7",
+        "I5"
+      ],
+      "comparar_por": "preco",
+      "nome": "Pc",
+      "problemas_extra": [
+        "Sem ram",
+        "Sem ha",
+        "Sem ssd"
+      ],
+      "graves_extra": [],
+      "categoria": ""
     }
   ]
 }
