@@ -1,5 +1,5 @@
 {
- "atualizado": 1794225630.0873892,
+ "atualizado": 1794226527.936253,
  "anuncios": {
   "cj-45485104": {
    "procura": "Moto4",
@@ -14,7 +14,7 @@
    "unidade": "€",
    "valor": 4000.0,
    "area": null,
-   "amostras": 26,
+   "amostras": 27,
    "grupo": null,
    "sinais": [],
    "problemas": [],
@@ -22,7 +22,7 @@
    "local": "Figueira da Foz",
    "url": "https://www.custojusto.pt/coimbra/veiculos/motos/moto-4-quad/linhai-lh-320-promax-4x4-45485104",
    "primeiro": 1794062207.034702,
-   "ultimo": 1794225630.0873892,
+   "ultimo": 1794226527.936253,
    "km": null,
    "publicado": null
   },
@@ -39,7 +39,7 @@
    "unidade": "€",
    "valor": 3500.0,
    "area": null,
-   "amostras": 26,
+   "amostras": 27,
    "grupo": null,
    "sinais": [],
    "problemas": [],
@@ -47,7 +47,7 @@
    "local": "Ponta Delgada",
    "url": "https://www.custojusto.pt/acores/veiculos/motos/moto-4-quad/linhai-lh-300-4x4-45430842",
    "primeiro": 1794062207.034702,
-   "ultimo": 1794225630.0873892,
+   "ultimo": 1794226527.936253,
    "km": null,
    "publicado": null
   },
@@ -64,7 +64,7 @@
    "unidade": "€",
    "valor": 3990.0,
    "area": null,
-   "amostras": 26,
+   "amostras": 27,
    "grupo": null,
    "sinais": [],
    "problemas": [],
@@ -72,7 +72,7 @@
    "local": "Ponta Delgada",
    "url": "https://www.custojusto.pt/acores/veiculos/motos/moto-4-quad/linhai-550-4x4-44739286",
    "primeiro": 1794062207.034702,
-   "ultimo": 1794225630.0873892,
+   "ultimo": 1794226527.936253,
    "km": null,
    "publicado": null
   },
@@ -89,7 +89,7 @@
    "unidade": "€",
    "valor": 3300.0,
    "area": null,
-   "amostras": 26,
+   "amostras": 27,
    "grupo": null,
    "sinais": [],
    "problemas": [],
@@ -97,7 +97,7 @@
    "local": "Leiria",
    "url": "https://www.custojusto.pt/leiria/veiculos/motos/moto-4-quad/moto-4x4-2005-43144075",
    "primeiro": 1794062207.034702,
-   "ultimo": 1794225630.0873892,
+   "ultimo": 1794226527.936253,
    "km": null,
    "publicado": null
   },
@@ -142,7 +142,7 @@
    "unidade": "€",
    "valor": 3650.0,
    "area": null,
-   "amostras": 26,
+   "amostras": 27,
    "grupo": null,
    "sinais": [],
    "problemas": [],
@@ -150,7 +150,7 @@
    "local": "Arganil",
    "url": "https://www.olx.pt/d/anuncio/vendo-moto-4-atv-linhai-300-4x4-IDJE11L.html",
    "primeiro": 1794086127.9353309,
-   "ultimo": 1794225630.0873892,
+   "ultimo": 1794226527.936253,
    "km": null,
    "publicado": "2026-10-13"
   },
@@ -167,7 +167,7 @@
    "unidade": "€",
    "valor": 3000.0,
    "area": null,
-   "amostras": 26,
+   "amostras": 27,
    "grupo": null,
    "sinais": [],
    "problemas": [],
@@ -175,7 +175,7 @@
    "local": "Azambuja",
    "url": "https://www.olx.pt/d/anuncio/moto-4x4-500cc-scrambler-IDJufbs.html",
    "primeiro": 1794092427.9410233,
-   "ultimo": 1794225630.0873892,
+   "ultimo": 1794226527.936253,
    "km": null,
    "publicado": "2026-07-05"
   }
@@ -184,7 +184,7 @@
   "Moto4": {
    "todos": {
     "mediana": 5000.0,
-    "amostras": 27,
+    "amostras": 28,
     "unidade": "€"
    },
    "500": {
