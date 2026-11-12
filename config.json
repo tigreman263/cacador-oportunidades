@@ -69,7 +69,7 @@
     {
       "id": "pmw9nwphmq27l",
       "tipo": "outro",
-      "ativa": true,
+      "ativa": false,
       "desconto_minimo": null,
       "fontes": [
         "custojusto",
