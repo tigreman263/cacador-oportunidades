@@ -109,6 +109,50 @@
       ],
       "graves_extra": [],
       "categoria": ""
+    },
+    {
+      "id": "pmwe3i9gx15z7",
+      "tipo": "carro",
+      "ativa": true,
+      "desconto_minimo": null,
+      "fontes": [
+        "custojusto",
+        "drive",
+        "autouncle"
+      ],
+      "familias_drive": [
+        "carros"
+      ],
+      "pesquisa": "4x4",
+      "incluir": [],
+      "alternativas": [
+        "4x4",
+        "Mitsubishi",
+        "Pajero",
+        "Toyota",
+        "Suzuki"
+      ],
+      "excluir": [],
+      "zona": {
+        "modo": "pais"
+      },
+      "preco_max": 3000,
+      "grupos": [
+        "diesel",
+        "gasolina",
+        "gpl",
+        "hibrido",
+        "eletrico"
+      ],
+      "comparar_por": "preco",
+      "nome": "4x4",
+      "problemas_extra": [],
+      "graves_extra": [
+        "abatid",
+        "sem matricula"
+      ],
+      "categoria": "veiculos/carros-usados",
+      "categoria_autouncle": ""
     }
   ]
 }
