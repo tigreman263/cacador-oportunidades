@@ -13,7 +13,7 @@
     {
       "id": "pmw5hpi2e8ze2",
       "tipo": "mota",
-      "ativa": true,
+      "ativa": false,
       "desconto_minimo": null,
       "fontes": [
         "custojusto",
