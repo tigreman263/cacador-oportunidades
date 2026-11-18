@@ -123,7 +123,7 @@
       "familias_drive": [
         "carros"
       ],
-      "pesquisa": "4x4",
+      "pesquisa": "Vitara",
       "incluir": [],
       "alternativas": [
         "4x4",
@@ -152,7 +152,7 @@
         "sem matricula"
       ],
       "categoria": "veiculos/carros-usados",
-      "categoria_autouncle": ""
+      "categoria_autouncle": "b-suv"
     }
   ]
 }
